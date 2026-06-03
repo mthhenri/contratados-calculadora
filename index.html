@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contratados - Terminal de Agente v5</title>
+<style>
+:root {
+    --bg: linear-gradient(135deg, #0f0c20 0%, #15102a 50%, #060409 100%);
+    --glass: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.08);
+    --border-accent: rgba(216,74,74,0.3);
+    --txt: #f3f1f6;
+    --txt2: #a39eb9;
+    --accent: #ff5252;
+    --accent-g: linear-gradient(135deg,#ff5252 0%,#b31010 100%);
+    --glow: 0 8px 32px 0 rgba(0,0,0,0.37);
+    --green: #52ffaa;
+    --blue: #5299ff;
+    --yellow: #ffd152;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;margin:0;padding:20px;min-height:100vh}
+.container{max-width:1200px;margin:auto;padding:10px}
+h1{font-size:2.2rem;text-align:center;background:linear-gradient(90deg,#fff,var(--accent),#fff);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 5s linear infinite;margin-bottom:8px;font-weight:800}
+.subtitle{text-align:center;color:var(--txt2);font-size:.85rem;margin-bottom:28px;letter-spacing:1px;text-transform:uppercase}
+@keyframes shine{to{background-position:200% center}}
+h2{color:var(--accent);font-size:1.1rem;margin:0 0 18px;text-transform:uppercase;letter-spacing:1px;border-left:4px solid var(--accent);padding-left:12px}
+h3{color:var(--txt2);font-size:.9rem;margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+.card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:var(--glow);transition:border-color .3s}
+.card:hover{border-color:var(--border-accent)}
+.card-green{border-left:3px solid var(--green)}
+.card-blue{border-left:3px solid var(--blue)}
+.card-yellow{border-left:3px solid var(--yellow)}
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:10px 20px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:.9rem;color:var(--txt2);transition:all .25s;letter-spacing:.5px}
+.tab.active{background:var(--accent-g);border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(255,82,82,.3)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+label{display:block;font-size:.82rem;color:var(--txt2);margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+input,select{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);color:#fff;border:1px solid var(--border);border-radius:10px;font-size:.95rem;transition:all .3s;outline:none}
+input:focus,select:focus{background:rgba(255,255,255,.08);border-color:var(--accent);box-shadow:0 0 12px rgba(255,82,82,.2)}
+input[type=range]{-webkit-appearance:none;appearance:none;height:12px;padding:0;border:none;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:10px;background:linear-gradient(90deg,rgba(255,82,82,.15),rgba(255,82,82,.35));border:1px solid rgba(255,255,255,.08);border-radius:999px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent-g);border:2px solid rgba(255,255,255,.5);margin-top:-7px;box-shadow:0 4px 14px rgba(255,82,82,.35)}
+input[type=range]::-moz-range-track{height:10px;background:linear-gradient(90deg,rgba(255,82,82,.15),rgba(255,82,82,.35));border:1px solid rgba(255,255,255,.08);border-radius:999px}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--accent-g);border:2px solid rgba(255,255,255,.5);box-shadow:0 4px 14px rgba(255,82,82,.35)}
+input[type=range]:focus{outline:none;box-shadow:none}
+select option{background:#15102a;color:#fff}
+select optgroup{background:#0f0c20;color:var(--accent);font-weight:bold}
+.stat-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:14px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.stat-box.highlight{border-color:rgba(255,82,82,.2);background:rgba(255,82,82,.04)}
+.stat-box.green{border-color:rgba(82,255,170,.15);background:rgba(82,255,170,.03)}
+.stat-box.blue{border-color:rgba(82,153,255,.15);background:rgba(82,153,255,.03)}
+.stat-label{font-size:.75rem;color:var(--txt2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px}
+.stat{font-size:1.7rem;font-weight:800;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.3);line-height:1.1}
+.stat-sm{font-size:1.2rem}
+.stat-xs{font-size:1rem}
+.stat-sub{font-size:.7rem;color:var(--txt2);margin-top:3px}
+ul{margin:0;padding-left:18px;color:var(--txt2)}
+li{margin-bottom:7px;line-height:1.5}
+li strong{color:var(--txt)}
+.bullet-list{line-height:1.8;color:var(--txt2)}
+.bullet-list span.tag{display:inline-block;background:rgba(255,82,82,.12);color:var(--accent);padding:1px 7px;border-radius:5px;font-size:.78rem;margin-left:4px}
+.bullet-list span.tag-green{background:rgba(82,255,170,.1);color:var(--green)}
+.bullet-list span.tag-blue{background:rgba(82,153,255,.1);color:var(--blue)}
+.badge{display:inline-block;background:var(--accent-g);color:#fff;padding:5px 11px;border-radius:7px;font-size:.78rem;font-weight:bold;letter-spacing:.5px;box-shadow:0 4px 12px rgba(216,74,74,.3)}
+.badge-green{background:linear-gradient(135deg,#52ffaa,#00b366)}
+.badge-blue{background:linear-gradient(135deg,#5299ff,#1040b3)}
+.badge-yellow{background:linear-gradient(135deg,#ffd152,#b38200);color:#000}
+.hist-item{background:rgba(255,255,255,.01);border:1px solid rgba(255,255,255,.03);border-radius:10px;padding:14px;margin-bottom:10px}
+.hist-item ul{margin-top:10px}
+hr{border:0;height:1px;background:var(--border);margin:20px 0}
+.info-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:.88rem;color:var(--txt2);line-height:1.7}
+.info-box strong{color:var(--txt)}
+.row-split{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.patente-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+.patente-nome{font-size:1.3rem;font-weight:800;color:var(--accent)}
+.patente-info{display:flex;gap:20px;flex-wrap:wrap;margin-top:8px}
+.patente-item{font-size:.85rem;color:var(--txt2)}
+.patente-item strong{color:var(--txt)}
+.dt-result{font-size:2rem;font-weight:800;color:var(--accent);text-align:center;padding:16px;background:rgba(255,82,82,.06);border-radius:10px;border:1px solid rgba(255,82,82,.15)}
+.dt-formula{font-size:.8rem;color:var(--txt2);text-align:center;margin-top:6px}
+.descanso-result{font-size:1.5rem;font-weight:700;color:var(--green);text-align:center;padding:12px;background:rgba(82,255,170,.05);border-radius:10px;border:1px solid rgba(82,255,170,.12)}
+.novo-agente-result{background:rgba(82,153,255,.05);border:1px solid rgba(82,153,255,.15);border-radius:12px;padding:18px}
+@media(max-width:768px){
+    body{padding:10px}
+    h1{font-size:1.6rem}
+    .card{padding:14px;margin-bottom:14px}
+    .grid,.grid-2,.grid-3,.grid-stats{grid-template-columns:1fr;gap:10px}
+    .stat-box{flex-direction:row;justify-content:space-between;align-items:center;text-align:left;padding:10px 14px}
+    .stat-label{margin-bottom:0}
+    .stat{font-size:1.3rem}
+    .stat-sm{font-size:1.1rem}
+    .tabs{gap:6px}
+    .tab{padding:8px 14px;font-size:.82rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Contratados — Terminal de Agente</h1>
+<p class="subtitle">Fundação SCP · Classe E · Sistema de Progressão v5</p>
+
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('agente')">⚔ Agente / Civil</div>
+    <div class="tab" onclick="switchTab('dt')">🎯 Calculadora de DT</div>
+    <div class="tab" onclick="switchTab('novo')">🔄 Novo Agente</div>
+    <div class="tab" onclick="switchTab('patente')">🏅 Patentes</div>
+    <div class="tab" onclick="switchTab('descanso')">💤 Descanso</div>
+</div>
+
+<!-- ===================== ABA AGENTE ===================== -->
+<div id="tab-agente" class="tab-panel active">
+
+<div class="card">
+<div class="grid">
+<div>
+    <label>Classe / Registro</label>
+    <select id="classe" onchange="calc()">
+        <optgroup label="Classes Base">
+            <option>Combatente</option>
+            <option>Especialista</option>
+            <option>Suporte</option>
+        </optgroup>
+        <optgroup label="Subclasses de Experimento">
+            <option>Experimento Bestial</option>
+            <option>Experimento Artificial</option>
+            <option>Experimento Híbrido</option>
+        </optgroup>
+        <optgroup label="Funcionários Não-Agentes">
+            <option>Civil</option>
+        </optgroup>
+    </select>
+</div>
+<div>
+    <div class="row-split" style="justify-content:space-between;align-items:flex-end">
+        <label id="label-nivel" style="margin-bottom:0">Nível</label>
+        <span id="nivel-valor" class="badge badge-yellow">0</span>
+    </div>
+    <input id="nivel" type="range" min="0" max="20" step="1" value="0" oninput="calc()">
+</div>
+<div>
+    <label>Vigor</label>
+    <input id="vig" type="number" min="-5" max="12" value="1" oninput="calc()">
+</div>
+<div>
+    <label>Destreza</label>
+    <input id="des" type="number" min="-5" max="12" value="1" oninput="calc()">
+</div>
+<div>
+    <label>Força</label>
+    <input id="for" type="number" min="-5" max="12" value="1" oninput="calc()">
+</div>
+<div>
+    <label>Vontade</label>
+    <input id="von" type="number" min="-5" max="12" value="1" oninput="calc()">
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Status do Personagem</h2>
+<div class="grid-stats">
+    <div class="stat-box highlight"><div class="stat-label">Vida</div><div id="vida" class="stat"></div></div>
+    <div class="stat-box highlight"><div class="stat-label">Energia</div><div id="energia" class="stat"></div></div>
+    <div class="stat-box blue"><div class="stat-label">Defesa Base</div><div id="defesa" class="stat"></div></div>
+    <div class="stat-box blue"><div class="stat-label">Proficiência</div><div id="prof" class="stat"></div></div>
+    <div class="stat-box"><div class="stat-label">Deslocamento</div><div id="deslocamento" class="stat stat-sm"></div></div>
+    <div class="stat-box"><div class="stat-label">Inventário Máx.</div><div id="inventario" class="stat"></div></div>
+    <div class="stat-box"><div class="stat-label">Corpo (Dano)</div><div id="corpo" class="stat stat-sm"></div></div>
+    <div class="stat-box green"><div class="stat-label">Dano Furtivo</div><div id="furtivo" class="stat stat-sm"></div></div>
+    <div class="stat-box"><div class="stat-label">Limite Energia</div><div id="limiteenergia" class="stat stat-sm"></div><div class="stat-sub">(VIG+DES)×2</div></div>
+    <div class="stat-box"><div class="stat-label">Traumas Suport.</div><div id="traumas" class="stat"></div><div class="stat-sub">VON + 1</div></div>
+    <div class="stat-box"><div class="stat-label">Hab. / Turno</div><div id="habturno" class="stat"></div><div id="habturno-sub" class="stat-sub"></div></div>
+    <div class="stat-box"><div class="stat-label">Sequelas (Desc.)</div><div id="sequelas" class="stat stat-xs"></div><div class="stat-sub">VON ao encerrar missão</div></div>
+</div>
+</div>
+
+<div class="card">
+<h2 id="titulo-beneficios">Benefícios deste Nível</h2>
+<div id="atual" class="bullet-list"></div>
+</div>
+
+<div class="card">
+<h2>Habilidades Acumuladas</h2>
+<div id="acumulados"></div>
+</div>
+
+<div class="card">
+<h2 id="titulo-historico">Progressão Detalhada</h2>
+<div id="historico"></div>
+</div>
+
+<div class="card">
+<h2 id="titulo-proximo">Próximo Nível</h2>
+<div id="proximo" class="bullet-list"></div>
+</div>
+
+</div><!-- /tab-agente -->
+
+<!-- ===================== ABA DT ===================== -->
+<div id="tab-dt" class="tab-panel">
+
+<div class="card">
+<h2>Calculadora de DT</h2>
+<p style="color:var(--txt2);font-size:.9rem;margin-top:-10px;margin-bottom:18px">Calcula a DT que seus aliados e inimigos precisam superar para resistir às suas ações.</p>
+
+<div class="grid-2">
+<div>
+    <div class="card card-blue" style="margin-bottom:0">
+    <h3 style="color:var(--blue);margin-top:0">DT de Habilidade</h3>
+    <p style="color:var(--txt2);font-size:.82rem;margin:0 0 14px">Usada quando a ação vem de uma <strong>habilidade</strong> (ex.: aplicar Sangramento, usar ability que pode ser evitada).</p>
+    <div><label>Nível do personagem</label><input id="dt-hab-nivel" type="number" min="0" max="20" value="0" oninput="calcDT()"></div>
+    <div style="margin-top:12px"><label>Atributo usado</label><input id="dt-hab-attr" type="number" min="0" max="12" value="1" oninput="calcDT()"></div>
+    <div class="dt-result" id="dt-hab-result">—</div>
+    <div class="dt-formula">Fórmula: 5 + Nível + (Atributo × 3)</div>
+    </div>
+</div>
+<div>
+    <div class="card card-green" style="margin-bottom:0">
+    <h3 style="color:var(--green);margin-top:0">DT de Atributo</h3>
+    <p style="color:var(--txt2);font-size:.82rem;margin:0 0 14px">Usada quando a DT vem de um <strong>atributo direto</strong> do causador (ex.: Sangramento causado pela Força).</p>
+    <div><label>Nível do personagem</label><input id="dt-attr-nivel" type="number" min="0" max="20" value="0" oninput="calcDT()"></div>
+    <div style="margin-top:12px"><label>Atributo usado</label><input id="dt-attr-attr" type="number" min="0" max="12" value="1" oninput="calcDT()"></div>
+    <div class="dt-result" id="dt-attr-result" style="color:var(--green);background:rgba(82,255,170,.06);border-color:rgba(82,255,170,.2)">—</div>
+    <div class="dt-formula">Fórmula: 10 + Nível + (Atributo × 2)</div>
+    </div>
+</div>
+</div>
+
+<div style="margin-top:20px">
+<div class="card" style="margin-bottom:0">
+<h3 style="color:var(--yellow);margin-top:0">Tabela de Referência Rápida (DT Ambas)</h3>
+<div id="dt-tabela" style="overflow-x:auto;margin-top:10px"></div>
+</div>
+</div>
+
+</div>
+</div><!-- /tab-dt -->
+
+<!-- ===================== ABA NOVO AGENTE ===================== -->
+<div id="tab-novo" class="tab-panel">
+
+<div class="card">
+<h2>Calculadora — Novo Agente</h2>
+<p style="color:var(--txt2);font-size:.9rem;margin-top:-10px;margin-bottom:18px">Calcula o Nível e Prestígio iniciais de um novo personagem entrando num esquadrão em andamento.</p>
+
+<div class="grid">
+<div>
+    <label>Motivo de entrada</label>
+    <select id="novo-motivo" onchange="calcNovoAgente()">
+        <option value="morte">Morte / Entrada do zero</option>
+        <option value="aposent">Aposentadoria</option>
+        <option value="exp_regular">Experimento (subclasse) — novo regular</option>
+        <option value="exp_exp">Experimento (subclasse) — novo Experimento</option>
+        <option value="extinto_regular">Contido/Exterminado → Regular</option>
+        <option value="extinto_exp">Contido/Exterminado → Experimento</option>
+    </select>
+</div>
+<div>
+    <label>Média de Nível do grupo <span style="color:var(--txt2);font-weight:400">(excl. saindo)</span></label>
+    <input id="novo-media-nivel" type="number" min="0" max="20" step="0.1" value="5" oninput="calcNovoAgente()">
+</div>
+<div>
+    <label>Média de Prestígio do grupo <span style="color:var(--txt2);font-weight:400">(excl. saindo)</span></label>
+    <input id="novo-media-prest" type="number" min="0" value="10" oninput="calcNovoAgente()">
+</div>
+</div>
+<hr>
+<div class="novo-agente-result" id="novo-resultado">—</div>
+</div>
+
+<div class="card">
+<h2>Bônus Monetário Inicial</h2>
+<p style="color:var(--txt2);font-size:.9rem;margin-top:-10px;margin-bottom:18px">Calculado com base no Prestígio Inicial e na Patente correspondente.</p>
+<div class="grid-2">
+<div><label>Prestígio Inicial (calculado acima ou manual)</label><input id="bonus-prest" type="number" min="0" value="0" oninput="calcBonus()"></div>
+<div style="display:flex;align-items:flex-end"><div class="dt-result" id="bonus-result" style="color:var(--yellow);background:rgba(255,209,82,.05);border-color:rgba(255,209,82,.2);width:100%">$0</div></div>
+</div>
+<div class="dt-formula" style="text-align:left;margin-top:8px">Fórmula: Prestígio × (500 × Multiplicador de Patente) + Dinheiro Inicial padrão</div>
+<div id="bonus-patente-info" style="margin-top:10px;color:var(--txt2);font-size:.85rem"></div>
+</div>
+
+</div><!-- /tab-novo -->
+
+<!-- ===================== ABA PATENTE ===================== -->
+<div id="tab-patente" class="tab-panel">
+
+<div class="card">
+<h2>Tabela de Patentes</h2>
+<div><label>Prestígio atual</label><input id="prest-input" type="number" min="0" value="0" oninput="calcPatente()"></div>
+<hr>
+<div id="patente-resultado"></div>
+</div>
+
+<div class="card">
+<h2>Referência Completa de Patentes</h2>
+<div id="patente-tabela-full"></div>
+</div>
+
+</div><!-- /tab-patente -->
+
+<!-- ===================== ABA DESCANSO ===================== -->
+<div id="tab-descanso" class="tab-panel">
+
+<div class="card">
+<h2>Calculadora de Descanso</h2>
+
+<div class="grid">
+<div>
+    <label>Tipo de Descanso</label>
+    <select id="desc-tipo" onchange="calcDescanso()">
+        <option value="curto">Curto (~15 min) — 1D4</option>
+        <option value="medio">Médio (2–4h) — 1D6</option>
+        <option value="longo">Longo (6–8h) — 1D8 · Uma vez por dia</option>
+    </select>
+</div>
+<div>
+    <label>Qualidade do Ambiente</label>
+    <select id="desc-qualidade" onchange="calcDescanso()">
+        <option value="insalubre">Insalubre (−1 tipo de dado)</option>
+        <option value="adequado" selected>Adequado (padrão)</option>
+        <option value="confortavel">Confortável (+1 tipo de dado)</option>
+    </select>
+</div>
+<div>
+    <label>Vigor (para Vida)</label>
+    <input id="desc-vig" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+</div>
+<div>
+    <label>Destreza (para Energia)</label>
+    <input id="desc-des" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+</div>
+<div>
+    <label>Nível</label>
+    <input id="desc-nivel" type="number" min="0" max="20" value="0" oninput="calcDescanso()">
+</div>
+<div>
+    <label>Refeição consumida?</label>
+    <select id="desc-refeicao" onchange="calcDescanso()">
+        <option value="nao">Não</option>
+        <option value="sim">Sim (+1 tipo de dado)</option>
+    </select>
+</div>
+<div>
+    <label>Foi interrompido?</label>
+    <select id="desc-interrupcao" onchange="calcDescanso()">
+        <option value="nao">Não</option>
+        <option value="sim">Sim (÷2 no resultado)</option>
+    </select>
+</div>
+</div>
+
+<hr>
+<div class="grid-2">
+<div>
+    <div class="stat-label" style="margin-bottom:8px">Recuperação de Vida</div>
+    <div class="descanso-result" id="desc-vida-result">—</div>
+    <div class="dt-formula" id="desc-vida-formula">—</div>
+</div>
+<div>
+    <div class="stat-label" style="margin-bottom:8px">Recuperação de Energia</div>
+    <div class="descanso-result" id="desc-energia-result" style="color:var(--blue);background:rgba(82,153,255,.05);border-color:rgba(82,153,255,.15)">—</div>
+    <div class="dt-formula" id="desc-energia-formula">—</div>
+</div>
+</div>
+
+<div class="info-box" style="margin-top:16px" id="desc-notas"></div>
+
+</div>
+
+</div><!-- /tab-descanso -->
+
+</div><!-- /container -->
+
+<script>
+// ============================================================
+// DADOS DE PROGRESSÃO
+// ============================================================
+const dadosAgente = {
+    0: [],
+    1:  ['+1 Atributo', '+1 Habilidade Geral', '+1 Habilidade de Classe ou Arquétipo'],
+    2:  ['+2 Atributos', '+1 Habilidade por Turno', '+1 Habilidade de Classe'],
+    3:  ['+1 Atributo', '+1 Habilidade Geral', '+1 Habilidade de Classe ou Arquétipo', '+1D6+1 de dano furtivo'],
+    4:  ['+2 Atributos', '+1 Habilidade Geral', '+1 Habilidade por Turno'],
+    5:  ['+1 Atributo', '+1 Habilidade de outra classe/arquétipo da sua classe', '+1 Habilidade de Classe ou Arquétipo'],
+    6:  ['+2 Atributos', '+1 Habilidade Geral', '+1 Habilidade por Turno', '+1 Habilidade de Classe', '+1D6+1 de dano furtivo'],
+    7:  ['+1 Atributo', '+1 Habilidade de Classe ou Arquétipo', '+1 Fortificação de Personalidade'],
+    8:  ['+2 Atributos', '+1 Habilidade Geral', '+1 Habilidade por Turno'],
+    9:  ['+1 Atributo', '+1 Habilidade Geral', '+1 Habilidade de Classe ou Arquétipo', '+1D6+1 de dano furtivo'],
+    10: ['+2 Atributos', '+2 Habilidades por Turno', '+1 Habilidade de outra classe/arquétipo da sua classe', '+1 Habilidade de Classe'],
+    11: ['+1 Atributo', '+1 Habilidade Geral', '+1 Habilidade de Classe ou Arquétipo'],
+    12: ['+2 Atributos', '+1 Habilidade por Turno', '+1D6+1 de dano furtivo'],
+    13: ['+1 Atributo', '+1 Habilidade Geral', '+1 Habilidade de Classe ou Arquétipo'],
+    14: ['+2 Atributos', '+1 Habilidade Geral', '+1 Habilidade por Turno', '+1 Habilidade de Classe', '+1 Fortificação de Personalidade'],
+    15: ['+1 Atributo', '+1 Habilidade de outra classe/arquétipo da sua classe', '+1 Habilidade de Classe ou Arquétipo', '+1D6+1 de dano furtivo'],
+    16: ['+2 Atributos', '+1 Habilidade Geral', '+1 Habilidade por Turno'],
+    17: ['+1 Atributo', '+1 Habilidade de Classe ou Arquétipo'],
+    18: ['+2 Atributos', '+1 Habilidade Geral', '+1 Habilidade por Turno', '+1 Habilidade de Classe', '+1D6+1 de dano furtivo'],
+    19: ['+1 Atributo', '+1 Habilidade Geral', '+1 Habilidade de Classe ou Arquétipo'],
+    20: ['+2 Atributos', '+2 Habilidades por Turno', '+1 Habilidade de outra classe/arquétipo da sua classe']
+};
+
+const dadosCivil = {
+    0: [],
+    1: ['Treinamento Iniciante', '+1 Habilidade Civil', '+1 Atributo'],
+    2: ['Treinamento Treinado', '+1 Habilidade Civil'],
+    3: ['Treinamento Profissional', '+1 Habilidade Civil', '+1 Atributo'],
+    4: ['Treinamento Especialista', '+1 Habilidade Civil'],
+    5: ['Treinamento Elite', '+1 Habilidade Civil', '+1 Atributo', '1 Habilidade de Classe (sem benefícios gerais da classe)']
+};
+
+// ============================================================
+// PATENTES
+// ============================================================
+const PATENTES = [
+    {nome:'Agente',         min:0,  max:2,  salario:1000, mult:1.0, modif:'1 nível / 2 mods/item'},
+    {nome:'Operador',       min:3,  max:5,  salario:1500, mult:1.5, modif:'2 níveis / 4 mods/item'},
+    {nome:'Experiente',     min:6,  max:11, salario:2500, mult:2.0, modif:'2 níveis / 6 mods/item'},
+    {nome:'Veterano',       min:12, max:20, salario:3500, mult:2.5, modif:'3 níveis / 9 mods/item'},
+    {nome:'Força Tarefa',   min:21, max:32, salario:4500, mult:3.0, modif:'3 níveis / 12 mods/item'},
+    {nome:'FT Especial',    min:33, max:47, salario:5250, mult:3.5, modif:'4 níveis / 15 mods/item'},
+    {nome:'Op. Especiais',  min:48, max:65, salario:6250, mult:4.0, modif:'4 níveis / 18 mods/item'},
+    {nome:'Líder Operacional', min:66, max:Infinity, salario:7500, mult:4.5, modif:'5 níveis / 20 mods/item'}
+];
+
+function getPatente(prest) {
+    return PATENTES.find(p => prest >= p.min && prest <= p.max) || PATENTES[PATENTES.length-1];
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function calcularDeslocamento(des, isCivil) {
+    if (isCivil) {
+        if (des <= 1) return '6m';
+        if (des <= 3) return '7m';
+        return '8m';
+    } else {
+        if (des <= 0) return '8m';
+        if (des <= 4) return '9m';
+        return '10m';
+    }
+}
+
+function calcularDanoCorpo(forca, vigor, isCivil) {
+    if (isCivil) {
+        let d = forca - 1;
+        return (d > 0 ? d : 0) + ' [Físico]';
+    }
+    let pts = forca + vigor;
+    if (pts < 0)  return '0 Dano';
+    if (pts <= 1)  return '1 [Físico]';
+    if (pts <= 3)  return '1D3 [Físico]';
+    if (pts <= 5)  return '1D4 [Físico]';
+    if (pts <= 7)  return '1D6 [Físico]';
+    if (pts <= 9)  return '2D6 [Físico]';
+    if (pts <= 11) return '3D6 [Físico]';
+    if (pts === 12) return '4D6 [Físico]';
+    return '4D6+7 [Físico]';
+}
+
+function calcularInventario(forca, isCivil) {
+    if (forca <= 0) return '0';
+    return isCivil ? (forca * 3).toString() : (forca * 5).toString();
+}
+
+function tagColor(texto) {
+    if (texto.includes('Furtivo') || texto.includes('furtivo')) return 'tag-green';
+    if (texto.includes('Turno')) return 'tag-blue';
+    if (texto.includes('Outra') || texto.includes('outra')) return 'tag-blue';
+    if (texto.includes('Fortific')) return '';
+    return '';
+}
+
+function aplicarLimitesPorClasse(isCivil) {
+    const nivelEl = document.getElementById('nivel');
+    const nivelValor = document.getElementById('nivel-valor');
+    const limiteNivel = isCivil ? 5 : 20;
+    const limiteAtributo = isCivil ? 3 : 8;
+
+    nivelEl.min = 0;
+    nivelEl.max = limiteNivel;
+    nivelEl.step = 1;
+
+    ['vig','des','for','von'].forEach(id => {
+        const el = document.getElementById(id);
+        el.min = -5;
+        el.max = limiteAtributo;
+        if (+el.value > limiteAtributo) el.value = limiteAtributo;
+        if (+el.value < -5) el.value = -5;
+    });
+
+    if (+nivelEl.value > limiteNivel) nivelEl.value = limiteNivel;
+    if (+nivelEl.value < 0) nivelEl.value = 0;
+
+    if (nivelValor) nivelValor.textContent = nivelEl.value;
+}
+
+// ============================================================
+// ABA AGENTE — CÁLCULO PRINCIPAL
+// ============================================================
+function calc() {
+    const c = document.getElementById('classe').value;
+    const isCivil = (c === 'Civil');
+    aplicarLimitesPorClasse(isCivil);
+
+    let n = +document.getElementById('nivel').value;
+    const v = +document.getElementById('vig').value;
+    const d = +document.getElementById('des').value;
+    const f = +document.getElementById('for').value;
+    const von = +document.getElementById('von').value;
+
+    // Adapta UI
+    document.getElementById('label-nivel').textContent = isCivil ? 'Treinamentos (0–5)' : 'Nível';
+    document.getElementById('titulo-beneficios').textContent = isCivil ? 'Benefícios deste Treinamento' : 'Benefícios deste Nível';
+    document.getElementById('titulo-historico').textContent = isCivil ? 'Progresso de Treinamentos' : 'Progressão Detalhada';
+    document.getElementById('titulo-proximo').textContent = isCivil ? 'Próximo Treinamento' : 'Próximo Nível';
+
+    if (isCivil && n > 5) { n = 5; document.getElementById('nivel').value = 5; }
+    if (!isCivil && n > 20) { n = 20; document.getElementById('nivel').value = 20; }
+    document.getElementById('nivel-valor').textContent = n;
+
+    // Saúde
+    let vida = 0, energia = 0;
+    if      (c === 'Combatente')          { vida=(30+v*4)+n*(7+v*2);   energia=(15+d*2)+n*(4+d*2); }
+    else if (c === 'Especialista')        { vida=(20+v*3)+n*(4+v*2);   energia=(22+d*3)+n*(7+d*2); }
+    else if (c === 'Suporte')             { vida=(25+v*3)+n*(5+v*2);   energia=(18+d*2)+n*(6+d*2); }
+    else if (c === 'Experimento Bestial') { vida=(30+v*5)+n*(9+v*2);   energia=(22+d*2)+n*(5+d*2); }
+    else if (c === 'Experimento Artificial'){vida=(27+v*3)+n*(5+v*2);  energia=(22+d*4)+n*(9+d*2); }
+    else if (c === 'Experimento Híbrido') { vida=(25+v*4)+n*(7+v*2);   energia=(18+d*3)+n*(7+d*2); }
+    else if (isCivil)                     { vida=(10+v)+n*v;            energia=(5+d*2)+n*d; }
+
+    document.getElementById('vida').textContent       = Math.floor(vida);
+    document.getElementById('energia').textContent    = Math.floor(energia);
+    document.getElementById('defesa').textContent     = isCivil ? 'N/A' : (5 + n);
+    document.getElementById('prof').textContent       = isCivil ? 'N/A' : ('+' + n);
+    document.getElementById('deslocamento').textContent = calcularDeslocamento(d, isCivil);
+    document.getElementById('corpo').textContent      = calcularDanoCorpo(f, v, isCivil);
+    document.getElementById('inventario').textContent = calcularInventario(f, isCivil);
+    document.getElementById('traumas').textContent    = isCivil ? 'N/A' : (von + 1);
+    document.getElementById('sequelas').textContent   = isCivil ? 'N/A' : ('VON (' + von + ')');
+
+    // Limite de Energia
+    const limEn = isCivil ? d : (v + d) * 2;
+    document.getElementById('limiteenergia').textContent = isCivil ? 'N/A' : limEn;
+
+    // Dano Furtivo
+    const furtivos = isCivil ? 0 : [3,6,9,12,15,18].filter(x => x <= n).length;
+    document.getElementById('furtivo').textContent = isCivil ? 'N/A' : ((1+furtivos)+'D6+'+(1+furtivos));
+
+    // Limite Habilidades/Turno — começa em 4, +1 em nível 2,4,6,8,10(×2),12,14,16,18,20(×2)
+    let habTurnoBase = 4;
+    let habTurnoGanhos = 0;
+    if (!isCivil) {
+        for (let i = 1; i <= n; i++) {
+            const bs = dadosAgente[i] || [];
+            bs.forEach(b => {
+                if (b.includes('2 Habilidades por Turno')) habTurnoGanhos += 2;
+                else if (b.includes('Habilidade por Turno')) habTurnoGanhos += 1;
+            });
+        }
+    }
+    const habTurnoTotal = isCivil ? 'N/A' : (habTurnoBase + habTurnoGanhos);
+    document.getElementById('habturno').textContent = habTurnoTotal;
+    document.getElementById('habturno-sub').textContent = isCivil ? '' : ('base 4 + ' + habTurnoGanhos + ' ganhos');
+
+    // Benefícios atuais
+    const dados = isCivil ? dadosCivil : dadosAgente;
+    const limite = isCivil ? 5 : 20;
+    const atualItens = dados[n] || [];
+    document.getElementById('atual').innerHTML = atualItens.length
+        ? atualItens.map(x => {
+            const isTitle = isCivil && x.startsWith('Treinamento');
+            if (isTitle) return `<span style="color:var(--yellow);font-weight:700">◆ ${x}</span>`;
+            const tc = tagColor(x);
+            const tag = tc ? ` <span class="tag ${tc}">${x.includes('furtivo')?'Furtivo':x.includes('Turno')||x.includes('outra')?'Especial':''}</span>` : '';
+            return '• ' + x + tag;
+        }).join('<br>')
+        : (isCivil ? 'Nenhum treinamento.' : '<span style="color:var(--txt2)">Nível inicial — sem ganhos além do setup base.</span>');
+
+    // Acumulados
+    let total = { atributos:0, geral:0, classe:0, ca:0, outra:0, fort:0, civil:0 };
+    let hist = '';
+
+    for (let i = 1; i <= n; i++) {
+        const label = isCivil ? `Treino ${i}` : `Nível ${String(i).padStart(2,'0')}`;
+        hist += `<div class="hist-item"><span class="badge">${label}</span><ul>`;
+
+        (dados[i] || []).forEach(b => {
+            const isTitle = isCivil && b.startsWith('Treinamento');
+            if (!isTitle) hist += `<li>${b}</li>`;
+
+            if (b.includes('Atributo')) {
+                if (b.includes('x2') || b.includes('2 Atributos')) total.atributos += 2;
+                else if (!b.startsWith('1 Habilidade de Classe') && !b.startsWith('+1 Habilidade')) total.atributos += 1;
+                else if (b === '+1 Atributo') total.atributos += 1;
+            }
+            if (b === '+1 Atributo') total.atributos += 0; // já handled abaixo
+            if (b.startsWith('+1 Atributo')) total.atributos += 0;
+            if (b.includes('Habilidade Geral') && !b.includes('Classe')) total.geral++;
+            if (b.includes('Habilidade de Classe') && !isCivil) total.classe++;
+            if (b.includes('1 Habilidade de Classe') && isCivil) total.classe++;
+            if (b.includes('Classe ou Arquétipo')) total.ca++;
+            if (b.includes('outra classe') || b.includes('Outra Classe')) total.outra++;
+            if (b.includes('Fortificação')) total.fort++;
+            if (b.includes('Habilidade Civil')) total.civil++;
+        });
+
+        hist += '</ul></div>';
+    }
+
+    // Recalcula atributos corretamente (mais simples e seguro)
+    let atribAcc = 0;
+    for (let i = 1; i <= n; i++) {
+        (dados[i] || []).forEach(b => {
+            if (b === '+2 Atributos') atribAcc += 2;
+            else if (b === '+1 Atributo') atribAcc += 1;
+        });
+    }
+    // Civil atributos
+    if (isCivil) {
+        atribAcc = 0;
+        for (let i = 1; i <= n; i++) {
+            (dados[i] || []).forEach(b => { if (b === '+1 Atributo') atribAcc += 1; });
+        }
+    }
+
+    document.getElementById('historico').innerHTML = hist || (isCivil ? 'Sem treinamentos ainda.' : 'Nenhum nível adquirido.');
+
+    // Painel Acumulados
+    let htmlAcc = '<ul>';
+    htmlAcc += `<li><strong>Atributos recebidos:</strong> +${atribAcc} pontos</li>`;
+    if (isCivil) {
+        htmlAcc += `<li><strong>Habilidades Civis:</strong> ${total.civil}</li>`;
+        if (total.classe > 0) htmlAcc += `<li><strong>Habilidades de Classe (Elite):</strong> ${total.classe}</li>`;
+    } else {
+        htmlAcc += `<li><strong>Habilidades Gerais:</strong> ${total.geral}</li>`;
+        htmlAcc += `<li><strong>Habilidades de Classe (específicas):</strong> ${total.classe}</li>`;
+        htmlAcc += `<li><strong>Habilidades Classe/Arquétipo (escolha livre):</strong> ${total.ca}</li>`;
+        htmlAcc += `<li><strong>Habilidades de outra classe/arquétipo:</strong> ${total.outra}</li>`;
+        htmlAcc += `<li><strong>Limite Hab./Turno atual:</strong> ${habTurnoTotal} max</li>`;
+        htmlAcc += `<li><strong>Fortificações de Personalidade:</strong> ${total.fort} de 2</li>`;
+        htmlAcc += `<li><strong>Dano Furtivo atual:</strong> ${(1+furtivos)}D6+${(1+furtivos)}</li>`;
+    }
+    htmlAcc += '</ul>';
+    document.getElementById('acumulados').innerHTML = htmlAcc;
+
+    // Próximo
+    const proxMsg = isCivil ? 'Máximo de treinamentos (Elite) alcançado.' : 'Nível máximo (20) alcançado. Parabéns, veterano.';
+    document.getElementById('proximo').innerHTML = n < limite
+        ? (dados[n+1]||[]).map(x => '• '+x).join('<br>')
+        : `<span style="color:var(--yellow)">${proxMsg}</span>`;
+}
+
+// ============================================================
+// ABA DT
+// ============================================================
+function calcDT() {
+    const nHab  = +document.getElementById('dt-hab-nivel').value;
+    const aHab  = +document.getElementById('dt-hab-attr').value;
+    const nAttr = +document.getElementById('dt-attr-nivel').value;
+    const aAttr = +document.getElementById('dt-attr-attr').value;
+
+    const dtHab  = 5  + nHab  + (aHab  * 3);
+    const dtAttr = 10 + nAttr + (aAttr * 2);
+
+    document.getElementById('dt-hab-result').textContent  = dtHab;
+    document.getElementById('dt-attr-result').textContent = dtAttr;
+
+    // Tabela de referência — Atributo 1..6, Nível 0/5/10/15/20
+    const niveis = [0,5,10,15,20];
+    const atributos = [1,2,3,4,5,6];
+    let tbl = '<table style="width:100%;border-collapse:collapse;font-size:.82rem">';
+    tbl += '<thead><tr><th style="padding:8px;text-align:left;color:var(--txt2)">Attr \\ Nível</th>';
+    niveis.forEach(nl => tbl += `<th style="padding:8px;text-align:center;color:var(--txt2)">${nl}</th>`);
+    tbl += '</tr></thead><tbody>';
+
+    atributos.forEach(at => {
+        tbl += `<tr><td style="padding:8px;color:var(--yellow);font-weight:700">ATR ${at}</td>`;
+        niveis.forEach(nl => {
+            const h = 5+nl+(at*3);
+            const a = 10+nl+(at*2);
+            tbl += `<td style="padding:8px;text-align:center;border-left:1px solid var(--border)">
+                <span style="color:var(--blue)">${h}</span>
+                <span style="color:var(--txt2);font-size:.75rem"> / </span>
+                <span style="color:var(--green)">${a}</span>
+            </td>`;
+        });
+        tbl += '</tr>';
+    });
+    tbl += '</tbody></table>';
+    tbl += '<p style="color:var(--txt2);font-size:.75rem;margin:8px 0 0"><span style="color:var(--blue)">Azul</span> = DT Habilidade · <span style="color:var(--green)">Verde</span> = DT Atributo</p>';
+    document.getElementById('dt-tabela').innerHTML = tbl;
+}
+
+// ============================================================
+// ABA NOVO AGENTE
+// ============================================================
+function calcNovoAgente() {
+    const motivo  = document.getElementById('novo-motivo').value;
+    const mNivel  = parseFloat(document.getElementById('novo-media-nivel').value) || 0;
+    const mPrest  = parseFloat(document.getElementById('novo-media-prest').value) || 0;
+
+    // Nível inicial — arredonda para o inteiro mais próximo (0.5 para cima), depois -1, mínimo 0
+    const nivelCalc = Math.max(0, Math.ceil(mNivel % 1 >= 0.5 ? Math.ceil(mNivel) : Math.round(mNivel)) - 1);
+
+    // Prestígio inicial por motivo
+    let divisor, descricao, permiteAbaixo = false;
+    switch(motivo) {
+        case 'morte':          divisor=7;  descricao='Morte / Entrada do zero'; break;
+        case 'aposent':        divisor=10; descricao='Aposentadoria'; break;
+        case 'exp_regular':    divisor=5;  descricao='Experimento → Regular'; permiteAbaixo=true; break;
+        case 'exp_exp':        divisor=3;  descricao='Experimento → Experimento'; permiteAbaixo=true; break;
+        case 'extinto_regular':divisor=5;  descricao='Contido/Exterminado → Regular'; permiteAbaixo=true; break;
+        case 'extinto_exp':    divisor=3;  descricao='Contido/Exterminado → Experimento'; permiteAbaixo=true; break;
+    }
+
+    const deducao   = Math.floor(mPrest / divisor);
+    let prestCalc   = Math.floor(mPrest - deducao);
+
+    // Cap mínimo de patente
+    const parenteGrupo = getPatente(Math.floor(mPrest));
+    let capIdx = PATENTES.indexOf(parenteGrupo);
+    let capMin, capNome;
+    if (permiteAbaixo && capIdx > 0) {
+        // Pode cair uma patente abaixo
+        capMin  = PATENTES[capIdx - 1].min;
+        capNome = PATENTES[capIdx - 1].nome;
+    } else {
+        capMin  = parenteGrupo.min;
+        capNome = parenteGrupo.nome;
+    }
+    prestCalc = Math.max(prestCalc, capMin);
+
+    const parenteResultado = getPatente(prestCalc);
+
+    // Atualiza campo de bônus
+    document.getElementById('bonus-prest').value = prestCalc;
+    calcBonus();
+
+    const amaldicStr = (motivo === 'extinto_regular' || motivo === 'extinto_exp')
+        ? '<li style="color:var(--yellow)">⚠ Recebe permanentemente a condição <strong>Amaldiçoado pelo Passado</strong></li>'
+        : '';
+
+    document.getElementById('novo-resultado').innerHTML = `
+        <div class="grid-3">
+            <div class="stat-box highlight">
+                <div class="stat-label">Nível Inicial</div>
+                <div class="stat">${nivelCalc}</div>
+                <div class="stat-sub">média ${mNivel.toFixed(1)} → −1</div>
+            </div>
+            <div class="stat-box blue">
+                <div class="stat-label">Prestígio Inicial</div>
+                <div class="stat">${prestCalc}</div>
+                <div class="stat-sub">média ${mPrest} − ÷${divisor} = −${deducao}</div>
+            </div>
+            <div class="stat-box green">
+                <div class="stat-label">Patente Resultante</div>
+                <div class="stat stat-sm">${parenteResultado.nome}</div>
+                <div class="stat-sub">cap mín: ${capNome}</div>
+            </div>
+        </div>
+        <ul style="margin-top:14px">
+            <li><strong>Motivo:</strong> ${descricao}</li>
+            <li><strong>Nível:</strong> ⌈${mNivel.toFixed(1)}⌉ − 1 = ${nivelCalc} (mínimo 0)</li>
+            <li><strong>Prestígio:</strong> ${mPrest} − ⌊${mPrest}÷${divisor}⌋ = ${mPrest}−${deducao} = ${Math.floor(mPrest-deducao)} → cap ${capNome} (${capMin}) → <strong>${prestCalc}</strong></li>
+            ${amaldicStr}
+        </ul>`;
+}
+
+function calcBonus() {
+    const prest = +document.getElementById('bonus-prest').value || 0;
+    const pat   = getPatente(prest);
+    const bonus = prest * (500 * pat.mult);
+    const total = bonus; // + dinheiro inicial padrão (1000 + 4D4×250, variável)
+    document.getElementById('bonus-result').textContent = '$ ' + bonus.toLocaleString('pt-BR');
+    document.getElementById('bonus-patente-info').innerHTML =
+        `<strong>Patente:</strong> ${pat.nome} · Multiplicador: ${pat.mult}× · Salário base: $${pat.salario.toLocaleString('pt-BR')}/missão<br>
+         <span style="color:var(--txt2);font-size:.8rem">Nota: adicione ao total o dinheiro inicial padrão (1.000 + 4D4 × 250), calculado separadamente por ser aleatório.</span>`;
+}
+
+// ============================================================
+// ABA PATENTE
+// ============================================================
+function calcPatente() {
+    const prest = +document.getElementById('prest-input').value || 0;
+    const pat   = getPatente(prest);
+
+    document.getElementById('patente-resultado').innerHTML = `
+        <div class="patente-box">
+            <div class="patente-nome">${pat.nome}</div>
+            <div style="color:var(--txt2);font-size:.85rem;margin-top:2px">${pat.min}–${pat.max === Infinity ? '∞' : pat.max} Prestígio</div>
+            <div class="patente-info">
+                <div class="patente-item"><strong>Salário por missão:</strong> $${pat.salario.toLocaleString('pt-BR')}</div>
+                <div class="patente-item"><strong>Limite de mods:</strong> ${pat.modif}</div>
+                <div class="patente-item"><strong>Multiplicador monetário:</strong> ${pat.mult}×</div>
+            </div>
+        </div>`;
+
+    // Tabela completa
+    let tbl = '<table style="width:100%;border-collapse:collapse;font-size:.85rem">';
+    tbl += `<thead><tr>
+        <th style="padding:10px 8px;text-align:left;color:var(--txt2);border-bottom:1px solid var(--border)">Patente</th>
+        <th style="padding:10px 8px;text-align:center;color:var(--txt2);border-bottom:1px solid var(--border)">Prestígio</th>
+        <th style="padding:10px 8px;text-align:center;color:var(--txt2);border-bottom:1px solid var(--border)">Salário</th>
+        <th style="padding:10px 8px;text-align:center;color:var(--txt2);border-bottom:1px solid var(--border)">Mods</th>
+        <th style="padding:10px 8px;text-align:center;color:var(--txt2);border-bottom:1px solid var(--border)">Mult.</th>
+    </tr></thead><tbody>`;
+
+    PATENTES.forEach(p => {
+        const isAtual = (p.nome === pat.nome);
+        const bg = isAtual ? 'rgba(255,82,82,.06)' : 'transparent';
+        const border = isAtual ? '1px solid rgba(255,82,82,.2)' : 'none';
+        tbl += `<tr style="background:${bg};outline:${border};border-radius:8px">
+            <td style="padding:10px 8px;font-weight:${isAtual?'700':'400'};color:${isAtual?'var(--accent)':'var(--txt)'}">${p.nome}</td>
+            <td style="padding:10px 8px;text-align:center;color:var(--txt2)">${p.min}–${p.max === Infinity ? '∞' : p.max}</td>
+            <td style="padding:10px 8px;text-align:center;color:var(--green)">$${p.salario.toLocaleString('pt-BR')}</td>
+            <td style="padding:10px 8px;text-align:center;color:var(--txt2);font-size:.78rem">${p.modif}</td>
+            <td style="padding:10px 8px;text-align:center;color:var(--yellow)">${p.mult}×</td>
+        </tr>`;
+    });
+    tbl += '</tbody></table>';
+    document.getElementById('patente-tabela-full').innerHTML = tbl;
+}
+
+// ============================================================
+// ABA DESCANSO
+// ============================================================
+const DADOS_DESCANSO = {
+    curto:  { label:'Curto',  dadoEn:4,  dadoVid:null, temVida:false },
+    medio:  { label:'Médio',  dadoEn:6,  dadoVid:4,    temVida:true  },
+    longo:  { label:'Longo',  dadoEn:8,  dadoVid:6,    temVida:true  }
+};
+
+const QUALIDADE_MOD = { insalubre:-1, adequado:0, confortavel:1 };
+
+const DADOS_SEQ = [3,4,6,8,10,12,20]; // tipos de dado em ordem
+
+function tipoDado(base, mod) {
+    const idx = DADOS_SEQ.indexOf(base);
+    const novo = Math.max(0, Math.min(DADOS_SEQ.length-1, idx+mod));
+    return DADOS_SEQ[novo];
+}
+
+function descDado(faces) {
+    if (!faces) return '—';
+    return faces === 0 ? '0' : 'D'+faces;
+}
+
+function calcDescanso() {
+    const tipo  = document.getElementById('desc-tipo').value;
+    const qual  = document.getElementById('desc-qualidade').value;
+    const vigD  = +document.getElementById('desc-vig').value || 0;
+    const desD  = +document.getElementById('desc-des').value || 0;
+    const nivel = +document.getElementById('desc-nivel').value || 0;
+    const refei = document.getElementById('desc-refeicao').value;
+    const inter = document.getElementById('desc-interrupcao').value;
+
+    const cfg = DADOS_DESCANSO[tipo];
+    let modTotal = QUALIDADE_MOD[qual];
+    if (refei === 'sim') modTotal += 1;
+
+    // Dado de Energia
+    const dadoEnBase = cfg.dadoEn;
+    const dadoEnFinal = tipoDado(dadoEnBase, modTotal);
+    const enMin = desD * 1 + nivel * 2;
+    const enMed = desD * ((dadoEnFinal+1)/2) + nivel*2;
+    const enMax = desD * dadoEnFinal + nivel * 2;
+
+    // Dado de Vida
+    let vidaStr = '—', vidaFormula = '—';
+    if (cfg.temVida) {
+        const dadoVidBase = cfg.dadoVid;
+        const dadoVidFinal = tipoDado(dadoVidBase, modTotal);
+        const vMin = vigD * 1 + nivel * 2;
+        const vMed = vigD * ((dadoVidFinal+1)/2) + nivel * 2;
+        const vMax = vigD * dadoVidFinal + nivel * 2;
+        vidaStr = inter === 'sim'
+            ? `${Math.floor(vMin/2)}–${Math.floor(vMax/2)} (÷2 por interrupção)`
+            : `${vMin}–${vMax}`;
+        vidaFormula = `${vigD}D${dadoVidFinal} + (${nivel}×2) = ${vigD}D${dadoVidFinal}+${nivel*2}`;
+        if (inter === 'sim') vidaFormula += ' ÷ 2';
+    }
+
+    const enMinF = inter === 'sim' ? Math.floor(enMin/2) : enMin;
+    const enMaxF = inter === 'sim' ? Math.floor(enMax/2) : enMax;
+    const energiaStr = `${enMinF}–${enMaxF}`;
+    const enFormula = `${desD}D${dadoEnFinal} + (${nivel}×2) = ${desD}D${dadoEnFinal}+${nivel*2}${inter==='sim'?' ÷ 2':''}`;
+
+    document.getElementById('desc-vida-result').textContent   = cfg.temVida ? vidaStr : 'Não recupera Vida';
+    document.getElementById('desc-vida-formula').textContent  = cfg.temVida ? vidaFormula : 'Descanso Curto não recupera Vida';
+    document.getElementById('desc-energia-result').textContent = energiaStr;
+    document.getElementById('desc-energia-formula').textContent = enFormula;
+
+    const notas = [];
+    if (tipo === 'longo') notas.push('⚠ Descanso Longo só pode ser feito <strong>uma vez por dia</strong>.');
+    if (qual === 'insalubre') notas.push('Ambiente insalubre reduz os dados em 1 tipo.');
+    if (qual === 'confortavel') notas.push('Ambiente confortável aumenta os dados em 1 tipo. A Base da Fundação é sempre Confortável.');
+    if (refei === 'sim') notas.push('Refeição consumida: +1 tipo de dado na recuperação.');
+    if (inter === 'sim') notas.push('Interrupção: resultado final dividido por 2 (arredonda para baixo).');
+    notas.push(`Fórmula geral: <strong>ATRIBUTO × dados + (Nível × 2)</strong>`);
+
+    document.getElementById('desc-notas').innerHTML = notas.map(n => '• '+n).join('<br>');
+}
+
+// ============================================================
+// SISTEMA DE ABAS
+// ============================================================
+function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t,i) => {
+        const ids = ['agente','dt','novo','patente','descanso'];
+        t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active');
+
+    // Inicializa aba ao abrir se necessário
+    if (id === 'dt') calcDT();
+    if (id === 'patente') calcPatente();
+    if (id === 'descanso') calcDescanso();
+    if (id === 'novo') calcNovoAgente();
+}
+
+// Init
+aplicarLimitesPorClasse(document.getElementById('classe').value === 'Civil');
+calc();
+calcDT();
+calcPatente();
+calcDescanso();
+calcNovoAgente();
+</script>
+</body>
+</html>
