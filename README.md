@@ -30,10 +30,8 @@ Este é um projeto **Single Page Application (SPA)** construído de forma nativa
 
 Como o projeto foi desenvolvido em arquivo único, você não precisa instalar nada:
 
-1. Baixe o arquivo `Contratados_calculadora_v5_slider.html`.
+1. Baixe o arquivo `index.html`.
 2. Dê um duplo clique no arquivo para abri-lo em qualquer navegador moderno (Chrome, Edge, Firefox, Safari).
-
-*Opção online:* Acesse a ferramenta rodando diretamente pelo GitHub Pages em: `https://<seu-usuario>.github.io/<nome-do-repositorio>/`
 
 ---
 
