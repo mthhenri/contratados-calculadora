@@ -85,7 +85,8 @@ function calcularDanoCorpo(forca, vigor, isCivil) {
 }
 
 function calcularInventario(forca, isCivil) {
-    if (forca <= 0) return '0';
+    if (forca < 0) return '0';
+    if (!isCivil && forca === 0) return '3';
     return isCivil ? (forca * 3).toString() : (forca * 5).toString();
 }
 
@@ -157,7 +158,7 @@ function calc() {
 
     document.getElementById('vida').textContent = Math.floor(vida);
     document.getElementById('energia').textContent = Math.floor(energia);
-    document.getElementById('defesa').textContent = isCivil ? 'N/A' : (5 + n);
+    document.getElementById('defesa').textContent = isCivil ? 'N/A' : (10 + n);
     document.getElementById('prof').textContent = isCivil ? 'N/A' : ('+' + n);
     document.getElementById('deslocamento').textContent = calcularDeslocamento(d, isCivil);
     document.getElementById('corpo').textContent = calcularDanoCorpo(f, v, isCivil);
