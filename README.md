@@ -1,49 +1,47 @@
-# ⚔️ Contratados — Terminal de Agente (v5)
+# Contratados — Terminal de Agente
 
-Uma ferramenta web automatizada desenvolvida para o sistema de RPG **Contratados** (v5), ambientado no universo de ficção científica e horror da **Fundação SCP (Classe E)**. O terminal centraliza e simplifica os cálculos matemáticos complexos de progressão, balanceamento de encontros e gerenciamento de recursos para Jogadores e Mestres.
+Calculadora web para o sistema de RPG **Contratados v4**, ambientado no universo da **Fundação SCP**. Automatiza os cálculos de progressão, recursos e combate para que você foque no roleplay.
 
----
-
-## 🚀 Funcionalidades Principais
-
-O terminal é dividido em 5 módulos estratégicos acessíveis por abas:
-
-* **⚔️ Agente / Civil:** Simulador completo de progressão de nível (0 a 20 para Agentes, 0 a 5 para Civis). Calcula automaticamente Vida, Energia, Defesa, Proficiência, Deslocamento, Capacidade de Carga, Dano Corporal/Furtivo e exibe os benefícios acumulados e futuros de cada classe.
-* **🎯 Calculadora de DT:** Gera instantaneamente as Dificuldades de Teste (DT) de Habilidade e de Atributo baseadas no nível e atributos do causador, acompanhada de uma matriz de referência rápida.
-* **🔄 Novo Agente:** Utilitário para o Mestre. Calcula o Nível, Prestígio e Patente iniciais de um personagem substituto com base na média do esquadrão atual, aplicando as deduções corretas por regras de Morte, Aposentadoria ou transições de Experimentos.
-* **🏅 Patentes:** Painel de consulta do plano de carreira da Fundação SCP. Exibe salários por missão, limites de modificadores por item e multiplicadores financeiros de acordo com o Prestígio.
-* **💤 Descanso:** Automatiza a recuperação de Vida e Energia pós-missão ou *short rests*, considerando a qualidade do ambiente (Insalubre, Adequado, Confortável), bônus de refeições e penalidades por interrupção.
+Não precisa instalar nada — basta abrir `src/index.html` no navegador.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Abas disponíveis
 
-Este é um projeto **Single Page Application (SPA)** construído de forma nativa e leve, sem dependências externas:
-
-* **HTML5:** Estruturação semântica da interface.
-* **CSS3 (Modern Vanilla):** Visual futurista e sombrio ("Glassmorphism") utilizando variáveis CSS, animações de gradiente dinâmicas e total responsividade para dispositivos móveis.
-* **JavaScript (ES6+):** Lógica matemática do sistema de RPG, manipulação de DOM e reatividade em tempo real por meio de seletores e sliders de input.
-
----
-
-## 🌐 Como Executar o Projeto
-
-Como o projeto foi desenvolvido em arquivo único, você não precisa instalar nada:
-
-1. Baixe o arquivo `index.html`.
-2. Dê um duplo clique no arquivo para abri-lo em qualquer navegador moderno (Chrome, Edge, Firefox, Safari).
+| Aba | O que faz |
+|-----|-----------|
+| **Agente / Civil** | Calcula Vida, Energia, Defesa, Deslocamento, Dano e benefícios de nível para qualquer classe (níveis 0–20 para Agentes, 0–5 para Civis) |
+| **Calculadora de DT** | Gera a Dificuldade de Teste de Habilidade e de Atributo com base no nível e atributo do personagem |
+| **Novo Agente** | Calcula nível, prestígio e dinheiro iniciais de um personagem substituto com base na média do esquadrão |
+| **Patentes** | Consulta a tabela de patentes: salário por missão, limite de modificadores e multiplicador financeiro |
+| **Descanso** | Calcula a recuperação de Vida e Energia considerando tipo de descanso, qualidade do ambiente, refeição e interrupção |
+| **Compras** | Monta o equipamento da missão: catálogo de itens, modificações, amplificadores e controle de orçamento/inventário |
 
 ---
 
-## 📊 Regras Adaptadas no Código
+## Como usar
 
-Abaixo estão as fórmulas base implementadas nativamente no motor JavaScript do terminal:
-
-* **DT de Habilidade:** $5 + N\acute{\iota}vel + (Atributo \times 3)$
-* **DT de Atributo:** $10 + N\acute{\iota}vel + (Atributo \times 2)$
-* **Limite de Energia (Agentes):** $(Vigor + Destreza) \times 2$
-* **Fórmula Base de Recuperação:** $Atributo \times Dado\_Modificado + (N\acute{\iota}vel \times 2)$
-* **Bônus Monetário Inicial:** $Prest\acute{\iota}gio \times (500 \times Multiplicador\_Patente)$
+1. Clone o repositório ou baixe os arquivos.
+2. Abra `src/index.html` diretamente no navegador (Chrome, Edge, Firefox).
+3. Nenhuma instalação, servidor ou build é necessário.
 
 ---
-Desenvolvido para automatizar a burocracia e focar no Roleplay. *Segurar. Conter. Proteger.* 🫙
+
+## Estrutura do projeto
+
+```
+src/
+  index.html   — interface e estrutura das abas
+  script.js    — toda a lógica de cálculo
+  styles.css   — tema escuro (glassmorphism)
+docs/
+  sistema-v4.0.0.md — fonte oficial das regras do sistema
+```
+
+Todas as regras de domínio estão em `docs/sistema-v4.0.0.md`. Em caso de conflito entre o código e o documento, o documento prevalece.
+
+---
+
+*Segurar. Conter. Proteger.*
+***SCP - Você é nossa prioridade***
+***2026***
