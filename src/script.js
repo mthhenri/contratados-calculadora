@@ -135,6 +135,7 @@ function calc() {
     const d = +document.getElementById('des').value;
     const f = +document.getElementById('for').value;
     const von = +document.getElementById('von').value;
+    const sen = +document.getElementById('sen').value;
 
     // Adapta UI
     document.getElementById('label-nivel').textContent = isCivil ? 'Treinamentos (0–5)' : 'Nível';
@@ -165,6 +166,7 @@ function calc() {
     document.getElementById('inventario').textContent = calcularInventario(f, isCivil);
     document.getElementById('traumas').textContent = isCivil ? 'N/A' : (von + 1);
     document.getElementById('sequelas').textContent = isCivil ? 'N/A' : ('VON (' + von + ')');
+    document.getElementById('percepcao').textContent = sen <= 0 ? '3 m' : (5 + sen * 5) + ' m';
 
     // Limite de Energia
     const limEn = isCivil ? d : (v + d) * 2;

@@ -741,6 +741,7 @@ A defesa base é complementada com as Habilidades e Fragmentos, e com isso, voc�
 ### **⬥ Área de Percepção** {#⬥-área-de-percepção}
 
 Define a área na qual você realmente nota as coisas que acontecem, naturalmente é o espaço no qual, se houver alguém furtivo, você tem chance de notá-lo. Essa área é igual à 5 somado com seu seu atributo de **Sentidos** multiplicado por 5\. Ex: 3 em **Sentidos** tem percepção de 20 metros.
+Caso seu agente **não possua Sentidos** (0 ou menos no atributo) sua área de percepção se torna apenas 3 metros.
 
 ### **⬥ Deslocamento** {#⬥-deslocamento}
 
