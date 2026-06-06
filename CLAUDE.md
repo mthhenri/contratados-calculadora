@@ -15,7 +15,7 @@ No build step or server needed. Open `src/index.html` directly in any modern bro
 This is a vanilla JS SPA with three files under `src/`:
 
 - **[src/index.html](src/index.html)** — All markup and tab structure. Each tab is a `<div id="tab-*" class="tab-panel">` toggled via `switchTab()`.
-- **[src/script.js](src/script.js)** — All game logic. Each tab has its own `calc*()` function (`calc()`, `calcDT()`, `calcNovoAgente()`, `calcBonus()`, `calcPatente()`, `calcDescanso()`). All inputs call these directly via `oninput`/`onchange` attributes in the HTML.
+- **[src/script.js](src/script.js)** — All game logic. Each tab has its own `calc*()` function (`calc()`, `calcDT()`, `calcNovoAgente()`, `calcBonus()`, `calcPatente()`, `calcDescanso()`, `calcCompras()`). All inputs call these directly via `oninput`/`onchange` attributes in the HTML.
 - **[src/styles.css](src/styles.css)** — Dark glassmorphism theme using CSS custom properties (`--txt`, `--blue`, `--green`, `--yellow`, etc.).
 
 ## Source of Truth
@@ -73,6 +73,32 @@ Calculates HP/Energy recovery for a rest.
 - Modifiers: environment quality (insalubre/adequado/confortável), refeição (+1 die type), interruption (÷2)
 - Formula: `ATRIBUTO × Ddado + (Nível × 2)`, die type adjusted by combined modifiers
 - Die type ladder: D3 → D4 → D6 → D8 → D10 → D12 → D20
+
+### Tab: Compras (`calcCompras()`)
+Assists the player in purchasing equipment and amplifiers for a mission.
+
+Inputs:
+- **Dinheiro Disponível:** current money
+- **Prestígio Atual:** determines rank and modification limits
+- **Inventário Máximo:** max inventory slots (from Força calc)
+- **Vontade:** determines amplifier stack limit (Vontade × 3)
+
+Limits enforced by Patente:
+- **maxMods per item:** total stacks across all modifications on a single item
+- **maxStack per mod:** max stacks of any single modification (per Patente level)
+- **Blocked modifications:** conflict rules prevent simultaneous incompatible mods
+
+Item categories: Corpo a Corpo, Explosivos, Armas de Fogo, Munições, Proteções, Exóticos, Armazenamento, Itens Operacionais, Itens Medicinais, Amplificadores.
+
+Amplificadores:
+- First stack costs $3.000, additional stacks $1.000 each
+- Total stacks capped at Vontade × 3
+- Stacks ≥ 2 on the same amp apply -2 Vontade penalty per extra stack
+
+Modification costs: $750 (standard), $250 (Explosivos/Munições), $300 (Armazenamento).
+Each modification stack adds +0.2 inventory weight.
+
+Summary tracks: total spent, remaining money (red if negative), inventory used/max (red if exceeded), amp stacks used/limit (red if exceeded).
 
 ## Domain Context (SCP Foundation RPG — "Contratados" v4)
 

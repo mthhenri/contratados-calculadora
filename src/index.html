@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h1>Contratados — Terminal de Agente</h1>
-        <p class="subtitle">Fundação SCP · Classe E · Sistema de Progressão v5</p>
+        <p class="subtitle">Fundação SCP · Classe E · Sistema de Progressão</p>
 
         <div class="tabs" id="tabs-desktop">
             <div class="tab active" data-tab="agente" onclick="switchTab('agente')">⚔ Agente / Civil</div>
@@ -20,6 +20,7 @@
             <div class="tab" data-tab="novo" onclick="switchTab('novo')">🔄 Novo Agente</div>
             <div class="tab" data-tab="patente" onclick="switchTab('patente')">🏅 Patentes</div>
             <div class="tab" data-tab="descanso" onclick="switchTab('descanso')">💤 Descanso</div>
+            <div class="tab" data-tab="compras" onclick="switchTab('compras')">🛒 Compras</div>
         </div>
 
         <!-- ===================== ABA AGENTE ===================== -->
@@ -30,6 +31,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Classe &amp; Nível</span>
+                    <button class="clear-tab-btn" onclick="clearTab('agente')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
                     <div>
@@ -212,6 +214,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Calculadora de DT</span>
+                    <button class="clear-tab-btn" onclick="clearTab('dt')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <p style="color:var(--txt2);font-size:.9rem;margin:0 0 18px">Calcula a DT que seus aliados e inimigos precisam superar para resistir às suas ações.</p>
                 <div class="grid grid-2col">
@@ -255,6 +258,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Configuração</span>
+                    <button class="clear-tab-btn" onclick="clearTab('novo')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
                     <div>
@@ -328,6 +332,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Consulta por Prestígio</span>
+                    <button class="clear-tab-btn" onclick="clearTab('patente')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div>
                     <label>Prestígio atual</label>
@@ -357,6 +362,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Configuração do Descanso</span>
+                    <button class="clear-tab-btn" onclick="clearTab('descanso')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
                     <div>
@@ -440,6 +446,109 @@
 
         </div><!-- /tab-descanso -->
 
+        <!-- ===================== ABA COMPRAS ===================== -->
+        <div id="tab-compras" class="tab-panel">
+
+            <!-- Passo 1: Configuração -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Configuração do Agente</span>
+                    <button class="clear-tab-btn" onclick="clearTab('compras')" title="Limpar carrinho e restaurar padrões">🗑 Limpar</button>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Dinheiro Disponível ($)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-dinheiro',-100)">−</button>
+                            <input id="cmp-dinheiro" type="number" min="0" step="100" value="1000" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-dinheiro',100)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Prestígio Atual</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-prestigio',-1)">−</button>
+                            <input id="cmp-prestigio" type="number" min="0" value="0" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-prestigio',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Inventário Máximo (slots)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-inventario',-1)">−</button>
+                            <input id="cmp-inventario" type="number" min="0" step="0.5" value="5" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-inventario',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Vontade (limite de Amplificadores)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-vontade',-1)">−</button>
+                            <input id="cmp-vontade" type="number" min="0" max="12" value="1" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-vontade',1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo de limites e gastos -->
+            <div class="card" id="cmp-summary-card">
+                <div class="cmp-summary-grid">
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Patente</div>
+                        <div class="cmp-summary-val" id="cmp-s-patente">—</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Dinheiro Restante</div>
+                        <div class="cmp-summary-val cmp-money" id="cmp-s-dinheiro">$0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Gasto Total</div>
+                        <div class="cmp-summary-val" id="cmp-s-gasto" style="color:var(--accent)">$0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Inventário Usado</div>
+                        <div class="cmp-summary-val" id="cmp-s-inv">0 / 0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Amplificadores</div>
+                        <div class="cmp-summary-val" id="cmp-s-amps">0 / 0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Mods por Item</div>
+                        <div class="cmp-summary-val" id="cmp-s-modlimit">—</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Penalidade Amps</div>
+                        <div class="cmp-summary-val" id="cmp-s-vontade-pen">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 2: Catálogo -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Catálogo de Equipamentos</span>
+                </div>
+                <div class="cmp-cat-tabs" id="cmp-cat-tabs"></div>
+                <div id="cmp-catalog"></div>
+            </div>
+
+            <!-- Passo 3: Carrinho -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Carrinho</span>
+                    <button class="cmp-export-btn" onclick="exportarCarrinho()">📥 Exportar .txt</button>
+                </div>
+                <div id="cmp-cart-empty" style="color:var(--txt2);text-align:center;padding:20px 0">Nenhum item adicionado ainda.</div>
+                <div id="cmp-cart"></div>
+            </div>
+
+        </div><!-- /tab-compras -->
+
     </div><!-- /container -->
 
     <!-- Bottom nav — visível apenas no mobile -->
@@ -462,7 +571,11 @@
         </button>
         <button class="bnav-item" data-tab="descanso" onclick="switchTab('descanso')">
             <span class="bnav-icon">💤</span>
-            <span class="bnav-label">Descanso</span>
+            <span class="bnav-label">Desc.</span>
+        </button>
+        <button class="bnav-item" data-tab="compras" onclick="switchTab('compras')">
+            <span class="bnav-icon">🛒</span>
+            <span class="bnav-label">Compras</span>
         </button>
     </nav>
 
