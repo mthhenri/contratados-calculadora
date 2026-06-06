@@ -4,30 +4,72 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Running the Project
 
-No build step or server needed. Open `index.html` directly in any modern browser. All logic is self-contained — no npm, no dependencies.
+No build step or server needed. Open `src/index.html` directly in any modern browser. All logic is self-contained — no npm, no dependencies.
 
 ## Architecture
 
-This is a vanilla JS SPA with three files:
+This is a vanilla JS SPA with three files under `src/`:
 
-- **[index.html](index.html)** — All markup and tab structure. Each tab is a `<div id="tab-*" class="tab-panel">` toggled via `switchTab()`.
-- **[script.js](script.js)** — All game logic. Each tab has its own `calc*()` function (`calc()`, `calcDT()`, `calcNovoAgente()`, `calcBonus()`, `calcPatente()`, `calcDescanso()`). All inputs call these directly via `oninput`/`onchange` attributes in the HTML.
-- **[styles.css](styles.css)** — Dark glassmorphism theme using CSS custom properties (`--txt`, `--blue`, `--green`, `--yellow`, etc.).
+- **[src/index.html](src/index.html)** — All markup and tab structure. Each tab is a `<div id="tab-*" class="tab-panel">` toggled via `switchTab()`.
+- **[src/script.js](src/script.js)** — All game logic. Each tab has its own `calc*()` function (`calc()`, `calcDT()`, `calcNovoAgente()`, `calcBonus()`, `calcPatente()`, `calcDescanso()`). All inputs call these directly via `oninput`/`onchange` attributes in the HTML.
+- **[src/styles.css](src/styles.css)** — Dark glassmorphism theme using CSS custom properties (`--txt`, `--blue`, `--green`, `--yellow`, etc.).
 
 ## Source of Truth
 
-All game rules are in [docs/Contratados - Sistema v4.0.0.md](docs/Contratados%20-%20Sistema%20v4.0.0.md). Consult it before changing any formula, progression table, or domain rule. If there is any conflict between the code and the document, the document wins.
+All game rules are in [docs/sistema-v4.0.0.md](docs/sistema-v4.0.0.md). Consult it before changing any formula, progression table, or domain rule. If there is any conflict between the code and the document, the document wins.
 
-## Domain Context (SCP Foundation RPG — "Contratados" v5)
+## Features Covered
 
-The app implements tabletop RPG rules. Key formulas:
+### Tab: Agente / Civil (`calc()`)
+Calculates a character's stats given class, level, and four attributes (Vigor, Destreza, Força, Vontade).
 
-- **HP (Vida):** base per class + Vigor scaling per level
-- **Energy (Energia):** base per class + Destreza scaling per level  
+Outputs:
+- **Vida (HP):** base + Vigor scaling per level, formula differs by class
+- **Energia:** base + Destreza scaling per level, formula differs by class
+- **Limite de Energia:** `(Vigor + Destreza) × 2` (N/A for Civis)
+- **Defesa Base:** `10 + Nível` (N/A for Civis)
+- **Proficiência:** `+Nível` (N/A for Civis)
+- **Deslocamento:** tiered by Destreza, different ranges for Agente vs Civil
+- **Dano Corpo a Corpo:** tiered by `Força + Vigor` (Agente) or `Força − 1` (Civil)
+- **Inventário:** `Força × 5` slots (Agente), `Força × 3` (Civil); Força=0 → 3 slots; Força<0 → 0 slots
+- **Traumas / Sequelas:** `Vontade + 1` capacity (N/A for Civis)
+- **Dano Furtivo:** `(1 + count)D6+(1 + count)`, gained at levels 3/6/9/12/15/18
+- **Limite Habilidades/Turno:** starts at 4, +1 at even levels, +2 at levels 10 and 20
+- **Benefícios do nível atual** and **próximo nível**
+- **Progressão acumulada** (atributos, habilidades gerais, de classe, arquétipo, outra classe, fortificações)
+
+Supports all classes: Combatente, Especialista, Suporte, Experimento Bestial, Experimento Artificial, Experimento Híbrido, Civil. Civis cap at level 5 and attributes at 3; Agentes cap at level 20 and attributes at 8.
+
+### Tab: Calculadora de DT (`calcDT()`)
+Calculates difficulty thresholds for skill and attribute checks.
+
 - **DT de Habilidade:** `5 + Nível + (Atributo × 3)`
 - **DT de Atributo:** `10 + Nível + (Atributo × 2)`
-- **Energy Cap:** `(Vigor + Destreza) × 2`
-- **Trauma capacity:** `Vontade + 1`
-- **Proficiency:** scales with level, same for all classes
+- Reference table showing DT Habilidade / DT Atributo for attributes 1–6 at levels 0/5/10/15/20
 
-Classes (Combatente, Especialista, Suporte) and Experiment subclasses (Bestial, Artificial, Híbrido) have distinct stat progressions. Civis cap at level 5. The `script.js` data tables are the authoritative source for per-level benefits.
+### Tab: Novo Agente (`calcNovoAgente()` + `calcBonus()`)
+Calculates starting stats for a new character based on party averages and the reason for entry.
+
+- **Nível inicial:** `⌈média⌉ − 1`, minimum 0
+- **Prestígio inicial:** `média − ⌊média ÷ divisor⌋`, capped to minimum of the party's current rank (or one rank below for Experimento/Exterminado entries)
+- **Bônus monetário:** `Prestígio × (500 × multiplicador_de_patente)`
+- Motivos cobertos: Morte/Zero, Aposentadoria, Experimento→Regular, Experimento→Experimento, Contido/Exterminado→Regular, Contido/Exterminado→Experimento
+- Condition **Amaldiçoado pelo Passado** flagged for Extinto entries
+
+### Tab: Patentes (`calcPatente()`)
+Looks up rank (Patente) for a given Prestígio value.
+
+- Shows current rank: name, Prestígio range, mission salary, mod limit, monetary multiplier
+- Full reference table for all 8 ranks (Agente → Líder Operacional)
+
+### Tab: Descanso (`calcDescanso()`)
+Calculates HP/Energy recovery for a rest.
+
+- Three rest types: Curto (no HP), Médio, Longo
+- Modifiers: environment quality (insalubre/adequado/confortável), refeição (+1 die type), interruption (÷2)
+- Formula: `ATRIBUTO × Ddado + (Nível × 2)`, die type adjusted by combined modifiers
+- Die type ladder: D3 → D4 → D6 → D8 → D10 → D12 → D20
+
+## Domain Context (SCP Foundation RPG — "Contratados" v4)
+
+Classes (Combatente, Especialista, Suporte) and Experiment subclasses (Bestial, Artificial, Híbrido) have distinct stat progressions. Civis cap at level 5. The `src/script.js` data tables are the authoritative source for per-level benefits.
