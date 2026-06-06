@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Antes de Commitar / Fazer Push
+
+Antes de realizar qualquer `git commit` ou `git push`, verifique se este arquivo (`CLAUDE.md`) precisa ser atualizado para refletir as mudanças feitas. Atualize as seções relevantes (Features Covered, Architecture, etc.) se qualquer nova funcionalidade, regra de domínio, aba, fórmula ou estrutura de arquivo tiver sido adicionada ou modificada.
+
 ## Running the Project
 
 No build step or server needed. Open `src/index.html` directly in any modern browser. All logic is self-contained — no npm, no dependencies.
@@ -33,6 +37,7 @@ Outputs:
 - **Dano Corpo a Corpo:** tiered by `Força + Vigor` (Agente) or `Força − 1` (Civil)
 - **Inventário:** `Força × 5` slots (Agente), `Força × 3` (Civil); Força=0 → 3 slots; Força<0 → 0 slots
 - **Traumas / Sequelas:** `Vontade + 1` capacity (N/A for Civis)
+- **Área de Percepção:** `Sentidos ≤ 0 → 3 m`; senão `5 + (Sentidos × 5) m`
 - **Dano Furtivo:** `(1 + count)D6+(1 + count)`, gained at levels 3/6/9/12/15/18
 - **Limite Habilidades/Turno:** starts at 4, +1 at even levels, +2 at levels 10 and 20
 - **Benefícios do nível atual** and **próximo nível**
