@@ -48,9 +48,8 @@ Supports all classes: Combatente, Especialista, Suporte, Experimento Bestial, Ex
 ### Tab: Calculadora de DT (`calcDT()`)
 Calculates difficulty thresholds for skill and attribute checks.
 
-- **DT de Habilidade:** `5 + Nível + (Atributo × 3)`
 - **DT de Atributo:** `10 + Nível + (Atributo × 2)`
-- Reference table showing DT Habilidade / DT Atributo for attributes 1–6 at levels 0/5/10/15/20
+- Reference table showing DT Atributo for attributes 1–6 at levels 0/5/10/15/20
 
 ### Tab: Novo Agente (`calcNovoAgente()` + `calcBonus()`)
 Calculates starting stats for a new character based on party averages and the reason for entry.

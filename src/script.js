@@ -289,15 +289,11 @@ function calc() {
 // ABA DT
 // ============================================================
 function calcDT() {
-    const nHab = +document.getElementById('dt-hab-nivel').value;
-    const aHab = +document.getElementById('dt-hab-attr').value;
     const nAttr = +document.getElementById('dt-attr-nivel').value;
     const aAttr = +document.getElementById('dt-attr-attr').value;
 
-    const dtHab = 5 + nHab + (aHab * 3);
     const dtAttr = 10 + nAttr + (aAttr * 2);
 
-    document.getElementById('dt-hab-result').textContent = dtHab;
     document.getElementById('dt-attr-result').textContent = dtAttr;
 
     // Tabela de referência — Atributo 1..6, Nível 0/5/10/15/20
@@ -311,18 +307,12 @@ function calcDT() {
     atributos.forEach(at => {
         tbl += `<tr><td style="padding:8px;color:var(--yellow);font-weight:700">ATR ${at}</td>`;
         niveis.forEach(nl => {
-            const h = 5 + nl + (at * 3);
             const a = 10 + nl + (at * 2);
-            tbl += `<td style="padding:8px;text-align:center;border-left:1px solid var(--border)">
-        <span style="color:var(--blue)">${h}</span>
-        <span style="color:var(--txt2);font-size:.75rem"> / </span>
-        <span style="color:var(--green)">${a}</span>
-    </td>`;
+            tbl += `<td style="padding:8px;text-align:center;border-left:1px solid var(--border);color:var(--green)">${a}</td>`;
         });
         tbl += '</tr>';
     });
     tbl += '</tbody></table>';
-    tbl += '<p style="color:var(--txt2);font-size:.75rem;margin:8px 0 0"><span style="color:var(--blue)">Azul</span> = DT Habilidade · <span style="color:var(--green)">Verde</span> = DT Atributo</p>';
     document.getElementById('dt-tabela').innerHTML = tbl;
 }
 
@@ -556,7 +546,9 @@ function switchTab(id) {
 function stepInput(id, delta) {
     const el = document.getElementById(id);
     const val = (parseInt(el.value) || 0) + delta;
-    el.value = Math.min(parseInt(el.max), Math.max(parseInt(el.min), val));
+    const max = el.max !== '' ? parseInt(el.max) : Infinity;
+    const min = el.min !== '' ? parseInt(el.min) : -Infinity;
+    el.value = Math.min(max, Math.max(min, val));
     el.dispatchEvent(new Event('input'));
 }
 

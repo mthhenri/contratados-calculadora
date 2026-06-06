@@ -208,62 +208,55 @@
         <!-- ===================== ABA DT ===================== -->
         <div id="tab-dt" class="tab-panel">
 
-            <div class="card">
-                <h2>Calculadora de DT</h2>
-                <p style="color:var(--txt2);font-size:.9rem;margin-top:-10px;margin-bottom:18px">Calcula a DT que seus
-                    aliados e inimigos precisam superar para resistir às suas ações.</p>
-
-                <div class="grid-2">
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Calculadora de DT</span>
+                </div>
+                <p style="color:var(--txt2);font-size:.9rem;margin:0 0 18px">Calcula a DT que seus aliados e inimigos precisam superar para resistir às suas ações.</p>
+                <div class="grid grid-2col">
                     <div>
-                        <div class="card card-blue" style="margin-bottom:0">
-                            <h3 style="color:var(--blue);margin-top:0">DT de Habilidade</h3>
-                            <p style="color:var(--txt2);font-size:.82rem;margin:0 0 14px">Usada quando a ação vem de uma
-                                <strong>habilidade</strong> (ex.: aplicar Sangramento, usar ability que pode ser
-                                evitada).</p>
-                            <div><label>Nível do personagem</label><input id="dt-hab-nivel" type="number" min="0"
-                                    max="20" value="0" oninput="calcDT()"></div>
-                            <div style="margin-top:12px"><label>Atributo usado</label><input id="dt-hab-attr"
-                                    type="number" min="0" max="12" value="1" oninput="calcDT()"></div>
-                            <div class="dt-result" id="dt-hab-result">—</div>
-                            <div class="dt-formula">Fórmula: 5 + Nível + (Atributo × 3)</div>
+                        <label>Nível do personagem</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-nivel',-1)">−</button>
+                            <input id="dt-attr-nivel" type="number" min="0" max="20" value="0" oninput="calcDT()">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-nivel',1)">+</button>
                         </div>
                     </div>
                     <div>
-                        <div class="card card-green" style="margin-bottom:0">
-                            <h3 style="color:var(--green);margin-top:0">DT de Atributo</h3>
-                            <p style="color:var(--txt2);font-size:.82rem;margin:0 0 14px">Usada quando a DT vem de um
-                                <strong>atributo direto</strong> do causador (ex.: Sangramento causado pela Força).</p>
-                            <div><label>Nível do personagem</label><input id="dt-attr-nivel" type="number" min="0"
-                                    max="20" value="0" oninput="calcDT()"></div>
-                            <div style="margin-top:12px"><label>Atributo usado</label><input id="dt-attr-attr"
-                                    type="number" min="0" max="12" value="1" oninput="calcDT()"></div>
-                            <div class="dt-result" id="dt-attr-result"
-                                style="color:var(--green);background:rgba(82,255,170,.06);border-color:rgba(82,255,170,.2)">
-                                —</div>
-                            <div class="dt-formula">Fórmula: 10 + Nível + (Atributo × 2)</div>
+                        <label>Atributo usado</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-attr',-1)">−</button>
+                            <input id="dt-attr-attr" type="number" min="0" max="12" value="1" oninput="calcDT()">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-attr',1)">+</button>
                         </div>
                     </div>
                 </div>
-
-                <div style="margin-top:20px">
-                    <div class="card" style="margin-bottom:0">
-                        <h3 style="color:var(--yellow);margin-top:0">Tabela de Referência Rápida (DT Ambas)</h3>
-                        <div id="dt-tabela" style="overflow-x:auto;margin-top:10px"></div>
-                    </div>
-                </div>
-
+                <div class="dt-result" id="dt-attr-result"
+                    style="color:var(--green);background:rgba(82,255,170,.06);border-color:rgba(82,255,170,.2);margin-top:14px">
+                    —</div>
+                <div class="dt-formula">Fórmula: 10 + Nível + (Atributo × 2)</div>
             </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Tabela de Referência Rápida</span>
+                </div>
+                <div id="dt-tabela" style="overflow-x:auto;margin-top:10px"></div>
+            </div>
+
         </div><!-- /tab-dt -->
 
         <!-- ===================== ABA NOVO AGENTE ===================== -->
         <div id="tab-novo" class="tab-panel">
 
-            <div class="card">
-                <h2>Calculadora — Novo Agente</h2>
-                <p style="color:var(--txt2);font-size:.9rem;margin-top:-10px;margin-bottom:18px">Calcula o Nível e
-                    Prestígio iniciais de um novo personagem entrando num esquadrão em andamento.</p>
-
-                <div class="grid">
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Configuração</span>
+                </div>
+                <div class="grid grid-2col">
                     <div>
                         <label>Motivo de entrada</label>
                         <select id="novo-motivo" onchange="calcNovoAgente()">
@@ -276,36 +269,53 @@
                         </select>
                     </div>
                     <div>
-                        <label>Média de Nível do grupo <span style="color:var(--txt2);font-weight:400">(excl.
-                                saindo)</span></label>
-                        <input id="novo-media-nivel" type="number" min="0" max="20" step="0.1" value="5"
-                            oninput="calcNovoAgente()">
+                        <label>Média de Nível do grupo <span style="color:var(--txt2);font-weight:400">(excl. saindo)</span></label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-nivel',-1)">−</button>
+                            <input id="novo-media-nivel" type="number" min="0" max="20" step="0.1" value="5" oninput="calcNovoAgente()">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-nivel',1)">+</button>
+                        </div>
                     </div>
                     <div>
-                        <label>Média de Prestígio do grupo <span style="color:var(--txt2);font-weight:400">(excl.
-                                saindo)</span></label>
-                        <input id="novo-media-prest" type="number" min="0" value="10" oninput="calcNovoAgente()">
+                        <label>Média de Prestígio do grupo <span style="color:var(--txt2);font-weight:400">(excl. saindo)</span></label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-prest',-1)">−</button>
+                            <input id="novo-media-prest" type="number" min="0" value="10" oninput="calcNovoAgente()">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-prest',1)">+</button>
+                        </div>
                     </div>
                 </div>
-                <hr>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Resultado</span>
+                </div>
                 <div class="novo-agente-result" id="novo-resultado">—</div>
             </div>
 
-            <div class="card">
-                <h2>Bônus Monetário Inicial</h2>
-                <p style="color:var(--txt2);font-size:.9rem;margin-top:-10px;margin-bottom:18px">Calculado com base no
-                    Prestígio Inicial e na Patente correspondente.</p>
-                <div class="grid-2">
-                    <div><label>Prestígio Inicial (calculado acima ou manual)</label><input id="bonus-prest"
-                            type="number" min="0" value="0" oninput="calcBonus()"></div>
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Bônus Monetário Inicial</span>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Prestígio Inicial (calculado acima ou manual)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('bonus-prest',-1)">−</button>
+                            <input id="bonus-prest" type="number" min="0" value="0" oninput="calcBonus()">
+                            <button type="button" class="step-btn" onclick="stepInput('bonus-prest',1)">+</button>
+                        </div>
+                    </div>
                     <div style="display:flex;align-items:flex-end">
                         <div class="dt-result" id="bonus-result"
                             style="color:var(--yellow);background:rgba(255,209,82,.05);border-color:rgba(255,209,82,.2);width:100%">
                             $0</div>
                     </div>
                 </div>
-                <div class="dt-formula" style="text-align:left;margin-top:8px">Fórmula: Prestígio × (500 × Multiplicador
-                    de Patente) + Dinheiro Inicial padrão</div>
+                <div class="dt-formula" style="text-align:left;margin-top:8px">Fórmula: Prestígio × (500 × Multiplicador de Patente) + Dinheiro Inicial padrão</div>
                 <div id="bonus-patente-info" style="margin-top:10px;color:var(--txt2);font-size:.85rem"></div>
             </div>
 
@@ -314,16 +324,27 @@
         <!-- ===================== ABA PATENTE ===================== -->
         <div id="tab-patente" class="tab-panel">
 
-            <div class="card">
-                <h2>Tabela de Patentes</h2>
-                <div><label>Prestígio atual</label><input id="prest-input" type="number" min="0" value="0"
-                        oninput="calcPatente()"></div>
-                <hr>
-                <div id="patente-resultado"></div>
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Consulta por Prestígio</span>
+                </div>
+                <div>
+                    <label>Prestígio atual</label>
+                    <div class="stepper">
+                        <button type="button" class="step-btn" onclick="stepInput('prest-input',-1)">−</button>
+                        <input id="prest-input" type="number" min="0" value="0" oninput="calcPatente()">
+                        <button type="button" class="step-btn" onclick="stepInput('prest-input',1)">+</button>
+                    </div>
+                </div>
+                <div id="patente-resultado" style="margin-top:14px"></div>
             </div>
 
-            <div class="card">
-                <h2>Referência Completa de Patentes</h2>
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Referência Completa de Patentes</span>
+                </div>
                 <div id="patente-tabela-full"></div>
             </div>
 
@@ -332,10 +353,12 @@
         <!-- ===================== ABA DESCANSO ===================== -->
         <div id="tab-descanso" class="tab-panel">
 
-            <div class="card">
-                <h2>Calculadora de Descanso</h2>
-
-                <div class="grid">
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Configuração do Descanso</span>
+                </div>
+                <div class="grid grid-2col">
                     <div>
                         <label>Tipo de Descanso</label>
                         <select id="desc-tipo" onchange="calcDescanso()">
@@ -354,15 +377,27 @@
                     </div>
                     <div>
                         <label>Vigor (para Vida)</label>
-                        <input id="desc-vig" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-vig',-1)">−</button>
+                            <input id="desc-vig" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-vig',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Destreza (para Energia)</label>
-                        <input id="desc-des" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-des',-1)">−</button>
+                            <input id="desc-des" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-des',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Nível</label>
-                        <input id="desc-nivel" type="number" min="0" max="20" value="0" oninput="calcDescanso()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-nivel',-1)">−</button>
+                            <input id="desc-nivel" type="number" min="0" max="20" value="0" oninput="calcDescanso()">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-nivel',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Refeição consumida?</label>
@@ -379,9 +414,14 @@
                         </select>
                     </div>
                 </div>
+            </div>
 
-                <hr>
-                <div class="grid-2">
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Resultado</span>
+                </div>
+                <div class="grid grid-2col">
                     <div>
                         <div class="stat-label" style="margin-bottom:8px">Recuperação de Vida</div>
                         <div class="descanso-result" id="desc-vida-result">—</div>
@@ -395,9 +435,7 @@
                         <div class="dt-formula" id="desc-energia-formula">—</div>
                     </div>
                 </div>
-
                 <div class="info-box" style="margin-top:16px" id="desc-notas"></div>
-
             </div>
 
         </div><!-- /tab-descanso -->
