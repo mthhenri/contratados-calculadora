@@ -98,17 +98,22 @@ function tagColor(texto) {
     return '';
 }
 
-function aplicarLimitesPorClasse(isCivil) {
+function aplicarLimitesPorClasse(classe) {
+    const isCivil = classe === 'Civil';
+    const isExpArtificial = classe === 'Experimento Artificial';
+    const limiteNivel = isCivil ? 5 : 20;
+    let limiteAtributo;
+    if (isCivil) limiteAtributo = 3;
+    else if (isExpArtificial) limiteAtributo = 8;
+    else limiteAtributo = 7;
+
     const nivelEl = document.getElementById('nivel');
     const nivelValor = document.getElementById('nivel-valor');
-    const limiteNivel = isCivil ? 5 : 20;
-    const limiteAtributo = isCivil ? 3 : 8;
-
     nivelEl.min = 0;
     nivelEl.max = limiteNivel;
     nivelEl.step = 1;
 
-    ['vig', 'des', 'for', 'von'].forEach(id => {
+    ['vig', 'des', 'for', 'von', 'sen'].forEach(id => {
         const el = document.getElementById(id);
         el.min = -5;
         el.max = limiteAtributo;
@@ -128,7 +133,7 @@ function aplicarLimitesPorClasse(isCivil) {
 function calc() {
     const c = document.getElementById('classe').value;
     const isCivil = (c === 'Civil');
-    aplicarLimitesPorClasse(isCivil);
+    aplicarLimitesPorClasse(c);
 
     let n = +document.getElementById('nivel').value;
     const v = +document.getElementById('vig').value;
@@ -535,22 +540,28 @@ function calcDescanso() {
 // SISTEMA DE ABAS
 // ============================================================
 function switchTab(id) {
-    document.querySelectorAll('.tab').forEach((t, i) => {
-        const ids = ['agente', 'dt', 'novo', 'patente', 'descanso'];
-        t.classList.toggle('active', ids[i] === id);
+    document.querySelectorAll('[data-tab]').forEach(el => {
+        el.classList.toggle('active', el.dataset.tab === id);
     });
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Inicializa aba ao abrir se necessário
     if (id === 'dt') calcDT();
     if (id === 'patente') calcPatente();
     if (id === 'descanso') calcDescanso();
     if (id === 'novo') calcNovoAgente();
 }
 
+function stepInput(id, delta) {
+    const el = document.getElementById(id);
+    const val = (parseInt(el.value) || 0) + delta;
+    el.value = Math.min(parseInt(el.max), Math.max(parseInt(el.min), val));
+    el.dispatchEvent(new Event('input'));
+}
+
 // Init
-aplicarLimitesPorClasse(document.getElementById('classe').value === 'Civil');
+aplicarLimitesPorClasse(document.getElementById('classe').value);
 calc();
 calcDT();
 calcPatente();

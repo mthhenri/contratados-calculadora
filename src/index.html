@@ -14,19 +14,24 @@
         <h1>Contratados — Terminal de Agente</h1>
         <p class="subtitle">Fundação SCP · Classe E · Sistema de Progressão v5</p>
 
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab('agente')">⚔ Agente / Civil</div>
-            <div class="tab" onclick="switchTab('dt')">🎯 Calculadora de DT</div>
-            <div class="tab" onclick="switchTab('novo')">🔄 Novo Agente</div>
-            <div class="tab" onclick="switchTab('patente')">🏅 Patentes</div>
-            <div class="tab" onclick="switchTab('descanso')">💤 Descanso</div>
+        <div class="tabs" id="tabs-desktop">
+            <div class="tab active" data-tab="agente" onclick="switchTab('agente')">⚔ Agente / Civil</div>
+            <div class="tab" data-tab="dt" onclick="switchTab('dt')">🎯 Calculadora de DT</div>
+            <div class="tab" data-tab="novo" onclick="switchTab('novo')">🔄 Novo Agente</div>
+            <div class="tab" data-tab="patente" onclick="switchTab('patente')">🏅 Patentes</div>
+            <div class="tab" data-tab="descanso" onclick="switchTab('descanso')">💤 Descanso</div>
         </div>
 
         <!-- ===================== ABA AGENTE ===================== -->
         <div id="tab-agente" class="tab-panel active">
 
-            <div class="card">
-                <div class="grid">
+            <!-- Passo 1: Classe & Nível -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Classe &amp; Nível</span>
+                </div>
+                <div class="grid grid-2col">
                     <div>
                         <label>Classe / Registro</label>
                         <select id="classe" onchange="calc()">
@@ -46,54 +51,94 @@
                         </select>
                     </div>
                     <div>
-                        <div class="row-split" style="justify-content:space-between;align-items:flex-end">
+                        <div class="row-split" style="justify-content:space-between;align-items:flex-end;margin-bottom:7px">
                             <label id="label-nivel" style="margin-bottom:0">Nível</label>
                             <span id="nivel-valor" class="badge badge-yellow">0</span>
                         </div>
                         <input id="nivel" type="range" min="0" max="20" step="1" value="0" oninput="calc()">
                     </div>
+                </div>
+            </div>
+
+            <!-- Passo 2: Atributos -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Atributos</span>
+                </div>
+                <div class="grid grid-attrs">
                     <div>
                         <label>Vigor</label>
-                        <input id="vig" type="number" min="-5" max="12" value="1" oninput="calc()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('vig',-1)">−</button>
+                            <input id="vig" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('vig',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Destreza</label>
-                        <input id="des" type="number" min="-5" max="12" value="1" oninput="calc()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('des',-1)">−</button>
+                            <input id="des" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('des',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Força</label>
-                        <input id="for" type="number" min="-5" max="12" value="1" oninput="calc()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('for',-1)">−</button>
+                            <input id="for" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('for',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Vontade</label>
-                        <input id="von" type="number" min="-5" max="12" value="1" oninput="calc()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('von',-1)">−</button>
+                            <input id="von" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('von',1)">+</button>
+                        </div>
                     </div>
                     <div>
                         <label>Sentidos</label>
-                        <input id="sen" type="number" min="-5" max="12" value="1" oninput="calc()">
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('sen',-1)">−</button>
+                            <input id="sen" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('sen',1)">+</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2>Status do Personagem</h2>
-                <div class="grid-stats">
-                    <div class="stat-box highlight">
+            <!-- Passo 3: Resultados -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Status do Personagem</span>
+                </div>
+
+                <!-- Stats primários em destaque -->
+                <div class="grid-stats-hero">
+                    <div class="stat-box highlight stat-hero">
                         <div class="stat-label">Vida</div>
                         <div id="vida" class="stat"></div>
                     </div>
-                    <div class="stat-box highlight">
+                    <div class="stat-box highlight stat-hero" style="border-color:rgba(82,153,255,.25);background:rgba(82,153,255,.06)">
                         <div class="stat-label">Energia</div>
-                        <div id="energia" class="stat"></div>
+                        <div id="energia" class="stat" style="color:var(--blue)"></div>
                     </div>
-                    <div class="stat-box blue">
+                    <div class="stat-box blue stat-hero">
                         <div class="stat-label">Defesa Base</div>
                         <div id="defesa" class="stat"></div>
                     </div>
-                    <div class="stat-box blue">
+                    <div class="stat-box blue stat-hero">
                         <div class="stat-label">Proficiência</div>
                         <div id="prof" class="stat"></div>
                     </div>
+                </div>
+
+                <!-- Stats secundários -->
+                <div class="grid-stats" style="margin-top:14px">
                     <div class="stat-box">
                         <div class="stat-label">Deslocamento</div>
                         <div id="deslocamento" class="stat stat-sm"></div>
@@ -359,11 +404,31 @@
 
     </div><!-- /container -->
 
-    <script src="script.js"></script>
+    <!-- Bottom nav — visível apenas no mobile -->
+    <nav class="bottom-nav" id="bottom-nav">
+        <button class="bnav-item active" data-tab="agente" onclick="switchTab('agente')">
+            <span class="bnav-icon">⚔</span>
+            <span class="bnav-label">Agente</span>
+        </button>
+        <button class="bnav-item" data-tab="dt" onclick="switchTab('dt')">
+            <span class="bnav-icon">🎯</span>
+            <span class="bnav-label">DT</span>
+        </button>
+        <button class="bnav-item" data-tab="novo" onclick="switchTab('novo')">
+            <span class="bnav-icon">🔄</span>
+            <span class="bnav-label">Novo</span>
+        </button>
+        <button class="bnav-item" data-tab="patente" onclick="switchTab('patente')">
+            <span class="bnav-icon">🏅</span>
+            <span class="bnav-label">Patente</span>
+        </button>
+        <button class="bnav-item" data-tab="descanso" onclick="switchTab('descanso')">
+            <span class="bnav-icon">💤</span>
+            <span class="bnav-label">Descanso</span>
+        </button>
+    </nav>
 
-    <script>
-        
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
