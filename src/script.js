@@ -935,23 +935,25 @@ function renderCmpCatalog() {
     const cat = cmpCatAtiva;
 
     if (cat === 'amplificador') {
-        const { vontade } = getCmpInputs();
+        const { vontade, prestigio } = getCmpInputs();
+        const pat = getPatenteMod(prestigio);
         const ampLimit = vontade * 3;
         const ampStacks = comprasAmps.reduce((s, a) => s + a.stacks, 0);
-        el.innerHTML = `<div class="cmp-info-box">Limite: <strong>Vontade × 3 = ${ampLimit} stacks</strong> totais · Primeiro empilhamento: $3.000 · Adicionais: $1.000</div>
+        el.innerHTML = `<div class="cmp-info-box">Limite: <strong>Vontade × 3 = ${ampLimit} stacks</strong> totais · máx. <strong>${pat.maxStack} stack/amp</strong> (${pat.nome}) · Primeiro empilhamento: $3.000 · Adicionais: $1.000</div>
         <div class="cmp-item-grid">` +
         CATALOGO_ITENS.amplificador.map(amp => {
             const inCart = comprasAmps.find(a => a.nome === amp.nome);
             const curStacks = inCart ? inCart.stacks : 0;
-            const canAdd = ampStacks < ampLimit && curStacks < amp.maxStack;
+            const effectiveMax = Math.min(amp.maxStack, pat.maxStack);
+            const canAdd = ampStacks < ampLimit && curStacks < effectiveMax;
             return `<div class="cmp-item-card">
                 <div class="cmp-item-name">${amp.nome}</div>
                 <div class="cmp-item-desc">${amp.efeito}</div>
                 <div class="cmp-item-meta">
                     <span class="cmp-item-cost">$${curStacks === 0 ? '3.000' : '1.000'}</span>
-                    <span class="cmp-item-weight">máx. ${amp.maxStack} stacks</span>
+                    <span class="cmp-item-weight">máx. ${effectiveMax} stacks</span>
                 </div>
-                ${curStacks > 0 ? `<div class="cmp-amp-stacks">Ativo: ${curStacks}/${amp.maxStack} stack${curStacks > 1 ? 's' : ''}
+                ${curStacks > 0 ? `<div class="cmp-amp-stacks">Ativo: ${curStacks}/${effectiveMax} stack${curStacks > 1 ? 's' : ''}
                     ${curStacks >= 2 ? '<span class="cmp-penalty-tag">-2 Vontade</span>' : ''}</div>` : ''}
                 <div class="cmp-item-actions">
                     ${curStacks > 0 ? `<button class="cmp-btn-remove" onclick="removeAmp('${amp.nome}')">−</button>` : ''}
@@ -1011,12 +1013,14 @@ function removeFromCart(uid) {
 }
 
 function addAmp(nome, initStacks, maxStack) {
-    const { vontade } = getCmpInputs();
+    const { vontade, prestigio } = getCmpInputs();
+    const pat = getPatenteMod(prestigio);
+    const effectiveMax = Math.min(maxStack, pat.maxStack);
     const ampLimit = vontade * 3;
     const totalStacks = comprasAmps.reduce((s, a) => s + a.stacks, 0);
     const existing = comprasAmps.find(a => a.nome === nome);
     if (existing) {
-        if (existing.stacks < maxStack && totalStacks < ampLimit) existing.stacks++;
+        if (existing.stacks < effectiveMax && totalStacks < ampLimit) existing.stacks++;
     } else {
         if (totalStacks + 1 <= ampLimit) comprasAmps.push({ nome, stacks: 1 });
     }
@@ -1321,7 +1325,8 @@ function renderCmpCart() {
 
     // Amplifiers section
     if (comprasAmps.length > 0) {
-        const { vontade } = getCmpInputs();
+        const { vontade, prestigio } = getCmpInputs();
+        const pat = getPatenteMod(prestigio);
         const ampLimit = vontade * 3;
         const totalAmpStacks = comprasAmps.reduce((s, a) => s + a.stacks, 0);
         const totalVontadePenalty = comprasAmps.reduce((s, a) => s + Math.max(0, a.stacks - 1) * 2, 0);
@@ -1329,9 +1334,10 @@ function renderCmpCart() {
             <div class="cmp-amps-header">⚡ Amplificadores (${totalAmpStacks}/${ampLimit} stacks)${totalVontadePenalty > 0 ? ' · <span style="color:var(--accent)">−' + totalVontadePenalty + ' Vontade total</span>' : ''}</div>`;
         comprasAmps.forEach(amp => {
             const def = CATALOGO_ITENS.amplificador.find(a => a.nome === amp.nome);
+            const effectiveMax = Math.min(def ? def.maxStack : 5, pat.maxStack);
             const cost = 3000 + Math.max(0, amp.stacks - 1) * 1000;
             const thisPenalty = Math.max(0, amp.stacks - 1) * 2;
-            const canAdd = totalAmpStacks < ampLimit && amp.stacks < (def ? def.maxStack : 5);
+            const canAdd = totalAmpStacks < ampLimit && amp.stacks < effectiveMax;
             html += `<div class="cmp-cart-item cmp-amp-item">
                 <div class="cmp-cart-header">
                     <div>
@@ -1340,7 +1346,7 @@ function renderCmpCart() {
                     </div>
                     <div class="cmp-cart-meta">
                         <span class="cmp-cart-cost">$${cost.toLocaleString('pt-BR')}</span>
-                        <span class="cmp-cart-weight">${amp.stacks} stack${amp.stacks > 1 ? 's' : ''}</span>
+                        <span class="cmp-cart-weight">${amp.stacks}/${effectiveMax} stack${amp.stacks > 1 ? 's' : ''}</span>
                     </div>
                 </div>
                 ${def ? `<div class="cmp-cart-stats">${def.efeito}</div>` : ''}
