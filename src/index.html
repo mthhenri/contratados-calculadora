@@ -31,6 +31,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Classe &amp; Nível</span>
+                    <button class="help-btn" onclick="openHelp('agente')">? Ajuda</button>
                     <button class="clear-tab-btn" onclick="clearTab('agente')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
@@ -214,6 +215,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Calculadora de DT</span>
+                    <button class="help-btn" onclick="openHelp('dt')">? Ajuda</button>
                     <button class="clear-tab-btn" onclick="clearTab('dt')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <p style="color:var(--txt2);font-size:.9rem;margin:0 0 18px">Calcula a DT que seus aliados e inimigos precisam superar para resistir às suas ações.</p>
@@ -258,6 +260,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Configuração</span>
+                    <button class="help-btn" onclick="openHelp('novo')">? Ajuda</button>
                     <button class="clear-tab-btn" onclick="clearTab('novo')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
@@ -332,6 +335,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Consulta por Prestígio</span>
+                    <button class="help-btn" onclick="openHelp('patente')">? Ajuda</button>
                     <button class="clear-tab-btn" onclick="clearTab('patente')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div>
@@ -362,6 +366,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Configuração do Descanso</span>
+                    <button class="help-btn" onclick="openHelp('descanso')">? Ajuda</button>
                     <button class="clear-tab-btn" onclick="clearTab('descanso')" title="Restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
@@ -454,6 +459,7 @@
                 <div class="step-header">
                     <span class="step-num">1</span>
                     <span class="step-title">Configuração do Agente</span>
+                    <button class="help-btn" onclick="openHelp('compras')">? Ajuda</button>
                     <button class="clear-tab-btn" onclick="clearTab('compras')" title="Limpar carrinho e restaurar padrões">🗑 Limpar</button>
                 </div>
                 <div class="grid grid-2col">
@@ -550,6 +556,17 @@
         </div><!-- /tab-compras -->
 
     </div><!-- /container -->
+
+    <!-- ===================== MODAL DE AJUDA ===================== -->
+    <div class="help-overlay" id="help-overlay" onclick="closeHelpOnOverlay(event)">
+        <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+            <div class="help-modal-header">
+                <span class="help-modal-title" id="help-modal-title">Ajuda</span>
+                <button class="help-modal-close" onclick="closeHelp()" aria-label="Fechar ajuda">✕</button>
+            </div>
+            <div class="help-modal-body" id="help-modal-body"></div>
+        </div>
+    </div>
 
     <!-- Bottom nav — visível apenas no mobile -->
     <nav class="bottom-nav" id="bottom-nav">

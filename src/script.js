@@ -443,7 +443,7 @@ function calcPatente() {
 </tr>`;
     });
     tbl += '</tbody></table>';
-    document.getElementById('patente-tabela-full').innerHTML = tbl;
+    document.getElementById('patente-tabela-full').innerHTML = `<div style="overflow-x:auto">${tbl}</div>`;
 }
 
 // ============================================================
@@ -1464,6 +1464,186 @@ function clearTab(id) {
         calcCompras();
     }
 }
+
+// ============================================================
+// MODAL DE AJUDA
+// ============================================================
+const HELP_CONTENT = {
+    agente: {
+        title: 'Ajuda — Agente / Civil',
+        html: `
+<h3>O que esta aba faz</h3>
+<p>Calcula todos os stats derivados do seu personagem com base na classe, nível e atributos.</p>
+<h3>Classe &amp; Nível</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>O que representa</th></tr></thead><tbody>
+<tr><td>Classe / Registro</td><td>Define as fórmulas de Vida e Energia, e os limites de nível/atributos. Civis têm progressão própria, cap nível 5 e atributos 3.</td></tr>
+<tr><td>Nível</td><td>Nível atual (0–20 para Agentes, 0–5 para Civis — chamado "Treinamentos").</td></tr>
+</tbody></table>
+<h3>Atributos</h3>
+<table class="help-table"><thead><tr><th>Atributo</th><th>O que influencia</th></tr></thead><tbody>
+<tr><td>Vigor</td><td>Vida, Limite de Energia, Dano Corpo a Corpo, recuperação de Vida no Descanso.</td></tr>
+<tr><td>Destreza</td><td>Energia, Limite de Energia, Deslocamento, recuperação de Energia no Descanso.</td></tr>
+<tr><td>Força</td><td>Dano Corpo a Corpo e Inventário Máximo.</td></tr>
+<tr><td>Vontade</td><td>Capacidade de Traumas/Sequelas suportadas.</td></tr>
+<tr><td>Sentidos</td><td>Raio da Área de Percepção.</td></tr>
+</tbody></table>
+<h3>Stats calculados</h3>
+<table class="help-table"><thead><tr><th>Stat</th><th>Fórmula</th></tr></thead><tbody>
+<tr><td>Vida / Energia</td><td>Base + escala por Vigor/Destreza × nível. Varia por classe.</td></tr>
+<tr><td>Defesa Base</td><td>10 + Nível (N/A para Civis).</td></tr>
+<tr><td>Proficiência</td><td>+Nível (N/A para Civis).</td></tr>
+<tr><td>Deslocamento</td><td>Escalonado por Destreza: 8–10 m (Agente) ou 6–8 m (Civil).</td></tr>
+<tr><td>Inventário Máx.</td><td>Força × 5 (Agente) ou Força × 3 (Civil). Força 0 = 3 slots; negativa = 0.</td></tr>
+<tr><td>Corpo (Dano)</td><td>Escalonado por Força + Vigor (Agente) ou Força − 1 (Civil).</td></tr>
+<tr><td>Dano Furtivo</td><td>Começa em 1D6+1; ganha +1D6+1 nos níveis 3, 6, 9, 12, 15, 18.</td></tr>
+<tr><td>Limite de Energia</td><td>(Vigor + Destreza) × 2 (N/A para Civis).</td></tr>
+<tr><td>Traumas Suport.</td><td>Vontade + 1 (N/A para Civis).</td></tr>
+<tr><td>Hab. / Turno</td><td>Começa em 4; +1 em níveis pares, +2 extra nos níveis 10 e 20.</td></tr>
+<tr><td>Área de Percepção</td><td>Sentidos ≤ 0 → 3 m; senão 5 + (Sentidos × 5) m.</td></tr>
+</tbody></table>
+<div class="help-note"><strong>Seções de progressão:</strong> "Benefícios deste Nível" mostra ganhos do nível atual. "Habilidades Acumuladas" exibe totais até agora. "Progressão Detalhada" lista nível a nível. "Próximo Nível" antecipa o próximo ganho.</div>`
+    },
+    dt: {
+        title: 'Ajuda — Calculadora de DT',
+        html: `
+<h3>O que esta aba faz</h3>
+<p>Calcula a Dificuldade de Teste (DT) que aliados e inimigos precisam superar para resistir às ações do seu personagem.</p>
+<h3>Campos</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>O que representa</th></tr></thead><tbody>
+<tr><td>Nível do personagem</td><td>Nível de quem realiza a ação (0–20).</td></tr>
+<tr><td>Atributo usado</td><td>Valor do atributo base da ação.</td></tr>
+<tr><td>Resultado</td><td>DT calculada: <strong>10 + Nível + (Atributo × 2)</strong>.</td></tr>
+</tbody></table>
+<h3>Tabela de Referência Rápida</h3>
+<p>Mostra a DT resultante para atributos de 1 a 6 nos níveis 0, 5, 10, 15 e 20. Útil para consulta durante o jogo sem precisar digitar valores.</p>
+<div class="help-note"><strong>Exemplo:</strong> Personagem nível 10, atributo 3 → DT = 10 + 10 + 6 = <strong>26</strong>.</div>`
+    },
+    novo: {
+        title: 'Ajuda — Novo Agente',
+        html: `
+<h3>O que esta aba faz</h3>
+<p>Calcula nível inicial, prestígio inicial e bônus monetário de um personagem que entra no grupo.</p>
+<h3>Campos de entrada</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>O que representa</th></tr></thead><tbody>
+<tr><td>Motivo de entrada</td><td>Determina o divisor de penalidade de Prestígio e se pode cair uma patente.</td></tr>
+<tr><td>Média de Nível</td><td>Média dos níveis dos membros atuais (excluindo quem está saindo).</td></tr>
+<tr><td>Média de Prestígio</td><td>Média de Prestígio dos membros atuais (excluindo quem está saindo).</td></tr>
+</tbody></table>
+<h3>Motivos e divisores</h3>
+<table class="help-table"><thead><tr><th>Motivo</th><th>Divisor</th></tr></thead><tbody>
+<tr><td>Morte / Entrada do zero</td><td>÷7</td></tr>
+<tr><td>Aposentadoria</td><td>÷10 (penalidade menor)</td></tr>
+<tr><td>Experimento → Regular</td><td>÷5, pode cair uma patente</td></tr>
+<tr><td>Experimento → Experimento</td><td>÷3, pode cair uma patente</td></tr>
+<tr><td>Contido/Exterminado → Regular</td><td>÷5, pode cair uma patente + condição Amaldiçoado</td></tr>
+<tr><td>Contido/Exterminado → Experimento</td><td>÷3, pode cair uma patente + condição Amaldiçoado</td></tr>
+</tbody></table>
+<h3>Fórmulas</h3>
+<table class="help-table"><thead><tr><th>Valor</th><th>Fórmula</th></tr></thead><tbody>
+<tr><td>Nível Inicial</td><td>⌈média⌉ − 1, mínimo 0.</td></tr>
+<tr><td>Prestígio Inicial</td><td>média − ⌊média ÷ divisor⌋, com cap mínimo de patente.</td></tr>
+</tbody></table>
+<h3>Bônus Monetário</h3>
+<p>Prestígio Inicial × (500 × Multiplicador de Patente). Não inclui o dinheiro inicial padrão (1.000 + 4D4 × 250), que deve ser calculado separadamente por ser aleatório.</p>`
+    },
+    patente: {
+        title: 'Ajuda — Patentes',
+        html: `
+<h3>O que esta aba faz</h3>
+<p>Consulta a patente de um personagem pelo Prestígio atual e exibe a tabela completa de todas as patentes.</p>
+<h3>Informações da patente</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>O que representa</th></tr></thead><tbody>
+<tr><td>Prestígio atual</td><td>Valor de Prestígio do personagem.</td></tr>
+<tr><td>Patente</td><td>Nome da patente correspondente ao Prestígio informado.</td></tr>
+<tr><td>Salário por missão</td><td>Quanto o personagem recebe ao completar uma missão.</td></tr>
+<tr><td>Limite de mods</td><td>Máximo de stacks por modificação (1ª coluna) e total de mods por item (2ª coluna). Ex: "3 níveis / 9 mods/item" significa até 3 stacks de qualquer mod, e até 9 mods no mesmo item.</td></tr>
+<tr><td>Multiplicador monetário</td><td>Usado no cálculo do bônus monetário de novos agentes.</td></tr>
+</tbody></table>
+<h3>Tabela de Referência</h3>
+<p>Lista todas as 8 patentes em ordem, com a patente atual destacada. Útil para planejar progressão ou comparar benefícios entre níveis de Prestígio.</p>
+<div class="help-note"><strong>Patentes disponíveis:</strong> Agente (0–2) → Operador → Experiente → Veterano → Força Tarefa → FT Especial → Op. Especiais → Líder Operacional (66+).</div>`
+    },
+    descanso: {
+        title: 'Ajuda — Descanso',
+        html: `
+<h3>O que esta aba faz</h3>
+<p>Calcula a recuperação de Vida e Energia de um descanso, com base no tipo, ambiente e modificadores.</p>
+<h3>Tipos de descanso</h3>
+<table class="help-table"><thead><tr><th>Tipo</th><th>Duração</th><th>Recupera</th></tr></thead><tbody>
+<tr><td>Curto</td><td>~15 min</td><td>Apenas Energia (dado base D4)</td></tr>
+<tr><td>Médio</td><td>2–4h</td><td>Vida (D4) e Energia (D6)</td></tr>
+<tr><td>Longo</td><td>6–8h</td><td>Vida (D6) e Energia (D8) — uma vez por dia</td></tr>
+</tbody></table>
+<h3>Modificadores</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>Efeito</th></tr></thead><tbody>
+<tr><td>Qualidade do Ambiente</td><td>Insalubre: −1 tipo de dado. Adequado: padrão. Confortável: +1 tipo de dado. A Base da Fundação é sempre Confortável.</td></tr>
+<tr><td>Vigor</td><td>Multiplicador da recuperação de Vida.</td></tr>
+<tr><td>Destreza</td><td>Multiplicador da recuperação de Energia.</td></tr>
+<tr><td>Nível</td><td>Bônus fixo de Nível × 2 somado à recuperação.</td></tr>
+<tr><td>Refeição consumida</td><td>+1 tipo de dado na recuperação.</td></tr>
+<tr><td>Foi interrompido</td><td>Resultado final ÷ 2 (arredonda para baixo).</td></tr>
+</tbody></table>
+<div class="help-note">
+<strong>Fórmula geral:</strong> ATRIBUTO × Ddado + (Nível × 2)<br>
+<strong>Escala de dados:</strong> D3 → D4 → D6 → D8 → D10 → D12 → D20<br>
+Os modificadores de qualidade e refeição somam e sobem ou descem o tipo de dado nessa escala.
+</div>`
+    },
+    compras: {
+        title: 'Ajuda — Compras',
+        html: `
+<h3>O que esta aba faz</h3>
+<p>Auxilia a montar o equipamento para uma missão respeitando orçamento, inventário, patente e limite de amplificadores.</p>
+<h3>Configuração do Agente</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>O que representa</th></tr></thead><tbody>
+<tr><td>Dinheiro Disponível</td><td>Quanto dinheiro o personagem tem para gastar.</td></tr>
+<tr><td>Prestígio Atual</td><td>Define a patente e os limites de modificações (stacks por mod e total de mods por item).</td></tr>
+<tr><td>Inventário Máximo</td><td>Capacidade total de slots (calculada na aba Agente / Civil pela Força).</td></tr>
+<tr><td>Vontade</td><td>Limite total de stacks de Amplificadores: Vontade × 3.</td></tr>
+</tbody></table>
+<h3>Painel de Resumo</h3>
+<table class="help-table"><thead><tr><th>Campo</th><th>O que representa</th></tr></thead><tbody>
+<tr><td>Dinheiro Restante</td><td>Disponível menos gasto total. Fica vermelho se negativo.</td></tr>
+<tr><td>Inventário Usado</td><td>Slots ocupados vs. capacidade (inclui bônus de mochilas vestidas). Vermelho se excedido.</td></tr>
+<tr><td>Amplificadores</td><td>Stacks totais vs. limite (Vontade × 3). Vermelho se excedido.</td></tr>
+<tr><td>Mods por Item</td><td>Limite de mods e stacks por modificação para a patente atual.</td></tr>
+<tr><td>Penalidade Amps</td><td>Cada amp com 2+ stacks aplica −2 Vontade por stack extra (ex: 3 stacks = −4 Vontade).</td></tr>
+</tbody></table>
+<h3>Amplificadores</h3>
+<table class="help-table"><thead><tr><th>Regra</th><th>Detalhe</th></tr></thead><tbody>
+<tr><td>Custo</td><td>1º stack: $3.000. Stacks adicionais do mesmo amp: $1.000 cada.</td></tr>
+<tr><td>Limite total</td><td>Vontade × 3 stacks no total entre todos os amplificadores.</td></tr>
+</tbody></table>
+<h3>Modificações de itens</h3>
+<table class="help-table"><thead><tr><th>Regra</th><th>Detalhe</th></tr></thead><tbody>
+<tr><td>Custo por stack</td><td>$750 (armas, proteções, exóticos), $250 (explosivos, munições), $300 (armazenamento).</td></tr>
+<tr><td>Peso</td><td>Cada stack de mod adiciona +0,2 slots ao item.</td></tr>
+<tr><td>Conflitos</td><td>Mods bloqueadas aparecem em vermelho e não podem ser adicionadas juntas no mesmo item.</td></tr>
+</tbody></table>
+<div class="help-note"><strong>Armazenamento:</strong> Mochilas <em>vestidas</em> ampliam o inventário e não pesam. Mochilas <em>guardadas no inventário</em> pesam mas não dão bônus de slots.</div>`
+    }
+};
+
+function openHelp(tab) {
+    const content = HELP_CONTENT[tab];
+    if (!content) return;
+    document.getElementById('help-modal-title').textContent = content.title;
+    document.getElementById('help-modal-body').innerHTML = content.html;
+    document.getElementById('help-overlay').classList.add('open');
+    document.getElementById('help-modal-body').scrollTop = 0;
+}
+
+function closeHelp() {
+    document.getElementById('help-overlay').classList.remove('open');
+}
+
+function closeHelpOnOverlay(e) {
+    if (e.target === document.getElementById('help-overlay')) closeHelp();
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeHelp();
+});
 
 // ============================================================
 // Init
