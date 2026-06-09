@@ -1044,8 +1044,11 @@ hr {
 }
 .clear-tab-btn:hover { background: rgba(255,80,80,.12); border-color: var(--accent); }
 
-.cmp-export-btn {
+.cmp-export-wrapper {
+    position: relative;
     margin-left: auto;
+}
+.cmp-export-btn {
     background: rgba(82,153,255,.1);
     border: 1px solid rgba(82,153,255,.35);
     color: var(--blue);
@@ -1057,6 +1060,35 @@ hr {
     white-space: nowrap;
 }
 .cmp-export-btn:hover { background: rgba(82,153,255,.22); }
+.cmp-export-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    background: var(--bg2, #1a1f2e);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 20;
+    min-width: 130px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+.cmp-export-menu.open { display: block; }
+.cmp-export-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--txt);
+    font-size: .82rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background .12s, color .12s;
+}
+.cmp-export-menu button:last-child { border-bottom: none; }
+.cmp-export-menu button:hover { background: rgba(82,153,255,.14); color: var(--blue); }
 
 /* ============================================================
    HELP BUTTON & MODAL

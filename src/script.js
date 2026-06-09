@@ -1658,35 +1658,63 @@ function renderCmpCart() {
     cartEl.innerHTML = html;
 }
 
-function exportarCarrinho() {
+function toggleExportMenu(event) {
+    event.stopPropagation();
+    document.getElementById('cmp-export-menu').classList.toggle('open');
+}
+
+function exportarCarrinho(mode) {
+    document.getElementById('cmp-export-menu').classList.remove('open');
+
+    const showCost = mode !== 'pesos';
+    const showPeso = mode !== 'custos';
+
     const { dinheiro, prestigio, inventario, vontade } = getCmpInputs();
     const { gasto, pesoUsado, ampStacks, bonusInventory } = getCmpTotals();
     const pat = getPatenteMod(prestigio);
     const restante = dinheiro - gasto;
     const effectiveInv = inventario + bonusInventory;
     const vontadePenalty = comprasAmps.reduce((s, a) => s + Math.max(0, a.stacks - 1) * 2, 0);
+    const _f = n => n % 1 === 0 ? n : n.toFixed(1);
 
     let txt = '=== CONTRATADOS — LISTA DE COMPRAS ===\n';
     txt += `Patente: ${pat.nome} (Prestígio ${prestigio})\n`;
-    txt += `Dinheiro disponível: $${dinheiro.toLocaleString('pt-BR')}\n`;
-    txt += `Gasto total: $${gasto.toLocaleString('pt-BR')}\n`;
-    txt += `Dinheiro restante: $${restante.toLocaleString('pt-BR')}\n`;
-    const _f = n => n % 1 === 0 ? n : n.toFixed(1);
-    txt += `Inventário: ${_f(pesoUsado)} / ${_f(effectiveInv)} slots${bonusInventory > 0 ? ` (${_f(inventario)} base + ${_f(bonusInventory)} armazenamento)` : ''}\n\n`;
+    if (showCost) {
+        txt += `Dinheiro disponível: $${dinheiro.toLocaleString('pt-BR')}\n`;
+        txt += `Gasto total: $${gasto.toLocaleString('pt-BR')}\n`;
+        txt += `Dinheiro restante: $${restante.toLocaleString('pt-BR')}\n`;
+    }
+    if (showPeso) {
+        txt += `Inventário: ${_f(pesoUsado)} / ${_f(effectiveInv)} slots${bonusInventory > 0 ? ` (${_f(inventario)} base + ${_f(bonusInventory)} armazenamento)` : ''}\n`;
+    }
+    txt += '\n';
 
     if (comprasCart.length > 0) {
         txt += '--- EQUIPAMENTOS ---\n';
         comprasCart.forEach(item => {
             const qty = item.qty || 1;
+            const isStorage = item.cat === 'armazenamento';
             const modsCost = item.mods.reduce((s, m) => s + getModPurchases(item, m.nome, m.stacks) * getModCusto(item, m.nome), 0);
             const totalCost = (item.custo + modsCost) * qty;
-            txt += `• ${item.nome}${qty > 1 ? ' ×' + qty : ''}${item.cat === 'armazenamento' && !item.stored ? ' [vestida]' : ''} — $${totalCost.toLocaleString('pt-BR')}\n`;
+            const modsWeight = item.mods.reduce((s, m) => s + m.stacks * getModPeso(item, m.nome), 0);
+            const totalWeight = (item.peso + modsWeight) * qty;
+            const countsWeight = !isStorage || item.stored;
+
+            let line = `• ${item.nome}${qty > 1 ? ' ×' + qty : ''}${isStorage && !item.stored ? ' [vestida]' : ''}`;
+            if (showCost) line += ` — $${totalCost.toLocaleString('pt-BR')}`;
+            if (showPeso && countsWeight) line += ` | ${_f(totalWeight)} slot${totalWeight !== 1 ? 's' : ''}`;
+            txt += line + '\n';
+
             const computedStatTxt = computeItemStat(item);
             if (computedStatTxt) txt += `  Stat: ${computedStatTxt.replace(/[⚔🛡📦] /g, '')}\n`;
             if (item.mods.length > 0) {
                 item.mods.forEach(mod => {
-                    const modCost = getModPurchases(item, mod.nome, mod.stacks) * getModCusto(item, mod.nome);
-                    txt += `  └ ${mod.nome} ×${mod.stacks} — $${modCost.toLocaleString('pt-BR')}\n`;
+                    let modLine = `  └ ${mod.nome} ×${mod.stacks}`;
+                    if (showCost) {
+                        const modCost = getModPurchases(item, mod.nome, mod.stacks) * getModCusto(item, mod.nome);
+                        modLine += ` — $${modCost.toLocaleString('pt-BR')}`;
+                    }
+                    txt += modLine + '\n';
                 });
             }
         });
@@ -1698,10 +1726,12 @@ function exportarCarrinho() {
         comprasAmps.forEach(amp => {
             const cost = 3000 + Math.max(0, amp.stacks - 1) * 1000;
             const def = CATALOGO_ITENS.amplificador.find(a => a.nome === amp.nome);
-            txt += `• ${amp.nome} ×${amp.stacks} — $${cost.toLocaleString('pt-BR')}\n`;
+            let line = `• ${amp.nome} ×${amp.stacks}`;
+            if (showCost) line += ` — $${cost.toLocaleString('pt-BR')}`;
+            txt += line + '\n';
             if (def) txt += `  └ Efeito: ${def.efeito}\n`;
         });
-        if (vontadePenalty > 0) txt += `\n⚠ Penalidade de Amplificadores: −${vontadePenalty} Vontade\n`;
+        if (showCost && vontadePenalty > 0) txt += `\n⚠ Penalidade de Amplificadores: −${vontadePenalty} Vontade\n`;
         txt += '\n';
     }
 
@@ -1938,7 +1968,16 @@ function closeHelpOnOverlay(e) {
 }
 
 document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeHelp();
+    if (e.key === 'Escape') {
+        closeHelp();
+        const menu = document.getElementById('cmp-export-menu');
+        if (menu) menu.classList.remove('open');
+    }
+});
+
+document.addEventListener('click', () => {
+    const menu = document.getElementById('cmp-export-menu');
+    if (menu) menu.classList.remove('open');
 });
 
 // ============================================================
