@@ -909,6 +909,8 @@ hr {
     color: var(--green);
     padding: 3px 4px 3px 10px;
 }
+.cmp-mod-tag-info { display: flex; flex-direction: column; gap: 1px; }
+.cmp-mod-tag-cost { font-size: .7rem; color: var(--yellow); opacity: .85; }
 .cmp-mod-tag-btns { display: flex; gap: 2px; }
 .cmp-mod-mini-btn {
     background: rgba(255,255,255,.1);

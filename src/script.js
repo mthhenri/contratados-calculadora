@@ -1044,6 +1044,13 @@ function getAllModDefs(item) {
     return [...base, ...borrowed];
 }
 
+// Returns number of purchases for a mod (1 for the first initStacks, +1 per extra stack).
+function getModPurchases(item, modNome, stacks) {
+    const def = getAllModDefs(item).find(m => m.nome === modNome);
+    const initStacks = def ? def.initStacks : 1;
+    return Math.max(1, stacks - initStacks + 1);
+}
+
 // Returns the cost per stack for a given mod on an item.
 function getModCusto(item, modNome) {
     const borrowedCat = getFazParteBorrowedCat(item);
@@ -1068,7 +1075,7 @@ function getCmpTotals() {
             bonusInventory += parseStorageBonus(ci && ci.bonus) * qty;
         }
         item.mods.forEach(mod => {
-            gasto += mod.stacks * getModCusto(item, mod.nome) * qty;
+            gasto += getModPurchases(item, mod.nome, mod.stacks) * getModCusto(item, mod.nome) * qty;
             if (!isStorage || item.stored) pesoUsado += mod.stacks * 0.2 * qty;
             if (isStorage && !item.stored) {
                 if (mod.nome === 'Compartimentos Extras') bonusInventory += mod.stacks * qty;
@@ -1420,7 +1427,7 @@ function renderCmpCart() {
         const fullModList = borrowedCat ? [...modList, ...borrowedModList.map(m => ({ ...m, _borrowedFrom: borrowedCat }))] : modList;
         const hasMods = fullModList.length > 0;
         const modsUsed = item.mods.reduce((s, m) => s + m.stacks, 0);
-        const modsCost = item.mods.reduce((s, m) => s + m.stacks * getModCusto(item, m.nome), 0);
+        const modsCost = item.mods.reduce((s, m) => s + getModPurchases(item, m.nome, m.stacks) * getModCusto(item, m.nome), 0);
         const modsWeight = item.mods.reduce((s, m) => s + m.stacks * 0.2, 0);
         const qty = item.qty || 1;
         const totalCost = (item.custo + modsCost) * qty;
@@ -1462,8 +1469,12 @@ function renderCmpCart() {
             item.mods.forEach(mod => {
                 const def = fullModList.find(m => m.nome === mod.nome);
                 const canAdd = mod.stacks < (def ? def.maxStack : 1) && mod.stacks < pat.maxStack && modsUsed < pat.maxMods;
+                const modTotalCost = getModPurchases(item, mod.nome, mod.stacks) * getModCusto(item, mod.nome);
                 html += `<div class="cmp-mod-tag">
-                    <span>${mod.nome} ×${mod.stacks}</span>
+                    <div class="cmp-mod-tag-info">
+                        <span>${mod.nome} ×${mod.stacks}</span>
+                        <span class="cmp-mod-tag-cost">$${modTotalCost.toLocaleString('pt-BR')}</span>
+                    </div>
                     <div class="cmp-mod-tag-btns">
                         <button class="cmp-mod-mini-btn" onclick="removeMod(${item.uid},'${mod.nome}')">−</button>
                         <button class="cmp-mod-mini-btn${!canAdd ? ' disabled' : ''}" onclick="addMod(${item.uid},'${mod.nome}')"${!canAdd ? ' disabled' : ''}>+</button>
@@ -1602,14 +1613,15 @@ function exportarCarrinho() {
         txt += '--- EQUIPAMENTOS ---\n';
         comprasCart.forEach(item => {
             const qty = item.qty || 1;
-            const modsCost = item.mods.reduce((s, m) => s + m.stacks * getModCusto(item, m.nome), 0);
+            const modsCost = item.mods.reduce((s, m) => s + getModPurchases(item, m.nome, m.stacks) * getModCusto(item, m.nome), 0);
             const totalCost = (item.custo + modsCost) * qty;
             txt += `• ${item.nome}${qty > 1 ? ' ×' + qty : ''}${item.cat === 'armazenamento' && !item.stored ? ' [vestida]' : ''} — $${totalCost.toLocaleString('pt-BR')}\n`;
             const computedStatTxt = computeItemStat(item);
             if (computedStatTxt) txt += `  Stat: ${computedStatTxt.replace(/[⚔🛡📦] /g, '')}\n`;
             if (item.mods.length > 0) {
                 item.mods.forEach(mod => {
-                    txt += `  └ ${mod.nome} ×${mod.stacks}\n`;
+                    const modCost = getModPurchases(item, mod.nome, mod.stacks) * getModCusto(item, mod.nome);
+                    txt += `  └ ${mod.nome} ×${mod.stacks} — $${modCost.toLocaleString('pt-BR')}\n`;
                 });
             }
         });
