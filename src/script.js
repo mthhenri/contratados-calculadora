@@ -776,14 +776,14 @@ const MODIFICACOES = {
     ],
     armasFogo: [
         { nome: 'Alcance',       initStacks: 1, maxStack: 1, bloqueia: [],                               desc: '+1 nível de alcance',                                          statEffect: null },
-        { nome: 'Estabilizador', initStacks: 3, maxStack: 4, bloqueia: [],                               desc: '+1 dado de teste por stack',                                   statEffect: '+1 dado' },
+        { nome: 'Estabilizador', initStacks: 3, maxStack: 4, bloqueia: [],                               desc: 'Concede Ataque Duplo (+1E). Extras: −1E/stack',                statEffect: null },
         { nome: 'Explosiva',     initStacks: 1, maxStack: 5, bloqueia: ['Furtiva','Silenciada','Plasma'], desc: '+1D6 [Explosão] por stack',                                   statEffect: '+1D6 [Explosão]' },
         { nome: 'Furtiva',       initStacks: 1, maxStack: 2, bloqueia: ['Plasma','Explosiva'],           desc: '−1 peso (mín. 1), sem acréscimo de peso da mod',               statEffect: null },
-        { nome: 'Mira Dot',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+1 no teste por stack',                                        statEffect: null },
-        { nome: 'Mira Laser',    initStacks: 1, maxStack: 1, bloqueia: [],                               desc: '+2 nos testes enquanto mirando',                               statEffect: null },
+        { nome: 'Mira Dot',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+2 nos testes de ataque por stack',                            statEffect: null },
+        { nome: 'Mira Laser',    initStacks: 1, maxStack: 1, bloqueia: [],                               desc: '+1 dado no teste',                                             statEffect: null },
         { nome: 'Plasma',        initStacks: 1, maxStack: 5, bloqueia: ['Silenciada','Furtiva','Explosiva'], desc: '+1D8 [Químico] por stack, +0,5 peso. Mun: Células de Plasma', statEffect: '+1D8 [Químico]' },
-        { nome: 'Potência',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+1D6 [Balístico] por stack',                                   statEffect: '+1D6 [Balístico]' },
-        { nome: 'Silenciada',    initStacks: 1, maxStack: 1, bloqueia: ['Explosiva','Plasma'],           desc: 'Ataque furtivo não revela posição',                            statEffect: null },
+        { nome: 'Potência',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+2 de dano por stack',                                         statEffect: '+2 dano' },
+        { nome: 'Silenciada',    initStacks: 1, maxStack: 1, bloqueia: ['Explosiva','Plasma'],           desc: 'Não concede bônus ao alvo ao ficar furtivo após ataque furtivo', statEffect: null },
         { nome: 'Tática',        initStacks: 1, maxStack: 3, bloqueia: [],                               desc: 'Saque livre. Extras: +1 dado no 1º turno/stack',               statEffect: null },
     ],
     municoes: [
@@ -792,12 +792,12 @@ const MODIFICACOES = {
         { nome: 'Explosiva',     initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+1D6 [Explosão] por stack',                                    statEffect: '+1D6 [Explosão]' },
         { nome: 'Impacto',       initStacks: 2, maxStack: 5, bloqueia: [],                               desc: 'Atordoar (DT Intelecto). +2 DT/stack extra',                  statEffect: null },
         { nome: 'Incendiária',   initStacks: 1, maxStack: 5, bloqueia: ['Estilhaços','Ponta Oca'],       desc: '+1D6 [Químico] + 50% Em Chamas. Extras: +1 dado +2 DT/stack', statEffect: '+1D6 [Químico]' },
-        { nome: 'Instável',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+1D6 em crítico; risco de explosão ao errar',                 statEffect: null },
-        { nome: 'Munição Extra', initStacks: 3, maxStack: 3, bloqueia: [],                               desc: '+3 usos de munição na arma',                                  statEffect: null },
+        { nome: 'Instável',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+1D10 [Balístico]. Falhar: 10% de chance de reduzir 1 cena', statEffect: '+1D10 [Balístico]' },
+        { nome: 'Munição Extra', initStacks: 3, maxStack: 3, bloqueia: [],                               desc: '+1 cena de duração (por 3 stacks iniciais)',                  statEffect: null },
         { nome: 'Perfurante',    initStacks: 1, maxStack: 5, bloqueia: [],                               desc: 'Ignora 5 resist. [Balístico] por stack',                      statEffect: 'Ignora 5 resist. [Balístico]' },
         { nome: 'Ponta Oca',     initStacks: 1, maxStack: 5, bloqueia: ['Incendiária','Tóxica'],         desc: '+1D6 [Físico] + 50% Sangramento. Extras: +1 dado +2 DT/stack', statEffect: '+1D6 [Físico]' },
-        { nome: 'Selante',       initStacks: 3, maxStack: 4, bloqueia: ['Calibre','Supressora'],         desc: '+1 cena de duração de munição por stack',                     statEffect: null },
-        { nome: 'Supressora',    initStacks: 2, maxStack: 4, bloqueia: ['Calibre','Selante'],            desc: 'Alvo: −1 dado nas reações por stack',                          statEffect: null },
+        { nome: 'Selante',       initStacks: 3, maxStack: 4, bloqueia: ['Calibre','Supressora'],         desc: 'Inibe regeneração neste turno. Extras: +5 fraqueza ao dano', statEffect: null },
+        { nome: 'Supressora',    initStacks: 2, maxStack: 4, bloqueia: ['Calibre','Selante'],            desc: 'Ao acertar com crítico, −1 dado no próximo teste de ataque',  statEffect: null },
         { nome: 'Tóxica',        initStacks: 1, maxStack: 5, bloqueia: ['Estilhaços','Ponta Oca'],       desc: '+1D6 [Químico] por stack',                                     statEffect: '+1D6 [Químico]' },
     ],
     protecoes: [
@@ -811,18 +811,18 @@ const MODIFICACOES = {
         { nome: 'Resistente',  initStacks: 2, maxStack: 5, bloqueia: ['Flexível'],                                 desc: '+1 ao Bloquear por stack',                     statEffect: null },
     ],
     exoticos: [
-        { nome: 'Antimatéria', initStacks: 4, maxStack: 4, bloqueia: ['Faz Parte','Vibrante','Flamejante'], desc: '+4 dados de dano [Explosão]',       statEffect: '+4 dados [Explosão]' },
-        { nome: 'Faz Parte',   initStacks: 2, maxStack: 2, bloqueia: ['Antimatéria'],                      desc: 'Pode equipar ocupando 0 mãos',       statEffect: null },
-        { nome: 'Vibrante',    initStacks: 1, maxStack: 5, bloqueia: ['Antimatéria'],                      desc: '+1D6 [Físico] por stack',            statEffect: '+1D6 [Físico]' },
-        { nome: 'Flamejante',  initStacks: 1, maxStack: 5, bloqueia: ['Antimatéria'],                      desc: '+1D6 [Químico] por stack',           statEffect: '+1D6 [Químico]' },
+        { nome: 'Antimatéria', initStacks: 4, maxStack: 4, bloqueia: ['Faz Parte','Vibrante','Flamejante'], desc: 'Muda o tipo de dano da arma para Dano Geral',                  statEffect: null },
+        { nome: 'Faz Parte',   initStacks: 2, maxStack: 2, bloqueia: ['Antimatéria'],                      desc: 'Permite aplicar modificações do tipo especificado',            statEffect: null },
+        { nome: 'Vibrante',    initStacks: 1, maxStack: 5, bloqueia: ['Antimatéria'],                      desc: '+1D8 [Físico] por stack',            statEffect: '+1D8 [Físico]' },
+        { nome: 'Flamejante',  initStacks: 1, maxStack: 5, bloqueia: ['Antimatéria'],                      desc: '+1D8 [Químico] por stack e causa Em Chamas',                   statEffect: '+1D8 [Químico]' },
     ],
     armazenamento: [
         { nome: 'Compartimentos Extras', initStacks: 1, maxStack: 5, bloqueia: ['Espaço Reservado'],      desc: '+1 inventário por stack',                    statEffect: '+1 inv.' },
-        { nome: 'Bolso Tático',          initStacks: 1, maxStack: 3, bloqueia: [],                        desc: 'Sacar itens como ação livre',                 statEffect: null },
-        { nome: 'Camadas Extras',        initStacks: 1, maxStack: 5, bloqueia: ['Distribuição de Peso'],  desc: '+0,5 inventário por stack',                   statEffect: '+0,5 inv.' },
-        { nome: 'Espaço Reservado',      initStacks: 2, maxStack: 4, bloqueia: ['Compartimentos Extras'], desc: 'Reserva slots para itens específicos',         statEffect: null },
-        { nome: 'Arsenal Reserva',       initStacks: 2, maxStack: 5, bloqueia: [],                        desc: '+1 arma oculta carregável por stack',          statEffect: null },
-        { nome: 'Distribuição de Peso',  initStacks: 1, maxStack: 5, bloqueia: ['Camadas Extras'],        desc: '−0,1 peso de itens guardados por stack',      statEffect: '−0,1 peso/item' },
+        { nome: 'Bolso Tático',          initStacks: 1, maxStack: 3, bloqueia: [],                        desc: 'Seleciona uma arma (ação de movimento) ou item (ação livre) para sacar', statEffect: null },
+        { nome: 'Camadas Extras',        initStacks: 1, maxStack: 5, bloqueia: ['Distribuição de Peso'],  desc: '+1 resist. [Físico] e [Balístico] por stack', statEffect: '+1 resist. [Físico/Bal.]' },
+        { nome: 'Espaço Reservado',      initStacks: 2, maxStack: 4, bloqueia: ['Compartimentos Extras'], desc: 'Item selecionado: 2ª repetição não conta peso. Extras: +1 item desconsiderado', statEffect: null },
+        { nome: 'Arsenal Reserva',       initStacks: 2, maxStack: 5, bloqueia: [],                        desc: 'Arma de até 1 peso não conta no inventário. Extras: +1 limite de peso',          statEffect: null },
+        { nome: 'Distribuição de Peso',  initStacks: 1, maxStack: 5, bloqueia: ['Camadas Extras'],        desc: '−1 deslocamento ao Sobrecarregado. 5º: DEF −2, dados −1',                        statEffect: null },
     ],
 };
 
@@ -1132,12 +1132,12 @@ function computeItemStat(item) {
             if (M['Fervente'])  extra.push({ dice: M['Fervente'],  sides: 4,  type: 'Químico'  });
             if (M['Plasma'])    extra.push({ dice: M['Plasma'],    sides: 6,  type: 'Químico'  });
         } else if (item.cat === 'armasFogo') {
-            if (M['Potência'])  extra.push({ dice: M['Potência'],  sides: 6,  type: 'Balístico' });
+            if (M['Potência'])  flat += M['Potência'] * 2;
             if (M['Explosiva']) extra.push({ dice: M['Explosiva'], sides: 6,  type: 'Explosão' });
             if (M['Plasma'])    extra.push({ dice: M['Plasma'],    sides: 8,  type: 'Químico'  });
         } else if (item.cat === 'exoticos') {
-            if (M['Vibrante'])   extra.push({ dice: M['Vibrante'],   sides: 6,     type: 'Físico'   });
-            if (M['Flamejante']) extra.push({ dice: M['Flamejante'], sides: 6,     type: 'Químico'  });
+            if (M['Vibrante'])   extra.push({ dice: M['Vibrante'],   sides: 8,     type: 'Físico'   });
+            if (M['Flamejante']) extra.push({ dice: M['Flamejante'], sides: 8,     type: 'Químico'  });
             if (M['Antimatéria']) extra.push({ dice: M['Antimatéria'], sides: sides, type: 'Explosão' });
         } else if (item.cat === 'explosivos') {
             if (M['Potente'])   dice += M['Potente'] * 2;
@@ -1163,11 +1163,17 @@ function computeItemStat(item) {
         };
 
         if (item.cat === 'protecoes' && entries.length > 0) {
-            if (M['Blindada'])  entries[0].value += M['Blindada'] * 2;
-            if (M['Reforçada']) entries[0].value += M['Reforçada'];
-            if (M['Camuflada']) entries[0].value -= M['Camuflada'];
-            if (M['Hazmat'])    findOrAdd('Químico').value  += M['Hazmat']    * 2;
-            if (M['Antibombas']) findOrAdd('Explosão').value += M['Antibombas'] * 2;
+            if (M['Blindada'])   entries.forEach(e => { e.value += M['Blindada'] * 2; });
+            if (M['Reforçada'])  entries.forEach(e => { e.value += M['Reforçada']; });
+            if (M['Camuflada'])  entries.forEach(e => { e.value = Math.max(0, e.value - M['Camuflada']); });
+            if (M['Hazmat'])     findOrAdd('Químico').value   += M['Hazmat']    * 2;
+            if (M['Antibombas']) findOrAdd('Explosão').value  += M['Antibombas'] * 2;
+        }
+        if (item.cat === 'armazenamento') {
+            if (M['Camadas Extras']) {
+                findOrAdd('Físico').value   += M['Camadas Extras'];
+                findOrAdd('Balístico').value += M['Camadas Extras'];
+            }
         }
 
         const resistStr = entries.filter(e => e.value > 0).map(e => `${e.value} [${e.typesRaw}]`).join(', ');
@@ -1178,7 +1184,6 @@ function computeItemStat(item) {
     if (ci.bonus) {
         let slots = parseStorageBonus(ci.bonus);
         if (M['Compartimentos Extras']) slots += M['Compartimentos Extras'];
-        if (M['Camadas Extras'])        slots += M['Camadas Extras'] * 0.5;
         const display = slots % 1 === 0 ? slots : slots.toFixed(1);
         return `📦 +${display} inv.`;
     }
