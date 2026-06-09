@@ -1409,7 +1409,11 @@ function computeItemStat(item) {
         const flatStr = flat > 0 ? `+${flat}` : '';
         const baseStr = `${dice}D${sides}${mod}${flatStr} [${type}]`;
         const parts = [baseStr, ...extra.map(e => `${e.dice}D${e.sides} [${e.type}]`)];
-        return `⚔ ${parts.join(' + ')}${ci.info ? ' · ' + ci.info : ''}`;
+        let infoStr = ci.info || '';
+        if (item.cat === 'armasFogo' && M['Plasma']) {
+            infoStr = infoStr.replace(/Mun:[^·\n]+/, 'Mun: Células de Plasma');
+        }
+        return `⚔ ${parts.join(' + ')}${infoStr ? ' · ' + infoStr : ''}`;
     }
 
     // --- RESIST ---
