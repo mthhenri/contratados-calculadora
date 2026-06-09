@@ -769,9 +769,9 @@ No início de seu contrato, além dos itens iniciais de seu kit, você também r
 
 *Dinheiro Inicial \= 1000 \+ ( 4D4 × 250 )*
 
-### **⬥ Equipamento Inicial**  {#⬥-equipamento-inicial}
+### **⬥ Equipamento Inicial** {#⬥-equipamento-inicial}
 
-	Na construção de sua ficha, você poderá escolher qualquer equipamento na loja, sendo ele seu equipamento inicial, no qual a soma total **não supere 2500** de dinheiro e **não ultrapasse 5** de peso. Não se pode modificar uma arma usando o dinheiro do kit inicial. O kit inicial obrigatoriamente é da qualidade Standard.
+	Na construção de sua ficha, você poderá escolher qualquer equipamento na loja, sendo ele seu equipamento inicial, no qual a soma total **não supere 2500** de dinheiro e **não ultrapasse 5** de peso. Não se pode modificar itens usando o dinheiro do kit inicial.
 
 ## **⬡ Iniciando um Novo Agente** {#⬡-iniciando-um-novo-agente}
 
@@ -1140,7 +1140,7 @@ Caso venha à **falhar** neste teste, você ainda aplica a modificação ao seu 
 | ⬡ Itens Operacionais |  |  |  |  |
 | ----- | :---- | :---: | :---- | :---- |
 | **Item** | **Descrição** | **Porte** | **Peso** | **Custo** |
-| **Energético** | *Recupera 50% da Energia máxima. Duas vezes por missão* | Uma Mão | 0,5 | $ 50 |
+| **Energético** | *Recupera 50% da Energia máxima. Duas vezes por missão **Energético concentrado consome deste limite por missão*** | Uma Mão | 0,5 | $ 50 |
 | **Energético Concentrado** | *Recupera 100% da Energia máxima. Duas vezes por missão* | Uma Mão | 0,5 | $ 250 |
 | **Carga Vital** | Reduz o custo de suas habilidades em 2 de Energia (mínimo 1\) por 2D4 turnos. Na cena seguinte, recebe \-1 dado em **Destreza** e **Força** | Uma Mão | 1 | $ 450 |
 | **Refeição** | *Usada em uma cena de descanso para aumentar sua recuperação de Vida e Energia* | Duas Mãos | 0,5 | $ 50 |
@@ -1743,7 +1743,7 @@ Recebe 2D6 \+ **Força** de dano Físico até superar a DT **Força** com um tes
 Reduz seu deslocamento para 4 metros e todos os seus testes de **Luta**, **Força**, **Vigor**, **Destreza**, **Pontaria** e **Medicina** recebem \-2 dados em seus testes, além de receber \-5 em Defesa.
 
 **⬦ Surdo**  
-Recebe \-1 dado em qualquer teste de **Sentidos** que envolvem audição. Reduz sua área de percepção para apenas **Sentidos** × 3 metros.
+Recebe \-1 dado em qualquer teste de **Sentidos** que envolvem audição. Reduz o multiplicador de **Sentidos** da sua área de percepção para × 3\.
 
 **⬦ Vulnerável**  
 Concede \+1 dado de dano a todos que lhe atacarem e \-5 Defesa para qualquer ataque recebido até cessar a condição.
