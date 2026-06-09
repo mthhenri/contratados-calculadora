@@ -672,6 +672,7 @@ function switchTab(id) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + id).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.replaceState(null, '', '#' + id);
 
     if (id === 'dt') calcDT();
     if (id === 'patente') calcPatente();
@@ -679,6 +680,10 @@ function switchTab(id) {
     if (id === 'novo') calcNovoAgente();
     if (id === 'compras') calcCompras();
 }
+
+const VALID_TABS = ['agente', 'dt', 'novo', 'patente', 'descanso', 'compras'];
+const initialTab = VALID_TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'agente';
+if (initialTab !== 'agente') switchTab(initialTab);
 
 function stepInput(id, delta) {
     const el = document.getElementById(id);
@@ -1750,13 +1755,17 @@ function exportarCarrinho(mode) {
     const dateStr = now.getFullYear().toString() +
         (now.getMonth() + 1).toString().padStart(2, '0') +
         now.getDate().toString().padStart(2, '0');
+    const timeStr = now.getHours().toString().padStart(2, '0') +
+        now.getMinutes().toString().padStart(2, '0') +
+        now.getSeconds().toString().padStart(2, '0');
     txt += `Exportado em: ${now.toLocaleDateString('pt-BR')}\n`;
 
+    const modeLabel = mode === 'custos' ? 'custos' : mode === 'pesos' ? 'pesos' : 'completa';
     const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `contratados-compras-${dateStr}.txt`;
+    a.download = `contratados-compras-${modeLabel}-${dateStr}-${timeStr}.txt`;
     a.click();
     URL.revokeObjectURL(url);
 }
