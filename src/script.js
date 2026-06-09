@@ -835,6 +835,36 @@ let cmpCatAtiva = 'cac';
 let cmpUidCounter = 0;
 let cmpOpenPanels = new Set();
 
+function saveCmpState() {
+    const state = {
+        cart: comprasCart,
+        amps: comprasAmps,
+        uid: cmpUidCounter,
+        dinheiro: document.getElementById('cmp-dinheiro').value,
+        prestigio: document.getElementById('cmp-prestigio').value,
+        inventario: document.getElementById('cmp-inventario').value,
+        vontade: document.getElementById('cmp-vontade').value,
+    };
+    localStorage.setItem('contratados_compras_v1', JSON.stringify(state));
+}
+
+function loadCmpState() {
+    const raw = localStorage.getItem('contratados_compras_v1');
+    if (!raw) return;
+    try {
+        const state = JSON.parse(raw);
+        comprasCart = state.cart || [];
+        comprasAmps = state.amps || [];
+        cmpUidCounter = state.uid || 0;
+        if (state.dinheiro !== undefined) document.getElementById('cmp-dinheiro').value = state.dinheiro;
+        if (state.prestigio !== undefined) document.getElementById('cmp-prestigio').value = state.prestigio;
+        if (state.inventario !== undefined) document.getElementById('cmp-inventario').value = state.inventario;
+        if (state.vontade !== undefined) document.getElementById('cmp-vontade').value = state.vontade;
+    } catch (e) {
+        localStorage.removeItem('contratados_compras_v1');
+    }
+}
+
 // ============================================================
 // ABA COMPRAS — LÓGICA
 // ============================================================
@@ -842,6 +872,7 @@ function calcCompras() {
     renderCmpSummary();
     renderCmpCatalog();
     renderCmpCart();
+    saveCmpState();
 }
 
 function getCmpInputs() {
@@ -1000,6 +1031,7 @@ function addToCart(cat, nome, custo, peso) {
     renderCmpSummary();
     renderCmpCatalog();
     renderCmpCart();
+    saveCmpState();
 }
 
 function removeFromCart(uid) {
@@ -1010,6 +1042,7 @@ function removeFromCart(uid) {
     renderCmpSummary();
     renderCmpCatalog();
     renderCmpCart();
+    saveCmpState();
 }
 
 function addAmp(nome, initStacks, maxStack) {
@@ -1027,6 +1060,7 @@ function addAmp(nome, initStacks, maxStack) {
     renderCmpSummary();
     renderCmpCatalog();
     renderCmpCart();
+    saveCmpState();
 }
 
 function removeAmp(nome) {
@@ -1037,6 +1071,7 @@ function removeAmp(nome) {
     renderCmpSummary();
     renderCmpCatalog();
     renderCmpCart();
+    saveCmpState();
 }
 
 function addMod(uid, modNome) {
@@ -1071,6 +1106,7 @@ function addMod(uid, modNome) {
 
     renderCmpSummary();
     renderCmpCart();
+    saveCmpState();
 }
 
 function removeMod(uid, modNome) {
@@ -1088,6 +1124,7 @@ function removeMod(uid, modNome) {
     }
     renderCmpSummary();
     renderCmpCart();
+    saveCmpState();
 }
 
 function toggleStored(uid) {
@@ -1095,6 +1132,7 @@ function toggleStored(uid) {
     if (item) item.stored = !item.stored;
     renderCmpSummary();
     renderCmpCart();
+    saveCmpState();
 }
 
 const _DIE_LADDER = [3, 4, 6, 8, 10, 12, 20];
@@ -1467,6 +1505,7 @@ function clearTab(id) {
         document.getElementById('cmp-inventario').value = 5;
         document.getElementById('cmp-vontade').value = 1;
         calcCompras();
+        saveCmpState();
     }
 }
 
@@ -1657,4 +1696,6 @@ calc();
 calcDT();
 calcPatente();
 calcDescanso();
+loadCmpState();
+calcCompras();
 calcNovoAgente();
