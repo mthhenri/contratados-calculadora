@@ -887,12 +887,12 @@ const MODIFICACOES = {
         { nome: 'Empunhadura Sofisticada', initStacks: 1, maxStack: 5, bloqueia: [],                                       desc: '+2 nos testes de ataque por stack',                        statEffect: null },
         { nome: 'Explosiva',               initStacks: 1, maxStack: 5, bloqueia: ['Fervente','Furtiva','Plasma'],          desc: '+1D4 [Explosão] por stack',                               statEffect: '+1D4 [Explosão]' },
         { nome: 'Fervente',                initStacks: 1, maxStack: 5, bloqueia: ['Explosiva'],                            desc: '+1D4 [Químico] por stack',                                statEffect: '+1D4 [Químico]' },
-        { nome: 'Furtiva',                 initStacks: 1, maxStack: 2, bloqueia: ['Explosiva','Pesada','Plasma'],          desc: '−1 peso (mín. 1), sem acréscimo de peso da mod',          statEffect: null },
+        { nome: 'Furtiva',                 initStacks: 1, maxStack: 2, bloqueia: ['Explosiva','Pesada','Plasma'],          desc: '−1 peso (mín. 1), sem acréscimo de peso da mod',          statEffect: null, peso: 0 },
         { nome: 'Impacto',                 initStacks: 1, maxStack: 5, bloqueia: [],                                       desc: 'Atordoar 1E (DT Força). +2 DT/stack extra',               statEffect: null },
         { nome: 'Lacerante',               initStacks: 1, maxStack: 5, bloqueia: [],                                       desc: 'Ignora 5 pts de resist. [Físico] por stack',              statEffect: 'Ignora 5 resist. [Físico]' },
         { nome: 'Letal',                   initStacks: 1, maxStack: 5, bloqueia: [],                                       desc: '+2 de dano por stack',                                    statEffect: '+2 dano' },
-        { nome: 'Pesada',                  initStacks: 3, maxStack: 5, bloqueia: ['Furtiva','Tática','Veloz'],             desc: '+1 tipo de dado (máx D10), +0,5 peso/stack',              statEffect: '+1 tipo dado (máx D10)' },
-        { nome: 'Plasma',                  initStacks: 1, maxStack: 5, bloqueia: ['Explosiva','Furtiva','Sangramento','Venenosa'], desc: '+1D6 [Químico] por stack, +0,5 peso', statEffect: '+1D6 [Químico]' },
+        { nome: 'Pesada',                  initStacks: 3, maxStack: 5, bloqueia: ['Furtiva','Tática','Veloz'],             desc: '+1 tipo de dado (máx D10), +0,5 peso/stack',              statEffect: '+1 tipo dado (máx D10)', peso: 0.5 },
+        { nome: 'Plasma',                  initStacks: 1, maxStack: 5, bloqueia: ['Explosiva','Furtiva','Sangramento','Venenosa'], desc: '+1D6 [Químico] por stack, +0,5 peso', statEffect: '+1D6 [Químico]', peso: 0.5 },
         { nome: 'Reforçada',               initStacks: 1, maxStack: 3, bloqueia: [],                                       desc: '+1 dado de dano por stack',                               statEffect: '+1 dado' },
         { nome: 'Sangramento',             initStacks: 1, maxStack: 4, bloqueia: ['Plasma','Venenosa'],                    desc: 'Causa Sangramento 2t (DT Força). +2 DT/+1t por stack',   statEffect: null },
         { nome: 'Tática',                  initStacks: 1, maxStack: 3, bloqueia: ['Pesada'],                               desc: 'Saque livre. Extras: +1 dado no 1º turno/stack',          statEffect: null },
@@ -914,10 +914,10 @@ const MODIFICACOES = {
         { nome: 'Alcance',       initStacks: 1, maxStack: 1, bloqueia: [],                               desc: '+1 nível de alcance',                                          statEffect: null },
         { nome: 'Estabilizador', initStacks: 3, maxStack: 4, bloqueia: [],                               desc: 'Concede Ataque Duplo (+1E). Extras: −1E/stack',                statEffect: null },
         { nome: 'Explosiva',     initStacks: 1, maxStack: 5, bloqueia: ['Furtiva','Silenciada','Plasma'], desc: '+1D6 [Explosão] por stack',                                   statEffect: '+1D6 [Explosão]' },
-        { nome: 'Furtiva',       initStacks: 1, maxStack: 2, bloqueia: ['Plasma','Explosiva'],           desc: '−1 peso (mín. 1), sem acréscimo de peso da mod',               statEffect: null },
+        { nome: 'Furtiva',       initStacks: 1, maxStack: 2, bloqueia: ['Plasma','Explosiva'],           desc: '−1 peso (mín. 1), sem acréscimo de peso da mod',               statEffect: null, peso: 0 },
         { nome: 'Mira Dot',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+2 nos testes de ataque por stack',                            statEffect: null },
         { nome: 'Mira Laser',    initStacks: 1, maxStack: 1, bloqueia: [],                               desc: '+1 dado no teste',                                             statEffect: null },
-        { nome: 'Plasma',        initStacks: 1, maxStack: 5, bloqueia: ['Silenciada','Furtiva','Explosiva'], desc: '+1D8 [Químico] por stack, +0,5 peso. Mun: Células de Plasma', statEffect: '+1D8 [Químico]' },
+        { nome: 'Plasma',        initStacks: 1, maxStack: 5, bloqueia: ['Silenciada','Furtiva','Explosiva'], desc: '+1D8 [Químico] por stack, +0,5 peso. Mun: Células de Plasma', statEffect: '+1D8 [Químico]', peso: 0.5 },
         { nome: 'Potência',      initStacks: 1, maxStack: 5, bloqueia: [],                               desc: '+2 de dano por stack',                                         statEffect: '+2 dano' },
         { nome: 'Silenciada',    initStacks: 1, maxStack: 1, bloqueia: ['Explosiva','Plasma'],           desc: 'Não concede bônus ao alvo ao ficar furtivo após ataque furtivo', statEffect: null },
         { nome: 'Tática',        initStacks: 1, maxStack: 3, bloqueia: [],                               desc: 'Saque livre. Extras: +1 dado no 1º turno/stack',               statEffect: null },
@@ -938,7 +938,7 @@ const MODIFICACOES = {
     ],
     protecoes: [
         { nome: 'Antibombas',  initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Espinhos','Hazmat','Flexível'], desc: '+2 resist. [Explosão] por stack',              statEffect: '+2 [Explosão]' },
-        { nome: 'Blindada',    initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Flexível','Reforçada'],         desc: '+2 na resist. principal, +0,5 peso/stack',     statEffect: '+2 resist.' },
+        { nome: 'Blindada',    initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Flexível','Reforçada'],         desc: '+2 na resist. principal, +0,5 peso/stack',     statEffect: '+2 resist.', peso: 0.5 },
         { nome: 'Camuflada',   initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Blindada','Espinhos'],         desc: '−1 peso (mín. 1), −1 resist. por stack',       statEffect: '−1 resist.' },
         { nome: 'Espinhos',    initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Camuflada','Hazmat'],          desc: '1D6+VIG [Físico] ao atacante. +1 dado/stack',  statEffect: null },
         { nome: 'Flexível',    initStacks: 2, maxStack: 5, bloqueia: ['Antibombas','Blindada','Resistente'],       desc: '+1 ao Esquivar por stack',                     statEffect: null },
@@ -1052,6 +1052,12 @@ function getModPurchases(item, modNome, stacks) {
     return Math.max(1, stacks - initStacks + 1);
 }
 
+// Returns weight added per stack for a given mod (defaults to 0.2).
+function getModPeso(item, modNome) {
+    const def = getAllModDefs(item).find(m => m.nome === modNome);
+    return (def && def.peso !== undefined) ? def.peso : 0.2;
+}
+
 // Returns the cost per stack for a given mod on an item.
 function getModCusto(item, modNome) {
     const borrowedCat = getFazParteBorrowedCat(item);
@@ -1077,7 +1083,7 @@ function getCmpTotals() {
         }
         item.mods.forEach(mod => {
             gasto += getModPurchases(item, mod.nome, mod.stacks) * getModCusto(item, mod.nome) * qty;
-            if (!isStorage || item.stored) pesoUsado += mod.stacks * 0.2 * qty;
+            if (!isStorage || item.stored) pesoUsado += mod.stacks * getModPeso(item, mod.nome) * qty;
             if (isStorage && !item.stored) {
                 if (mod.nome === 'Compartimentos Extras') bonusInventory += mod.stacks * qty;
                 else if (mod.nome === 'Camadas Extras') bonusInventory += mod.stacks * 0.5 * qty;
@@ -1487,7 +1493,7 @@ function renderCmpCart() {
         const hasMods = fullModList.length > 0;
         const modsUsed = item.mods.reduce((s, m) => s + m.stacks, 0);
         const modsCost = item.mods.reduce((s, m) => s + getModPurchases(item, m.nome, m.stacks) * getModCusto(item, m.nome), 0);
-        const modsWeight = item.mods.reduce((s, m) => s + m.stacks * 0.2, 0);
+        const modsWeight = item.mods.reduce((s, m) => s + m.stacks * getModPeso(item, m.nome), 0);
         const qty = item.qty || 1;
         const totalCost = (item.custo + modsCost) * qty;
         const isStorage = item.cat === 'armazenamento';
