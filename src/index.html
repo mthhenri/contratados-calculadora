@@ -589,7 +589,14 @@
                 <div class="step-header">
                     <span class="step-num">3</span>
                     <span class="step-title">Carrinho</span>
-                    <button class="cmp-export-btn" onclick="exportarCarrinho()">📥 Exportar .txt</button>
+                    <div class="cmp-export-wrapper" id="cmp-export-wrapper">
+                        <button class="cmp-export-btn" onclick="toggleExportMenu(event)">📥 Exportar .txt ▾</button>
+                        <div class="cmp-export-menu" id="cmp-export-menu">
+                            <button onclick="exportarCarrinho('completa')">Completa</button>
+                            <button onclick="exportarCarrinho('custos')">Custos</button>
+                            <button onclick="exportarCarrinho('pesos')">Pesos</button>
+                        </div>
+                    </div>
                 </div>
                 <div id="cmp-cart-empty" style="color:var(--txt2);text-align:center;padding:20px 0">Nenhum item adicionado ainda.</div>
                 <div id="cmp-cart"></div>
