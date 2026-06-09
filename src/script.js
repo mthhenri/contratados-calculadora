@@ -231,7 +231,7 @@ function calc() {
             if (b === '+1 Atributo') total.atributos += 0; // já handled abaixo
             if (b.startsWith('+1 Atributo')) total.atributos += 0;
             if (b.includes('Habilidade Geral') && !b.includes('Classe')) total.geral++;
-            if (b.includes('Habilidade de Classe') && !isCivil) total.classe++;
+            if (b.includes('Habilidade de Classe') && !b.includes('Classe ou Arquétipo') && !isCivil) total.classe++;
             if (b.includes('1 Habilidade de Classe') && isCivil) total.classe++;
             if (b.includes('Classe ou Arquétipo')) total.ca++;
             if (b.includes('outra classe') || b.includes('Outra Classe')) total.outra++;
