@@ -655,7 +655,7 @@ const CATALOGO_ITENS = {
         { nome: 'Escudo-Barreira Móvel',  custo: 1750, peso: 4,   resist: '7 [Físico/Balístico]',        desc: 'Barreira de combate. Penalidade: −1 dado DES — 2 mãos' },
     ],
     exoticos: [
-        { nome: 'Lança-Granada',    custo: 3000, peso: 3,   dano: '4D8 [Explosão]',  info: 'Médio · 3m · Mun: Granadas',        desc: 'Lança granadas explosivas em área — 2 mãos',        fazParteCat: 'explosivos' },
+        { nome: 'Lança-Granada',    custo: 3000, peso: 3,   dano: '4D8 [Explosão]',  info: 'Médio · 3m · Mun: Granadas',        desc: 'Lança granadas explosivas em área — 2 mãos',        fazParteCat: 'armasFogo'  },
         { nome: 'Balestra',         custo: 750,  peso: 1.5, dano: '2D6 [Físico]',    info: 'Médio · Mun: Virotes',              desc: 'Arco mecânico de alta precisão — 2 mãos',           fazParteCat: 'armasFogo'  },
         { nome: 'Torreta',          custo: 7500, peso: 5,   dano: '3D6 [Balístico]', info: 'Médio · Mun: 12.7mm',              desc: 'Máquina autônoma de disparo; usa PON de quem a posicionou', fazParteCat: 'armasFogo' },
         { nome: 'Bazuca',           custo: 5000, peso: 7,   dano: '12D8 [Explosão]', info: 'Médio · 7m · Mun: Míssil',         desc: 'Míssil em linha reta, explode no contato — 2 mãos', fazParteCat: 'explosivos' },
