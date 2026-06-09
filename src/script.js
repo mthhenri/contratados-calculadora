@@ -1945,3 +1945,34 @@ calcDescanso();
 loadCmpState();
 calcCompras();
 calcNovoAgente();
+
+// ============================================================
+// EASTER EGG — título "Contratados": 2 cliques, 5 cliques, 1 clique
+(function () {
+    const PATTERN = [2, 5, 1];
+    let groups = [];
+    let currentCount = 0;
+    let timer = null;
+
+    const el = document.getElementById('easter-egg-title');
+    if (!el) return;
+
+    el.style.cursor = 'default';
+
+    el.addEventListener('click', function () {
+        currentCount++;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            groups.push(currentCount);
+            currentCount = 0;
+            if (groups.length === PATTERN.length) {
+                if (groups.every(function (v, i) { return v === PATTERN[i]; })) {
+                    alert('Aquele que procura, acha, e você achou A MORTE');
+                }
+                groups = [];
+            } else if (groups.length > PATTERN.length) {
+                groups = [];
+            }
+        }, 700);
+    });
+})();
