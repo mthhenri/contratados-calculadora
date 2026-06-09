@@ -658,7 +658,7 @@ const CATALOGO_ITENS = {
         { nome: 'Lança-Granada',    custo: 3000, peso: 3,   dano: '4D8 [Explosão]',  info: 'Médio · 3m · Mun: Granadas',        desc: 'Lança granadas explosivas em área — 2 mãos',        fazParteCat: 'armasFogo'  },
         { nome: 'Balestra',         custo: 750,  peso: 1.5, dano: '2D6 [Físico]',    info: 'Médio · Mun: Virotes',              desc: 'Arco mecânico de alta precisão — 2 mãos',           fazParteCat: 'armasFogo'  },
         { nome: 'Torreta',          custo: 7500, peso: 5,   dano: '3D6 [Balístico]', info: 'Médio · Mun: 12.7mm',              desc: 'Máquina autônoma de disparo; usa PON de quem a posicionou', fazParteCat: 'armasFogo' },
-        { nome: 'Bazuca',           custo: 5000, peso: 7,   dano: '12D8 [Explosão]', info: 'Médio · 7m · Mun: Míssil',         desc: 'Míssil em linha reta, explode no contato — 2 mãos', fazParteCat: 'explosivos' },
+        { nome: 'Bazuca',           custo: 5000, peso: 7,   dano: '12D8 [Explosão]', info: 'Médio · 7m · Mun: Míssil',         desc: 'Míssil em linha reta, explode no contato — 2 mãos', fazParteCat: 'armasFogo'  },
         { nome: 'Lança-Chamas',     custo: 3000, peso: 4,   dano: '3D8 [Químico]',   info: 'Curto · Em Chamas · Mun: Propano', desc: 'Rajada de fogo contínua, incendeia área — 2 mãos',  fazParteCat: 'armasFogo'  },
         { nome: 'Motoserra',        custo: 2500, peso: 3,   dano: '2D8 [Físico]',    info: 'CaC · Crítico ×3 · Mun: Gasolina', desc: 'Arma brutal — crítico causa dano ×3 — 2 mãos',     fazParteCat: 'cac'        },
         { nome: 'Quebra-Átomos',    custo: 3500, peso: 4,   dano: '2D12 [Químico]',  info: 'Médio · Mun: Células de Plasma',   desc: 'Fuzil de plasma que desintegra alvos — 2 mãos',    fazParteCat: 'armasFogo'  },
