@@ -655,13 +655,13 @@ const CATALOGO_ITENS = {
         { nome: 'Escudo-Barreira Móvel',  custo: 1750, peso: 4,   resist: '7 [Físico/Balístico]',        desc: 'Barreira de combate. Penalidade: −1 dado DES — 2 mãos' },
     ],
     exoticos: [
-        { nome: 'Lança-Granada',    custo: 3000, peso: 3,   dano: '4D8 [Explosão]',  info: 'Médio · 3m · Mun: Granadas',        desc: 'Lança granadas explosivas em área — 2 mãos' },
-        { nome: 'Balestra',         custo: 750,  peso: 1.5, dano: '2D6 [Físico]',    info: 'Médio · Mun: Virotes',              desc: 'Arco mecânico de alta precisão — 2 mãos' },
-        { nome: 'Torreta',          custo: 7500, peso: 5,   dano: '3D6 [Balístico]', info: 'Médio · Mun: 12.7mm',              desc: 'Máquina autônoma de disparo; usa PON de quem a posicionou' },
-        { nome: 'Bazuca',           custo: 5000, peso: 7,   dano: '12D8 [Explosão]', info: 'Médio · 7m · Mun: Míssil',         desc: 'Míssil em linha reta, explode no contato — 2 mãos' },
-        { nome: 'Lança-Chamas',     custo: 3000, peso: 4,   dano: '3D8 [Químico]',   info: 'Curto · Em Chamas · Mun: Propano', desc: 'Rajada de fogo contínua, incendeia área — 2 mãos' },
-        { nome: 'Motoserra',        custo: 2500, peso: 3,   dano: '2D8 [Físico]',    info: 'CaC · Crítico ×3 · Mun: Gasolina', desc: 'Arma brutal — crítico causa dano ×3 — 2 mãos' },
-        { nome: 'Quebra-Átomos',    custo: 3500, peso: 4,   dano: '2D12 [Químico]',  info: 'Médio · Mun: Células de Plasma',   desc: 'Fuzil de plasma que desintegra alvos — 2 mãos' },
+        { nome: 'Lança-Granada',    custo: 3000, peso: 3,   dano: '4D8 [Explosão]',  info: 'Médio · 3m · Mun: Granadas',        desc: 'Lança granadas explosivas em área — 2 mãos',        fazParteCat: 'explosivos' },
+        { nome: 'Balestra',         custo: 750,  peso: 1.5, dano: '2D6 [Físico]',    info: 'Médio · Mun: Virotes',              desc: 'Arco mecânico de alta precisão — 2 mãos',           fazParteCat: 'armasFogo'  },
+        { nome: 'Torreta',          custo: 7500, peso: 5,   dano: '3D6 [Balístico]', info: 'Médio · Mun: 12.7mm',              desc: 'Máquina autônoma de disparo; usa PON de quem a posicionou', fazParteCat: 'armasFogo' },
+        { nome: 'Bazuca',           custo: 5000, peso: 7,   dano: '12D8 [Explosão]', info: 'Médio · 7m · Mun: Míssil',         desc: 'Míssil em linha reta, explode no contato — 2 mãos', fazParteCat: 'explosivos' },
+        { nome: 'Lança-Chamas',     custo: 3000, peso: 4,   dano: '3D8 [Químico]',   info: 'Curto · Em Chamas · Mun: Propano', desc: 'Rajada de fogo contínua, incendeia área — 2 mãos',  fazParteCat: 'armasFogo'  },
+        { nome: 'Motoserra',        custo: 2500, peso: 3,   dano: '2D8 [Físico]',    info: 'CaC · Crítico ×3 · Mun: Gasolina', desc: 'Arma brutal — crítico causa dano ×3 — 2 mãos',     fazParteCat: 'cac'        },
+        { nome: 'Quebra-Átomos',    custo: 3500, peso: 4,   dano: '2D12 [Químico]',  info: 'Médio · Mun: Células de Plasma',   desc: 'Fuzil de plasma que desintegra alvos — 2 mãos',    fazParteCat: 'armasFogo'  },
     ],
     armazenamento: [
         { nome: 'Bolso de Corpo',     custo: 75,   peso: 0.1, bonus: '+1 inv.',    desc: 'Pequeno bolso corporal discreto' },
@@ -890,6 +890,34 @@ function parseStorageBonus(bonusStr) {
     return m ? parseFloat(m[1].replace(',', '.')) : 0;
 }
 
+// Returns the borrowed category key for an exotic item when "Faz Parte" is active, else null.
+function getFazParteBorrowedCat(item) {
+    if (item.cat !== 'exoticos') return null;
+    const hasFazParte = item.mods.some(m => m.nome === 'Faz Parte');
+    if (!hasFazParte) return null;
+    const ci = CATALOGO_ITENS.exoticos.find(i => i.nome === item.nome);
+    return (ci && ci.fazParteCat) || null;
+}
+
+// Returns the full mod definition list available for an item (base + borrowed if applicable).
+function getAllModDefs(item) {
+    const base = MODIFICACOES[item.cat] || [];
+    const borrowedCat = getFazParteBorrowedCat(item);
+    if (!borrowedCat) return base;
+    const borrowed = (MODIFICACOES[borrowedCat] || []).map(m => ({ ...m, _borrowedFrom: borrowedCat }));
+    return [...base, ...borrowed];
+}
+
+// Returns the cost per stack for a given mod on an item.
+function getModCusto(item, modNome) {
+    const borrowedCat = getFazParteBorrowedCat(item);
+    if (borrowedCat) {
+        const isBorrowed = (MODIFICACOES[borrowedCat] || []).some(m => m.nome === modNome);
+        if (isBorrowed) return MOD_CUSTO[borrowedCat] || 750;
+    }
+    return MOD_CUSTO[item.cat] || 750;
+}
+
 function getCmpTotals() {
     let gasto = 0, pesoUsado = 0, bonusInventory = 0;
 
@@ -903,9 +931,8 @@ function getCmpTotals() {
             const ci = (CATALOGO_ITENS.armazenamento || []).find(c => c.nome === item.nome);
             bonusInventory += parseStorageBonus(ci && ci.bonus) * qty;
         }
-        const modCusto = MOD_CUSTO[item.cat] || 750;
         item.mods.forEach(mod => {
-            gasto += mod.stacks * modCusto * qty;
+            gasto += mod.stacks * getModCusto(item, mod.nome) * qty;
             if (!isStorage || item.stored) pesoUsado += mod.stacks * 0.2 * qty;
             if (isStorage && !item.stored) {
                 if (mod.nome === 'Compartimentos Extras') bonusInventory += mod.stacks * qty;
@@ -1079,7 +1106,7 @@ function addMod(uid, modNome) {
     if (!item) return;
     const { prestigio } = getCmpInputs();
     const pat = getPatenteMod(prestigio);
-    const mods = MODIFICACOES[item.cat] || [];
+    const mods = getAllModDefs(item);
     const modDef = mods.find(m => m.nome === modNome);
     if (!modDef) return;
 
@@ -1112,7 +1139,7 @@ function addMod(uid, modNome) {
 function removeMod(uid, modNome) {
     const item = comprasCart.find(i => i.uid === uid);
     if (!item) return;
-    const mods = MODIFICACOES[item.cat] || [];
+    const mods = getAllModDefs(item);
     const modDef = mods.find(m => m.nome === modNome);
     const existing = item.mods.find(m => m.nome === modNome);
     if (!existing || !modDef) return;
@@ -1252,10 +1279,12 @@ function renderCmpCart() {
     // Regular items
     comprasCart.forEach(item => {
         const modList = MODIFICACOES[item.cat] || [];
-        const hasMods = modList.length > 0;
+        const borrowedCat = getFazParteBorrowedCat(item);
+        const borrowedModList = borrowedCat ? (MODIFICACOES[borrowedCat] || []) : [];
+        const fullModList = borrowedCat ? [...modList, ...borrowedModList.map(m => ({ ...m, _borrowedFrom: borrowedCat }))] : modList;
+        const hasMods = fullModList.length > 0;
         const modsUsed = item.mods.reduce((s, m) => s + m.stacks, 0);
-        const modCusto = MOD_CUSTO[item.cat] || 750;
-        const modsCost = item.mods.reduce((s, m) => s + m.stacks * modCusto, 0);
+        const modsCost = item.mods.reduce((s, m) => s + m.stacks * getModCusto(item, m.nome), 0);
         const modsWeight = item.mods.reduce((s, m) => s + m.stacks * 0.2, 0);
         const qty = item.qty || 1;
         const totalCost = (item.custo + modsCost) * qty;
@@ -1295,8 +1324,7 @@ function renderCmpCart() {
         if (item.mods.length > 0) {
             html += `<div class="cmp-active-mods">`;
             item.mods.forEach(mod => {
-                const def = modList.find(m => m.nome === mod.nome);
-                const canRemove = true;
+                const def = fullModList.find(m => m.nome === mod.nome);
                 const canAdd = mod.stacks < (def ? def.maxStack : 1) && mod.stacks < pat.maxStack && modsUsed < pat.maxMods;
                 html += `<div class="cmp-mod-tag">
                     <span>${mod.nome} ×${mod.stacks}</span>
@@ -1309,18 +1337,14 @@ function renderCmpCart() {
             html += `</div>`;
         }
 
-        // Mod panel
-        if (hasMods) {
-            html += `<button class="cmp-mods-toggle" onclick="toggleModPanel(${item.uid})">
-                ⚙ Modificações (${modsUsed}/${pat.maxMods} slots usados) ▾
-            </button>
-            <div id="cmp-modpanel-${item.uid}" class="cmp-mod-panel" style="display:${cmpOpenPanels.has(item.uid) ? 'block' : 'none'}">
-                <div class="cmp-mod-grid">`;
-            modList.forEach(mod => {
+        // Helper: renders a list of mod entries into html
+        const renderModSection = (mods, sectionCat) => {
+            let out = '';
+            mods.forEach(mod => {
                 const existing = item.mods.find(m => m.nome === mod.nome);
                 const curStacks = existing ? existing.stacks : 0;
                 const blockedByExisting = item.mods.some(m => {
-                    const d = modList.find(d => d.nome === m.nome);
+                    const d = fullModList.find(d => d.nome === m.nome);
                     return d && d.bloqueia.includes(mod.nome);
                 });
                 const thisBlocks = existing && mod.bloqueia.length > 0
@@ -1344,7 +1368,7 @@ function renderCmpCart() {
                     `<span class="cmp-stack-dot${i < curStacks ? ' filled' : ''}"></span>`
                 ).join('');
 
-                html += `<div class="cmp-mod-entry${blockedByExisting ? ' blocked' : ''}${curStacks > 0 ? ' active' : ''}">
+                out += `<div class="cmp-mod-entry${blockedByExisting ? ' blocked' : ''}${curStacks > 0 ? ' active' : ''}">
                     <div class="cmp-mod-entry-top">
                         <span class="cmp-mod-entry-name">${mod.nome}</span>
                         <div class="cmp-mod-entry-stacks">${stackDots}</div>
@@ -1352,7 +1376,7 @@ function renderCmpCart() {
                     ${mod.desc ? `<div class="cmp-item-desc">${mod.desc}</div>` : ''}
                     ${reason ? `<div class="cmp-mod-reason">${reason}</div>` : ''}
                     ${mod.bloqueia.length > 0 ? `<div class="cmp-mod-blocks">Bloqueia: ${mod.bloqueia.join(', ')}</div>` : ''}
-                    <div class="cmp-mod-entry-cost">$${(MOD_CUSTO[item.cat] || 750).toLocaleString('pt-BR')}/stack</div>
+                    <div class="cmp-mod-entry-cost">$${(MOD_CUSTO[sectionCat] || 750).toLocaleString('pt-BR')}/stack</div>
                     <button class="cmp-btn-add cmp-btn-add-sm${!canAdd ? ' disabled' : ''}"
                         onclick="addMod(${item.uid},'${mod.nome}')"
                         ${!canAdd ? 'disabled' : ''}>
@@ -1360,6 +1384,22 @@ function renderCmpCart() {
                     </button>
                 </div>`;
             });
+            return out;
+        };
+
+        // Mod panel
+        if (hasMods) {
+            html += `<button class="cmp-mods-toggle" onclick="toggleModPanel(${item.uid})">
+                ⚙ Modificações (${modsUsed}/${pat.maxMods} slots usados) ▾
+            </button>
+            <div id="cmp-modpanel-${item.uid}" class="cmp-mod-panel" style="display:${cmpOpenPanels.has(item.uid) ? 'block' : 'none'}">
+                <div class="cmp-mod-grid">`;
+            html += renderModSection(modList, item.cat);
+            if (borrowedCat && borrowedModList.length > 0) {
+                const borrowedCatLabel = CATALOGO_CATS.find(c => c.key === borrowedCat)?.label || borrowedCat;
+                html += `</div><div class="cmp-mod-section-header">Via Faz Parte — ${borrowedCatLabel}</div><div class="cmp-mod-grid">`;
+                html += renderModSection(borrowedModList, borrowedCat);
+            }
             html += `</div></div>`;
         }
 
@@ -1426,8 +1466,7 @@ function exportarCarrinho() {
         txt += '--- EQUIPAMENTOS ---\n';
         comprasCart.forEach(item => {
             const qty = item.qty || 1;
-            const modCusto = MOD_CUSTO[item.cat] || 750;
-            const modsCost = item.mods.reduce((s, m) => s + m.stacks * modCusto, 0);
+            const modsCost = item.mods.reduce((s, m) => s + m.stacks * getModCusto(item, m.nome), 0);
             const totalCost = (item.custo + modsCost) * qty;
             txt += `• ${item.nome}${qty > 1 ? ' ×' + qty : ''}${item.cat === 'armazenamento' && !item.stored ? ' [vestida]' : ''} — $${totalCost.toLocaleString('pt-BR')}\n`;
             const computedStatTxt = computeItemStat(item);
