@@ -449,6 +449,41 @@
                 <div class="info-box" style="margin-top:16px" id="desc-notas"></div>
             </div>
 
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Rolar Dados</span>
+                </div>
+                <div class="grid grid-2col" style="margin-bottom:16px">
+                    <div>
+                        <label>Dados Extras de Vida <span style="opacity:.6;font-size:.8em">(ex: 2d6, 1d8)</span></label>
+                        <input id="desc-extra-vida" type="text" placeholder="0" oninput="rollDescansoIfVisible()">
+                    </div>
+                    <div>
+                        <label>Dados Extras de Energia <span style="opacity:.6;font-size:.8em">(ex: 2d6, 1d8)</span></label>
+                        <input id="desc-extra-energia" type="text" placeholder="0" oninput="rollDescansoIfVisible()">
+                    </div>
+                </div>
+                <div style="margin-bottom:16px">
+                    <button class="btn-roll" id="desc-roll-btn" onclick="rollDescanso()">
+                        <span class="dice-icon">🎲</span> Rolar
+                    </button>
+                </div>
+                <div class="grid grid-2col" id="desc-roll-container" style="display:none">
+                    <div>
+                        <div class="stat-label" style="margin-bottom:8px">Vida Recuperada</div>
+                        <div class="descanso-result" id="desc-roll-vida" style="font-size:2rem">—</div>
+                        <div class="dt-formula" id="desc-roll-vida-breakdown">—</div>
+                    </div>
+                    <div>
+                        <div class="stat-label" style="margin-bottom:8px">Energia Recuperada</div>
+                        <div class="descanso-result" id="desc-roll-energia"
+                            style="color:var(--blue);background:rgba(82,153,255,.05);border-color:rgba(82,153,255,.15);font-size:2rem">—</div>
+                        <div class="dt-formula" id="desc-roll-energia-breakdown">—</div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- /tab-descanso -->
 
         <!-- ===================== ABA COMPRAS ===================== -->
