@@ -968,6 +968,7 @@ const MODIFICACOES = {
 let comprasCart = [];   // [{uid, nome, cat, custo, peso, qty, mods:[{nome, stacks}]}]
 let comprasAmps = [];   // [{nome, stacks}]
 let cmpCatAtiva = 'cac';
+let cmpSearch = '';
 let cmpUidCounter = 0;
 let cmpOpenPanels = new Set();
 
@@ -1129,47 +1130,96 @@ function renderCmpCatalog() {
     // Category tabs
     const tabsEl = document.getElementById('cmp-cat-tabs');
     tabsEl.innerHTML = CATALOGO_CATS.map(c =>
-        `<button class="cmp-cat-btn${cmpCatAtiva === c.key ? ' active' : ''}" onclick="setCmpCat('${c.key}')">${c.icon} ${c.label}</button>`
+        `<button class="cmp-cat-btn${cmpCatAtiva === c.key ? ' active' : ''}${cmpSearch ? ' disabled' : ''}" onclick="setCmpCat('${c.key}')">${c.icon} ${c.label}</button>`
     ).join('');
 
     const el = document.getElementById('cmp-catalog');
     const cat = cmpCatAtiva;
 
-    if (cat === 'amplificador') {
-        const { vontade, prestigio } = getCmpInputs();
-        const pat = getPatenteMod(prestigio);
-        const ampLimit = vontade * 3;
-        const ampStacks = comprasAmps.reduce((s, a) => s + a.stacks, 0);
-        el.innerHTML = `<div class="cmp-info-box">Limite: <strong>Vontade × 3 = ${ampLimit} stacks</strong> totais · máx. <strong>${pat.maxStack} stack/amp</strong> (${pat.nome}) · Primeiro empilhamento: $3.000 · Adicionais: $1.000</div>
-        <div class="cmp-item-grid">` +
-        CATALOGO_ITENS.amplificador.map(amp => {
-            const inCart = comprasAmps.find(a => a.nome === amp.nome);
-            const curStacks = inCart ? inCart.stacks : 0;
-            const effectiveMax = Math.min(amp.maxStack, pat.maxStack);
-            const canAdd = ampStacks < ampLimit && curStacks < effectiveMax;
-            return `<div class="cmp-item-card">
-                <div class="cmp-item-name">${amp.nome}</div>
-                <div class="cmp-item-desc">${amp.efeito}</div>
-                <div class="cmp-item-meta">
-                    <span class="cmp-item-cost">$${curStacks === 0 ? '3.000' : '1.000'}</span>
-                    <span class="cmp-item-weight">máx. ${effectiveMax} stacks</span>
-                </div>
-                ${curStacks > 0 ? `<div class="cmp-amp-stacks">Ativo: ${curStacks}/${effectiveMax} stack${curStacks > 1 ? 's' : ''}
-                    ${curStacks >= 2 ? '<span class="cmp-penalty-tag">-2 Vontade</span>' : ''}</div>` : ''}
-                <div class="cmp-item-actions">
-                    ${curStacks > 0 ? `<button class="cmp-btn-remove" onclick="removeAmp('${amp.nome}')">−</button>` : ''}
-                    <button class="cmp-btn-add${!canAdd ? ' disabled' : ''}" onclick="addAmp('${amp.nome}',${amp.initStacks},${amp.maxStack})"${!canAdd ? ' disabled' : ''}>
-                        ${curStacks === 0 ? '+ Adquirir ($3.000)' : '+ Stack ($1.000)'}
-                    </button>
-                </div>
-            </div>`;
-        }).join('') + '</div>';
+    // --- Amplificador section (only shown if no search, or search matches amps) ---
+    if (!cmpSearch) {
+        if (cat === 'amplificador') {
+            el.innerHTML = buildAmpCatalogHtml();
+            return;
+        }
+    } else {
+        const ampMatch = CATALOGO_ITENS.amplificador.some(a => a.nome.toLowerCase().includes(cmpSearch));
+        if (ampMatch && !CATALOGO_CATS.filter(c => c.key !== 'amplificador').some(c =>
+            (CATALOGO_ITENS[c.key] || []).some(i => i.nome.toLowerCase().includes(cmpSearch))
+        )) {
+            // Only amp results — show amp section
+            el.innerHTML = buildAmpCatalogHtml(cmpSearch);
+            return;
+        }
+        if (ampMatch) {
+            // Mixed results: show regular items + amp section below
+            const regularHtml = buildRegularItemsHtml(cmpSearch);
+            el.innerHTML = regularHtml + buildAmpCatalogHtml(cmpSearch);
+            return;
+        }
+        el.innerHTML = buildRegularItemsHtml(cmpSearch);
         return;
     }
 
-    const itens = CATALOGO_ITENS[cat] || [];
-    el.innerHTML = `<div class="cmp-item-grid">` +
-    itens.map(item => {
+    el.innerHTML = buildRegularItemsHtml(null, cat);
+}
+
+function buildAmpCatalogHtml(search) {
+    const { vontade, prestigio } = getCmpInputs();
+    const pat = getPatenteMod(prestigio);
+    const ampLimit = vontade * 3;
+    const ampStacks = comprasAmps.reduce((s, a) => s + a.stacks, 0);
+    const amps = search
+        ? CATALOGO_ITENS.amplificador.filter(a => a.nome.toLowerCase().includes(search))
+        : CATALOGO_ITENS.amplificador;
+    return `<div class="cmp-info-box">Limite: <strong>Vontade × 3 = ${ampLimit} stacks</strong> totais · máx. <strong>${pat.maxStack} stack/amp</strong> (${pat.nome}) · Primeiro empilhamento: $3.000 · Adicionais: $1.000</div>
+    <div class="cmp-item-grid">` +
+    amps.map(amp => {
+        const inCart = comprasAmps.find(a => a.nome === amp.nome);
+        const curStacks = inCart ? inCart.stacks : 0;
+        const effectiveMax = Math.min(amp.maxStack, pat.maxStack);
+        const canAdd = ampStacks < ampLimit && curStacks < effectiveMax;
+        return `<div class="cmp-item-card">
+            <div class="cmp-item-name">${amp.nome}</div>
+            <div class="cmp-item-desc">${amp.efeito}</div>
+            <div class="cmp-item-meta">
+                <span class="cmp-item-cost">$${curStacks === 0 ? '3.000' : '1.000'}</span>
+                <span class="cmp-item-weight">máx. ${effectiveMax} stacks</span>
+            </div>
+            ${curStacks > 0 ? `<div class="cmp-amp-stacks">Ativo: ${curStacks}/${effectiveMax} stack${curStacks > 1 ? 's' : ''}
+                ${curStacks >= 2 ? '<span class="cmp-penalty-tag">-2 Vontade</span>' : ''}</div>` : ''}
+            <div class="cmp-item-actions">
+                ${curStacks > 0 ? `<button class="cmp-btn-remove" onclick="removeAmp('${amp.nome}')">−</button>` : ''}
+                <button class="cmp-btn-add${!canAdd ? ' disabled' : ''}" onclick="addAmp('${amp.nome}',${amp.initStacks},${amp.maxStack})"${!canAdd ? ' disabled' : ''}>
+                    ${curStacks === 0 ? '+ Adquirir ($3.000)' : '+ Stack ($1.000)'}
+                </button>
+            </div>
+        </div>`;
+    }).join('') + '</div>';
+}
+
+function buildRegularItemsHtml(search, cat) {
+    let itensParaRender;
+    if (search) {
+        itensParaRender = [];
+        for (const [catKey, itens] of Object.entries(CATALOGO_ITENS)) {
+            if (catKey === 'amplificador') continue;
+            for (const item of itens) {
+                if (item.nome.toLowerCase().includes(search)) {
+                    itensParaRender.push({ ...item, _cat: catKey });
+                }
+            }
+        }
+    } else {
+        itensParaRender = (CATALOGO_ITENS[cat] || []).map(item => ({ ...item, _cat: cat }));
+    }
+
+    if (itensParaRender.length === 0) {
+        return `<div class="cmp-item-grid"><p style="color:var(--txt-muted,#888);padding:1rem;">Nenhum item encontrado.</p></div>`;
+    }
+
+    return `<div class="cmp-item-grid">` +
+    itensParaRender.map(item => {
         const hasBonus = item.bonus ? `<span class="cmp-bonus-tag">${item.bonus}</span>` : '';
         const statLine = item.dano
             ? `<div class="cmp-item-stat">⚔ ${item.dano}${item.info ? ' · ' + item.info : ''}</div>`
@@ -1184,13 +1234,18 @@ function renderCmpCatalog() {
                 <span class="cmp-item-cost">$${item.custo.toLocaleString('pt-BR')}</span>
                 <span class="cmp-item-weight">${item.peso} slot${item.peso !== 1 ? 's' : ''}</span>
             </div>
-            <button class="cmp-btn-add" onclick="addToCart('${cat}','${item.nome.replace(/'/g, "\\'")}',${item.custo},${item.peso})">+ Adicionar</button>
+            <button class="cmp-btn-add" onclick="addToCart('${item._cat}','${item.nome.replace(/'/g, "\\'")}',${item.custo},${item.peso})">+ Adicionar</button>
         </div>`;
     }).join('') + '</div>';
 }
 
 function setCmpCat(key) {
     cmpCatAtiva = key;
+    renderCmpCatalog();
+}
+
+function setCmpSearch(val) {
+    cmpSearch = val.trim().toLowerCase();
     renderCmpCatalog();
 }
 

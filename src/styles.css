@@ -789,6 +789,21 @@ hr {
     margin-bottom: 4px;
 }
 .cmp-summary-val { font-size: 1.05rem; font-weight: 700; color: var(--txt); }
+#cmp-search {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--txt);
+    font-size: 0.9rem;
+    outline: none;
+}
+#cmp-search:focus { border-color: var(--blue); }
+#cmp-search::placeholder { color: #888; }
+.cmp-cat-btn.disabled { opacity: 0.4; pointer-events: none; }
 .cmp-cat-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 .cmp-cat-btn {
     background: rgba(255,255,255,.05);
