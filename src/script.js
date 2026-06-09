@@ -683,7 +683,6 @@ function switchTab(id) {
 
 const VALID_TABS = ['agente', 'dt', 'novo', 'patente', 'descanso', 'compras'];
 const initialTab = VALID_TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'agente';
-if (initialTab !== 'agente') switchTab(initialTab);
 
 function stepInput(id, delta) {
     const el = document.getElementById(id);
@@ -1770,6 +1769,69 @@ function exportarCarrinho(mode) {
     URL.revokeObjectURL(url);
 }
 
+// ── Exportar/Importar código compartilhável ──
+
+function abrirModalExportarCodigo() {
+    document.getElementById('cmp-export-menu').classList.remove('open');
+    const payload = {
+        v: 1,
+        cart: comprasCart,
+        amps: comprasAmps,
+        dinheiro: document.getElementById('cmp-dinheiro').value,
+        prestigio: document.getElementById('cmp-prestigio').value,
+        inventario: document.getElementById('cmp-inventario').value,
+        vontade: document.getElementById('cmp-vontade').value,
+    };
+    const code = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    document.getElementById('cmp-export-code-text').value = code;
+    document.getElementById('cmp-modal-export-code').classList.remove('hidden');
+}
+
+function fecharModalExportarCodigo() {
+    document.getElementById('cmp-modal-export-code').classList.add('hidden');
+}
+
+function copiarCodigoCarrinho() {
+    const ta = document.getElementById('cmp-export-code-text');
+    ta.select();
+    navigator.clipboard.writeText(ta.value).catch(() => document.execCommand('copy'));
+}
+
+function abrirModalImportar() {
+    document.getElementById('cmp-import-text').value = '';
+    document.getElementById('cmp-modal-import').classList.remove('hidden');
+}
+
+function fecharModalImportar() {
+    document.getElementById('cmp-modal-import').classList.add('hidden');
+}
+
+function importarCarrinho() {
+    const raw = document.getElementById('cmp-import-text').value.trim();
+    if (!raw) return;
+    let payload;
+    try {
+        payload = JSON.parse(decodeURIComponent(escape(atob(raw))));
+    } catch (e) {
+        alert('Código inválido. Verifique se copiou o código corretamente.');
+        return;
+    }
+    if (!payload || payload.v !== 1 || !Array.isArray(payload.cart) || !Array.isArray(payload.amps)) {
+        alert('Código incompatível ou corrompido.');
+        return;
+    }
+    comprasCart = payload.cart;
+    comprasAmps = payload.amps;
+    cmpUidCounter = comprasCart.reduce((max, item) => Math.max(max, item.uid ?? 0), 0) + 1;
+    if (payload.dinheiro !== undefined) document.getElementById('cmp-dinheiro').value = payload.dinheiro;
+    if (payload.prestigio !== undefined) document.getElementById('cmp-prestigio').value = payload.prestigio;
+    if (payload.inventario !== undefined) document.getElementById('cmp-inventario').value = payload.inventario;
+    if (payload.vontade !== undefined) document.getElementById('cmp-vontade').value = payload.vontade;
+    fecharModalImportar();
+    calcCompras();
+    saveCmpState();
+}
+
 function clearTab(id) {
     if (id === 'agente') {
         document.getElementById('classe').value = 'Combatente';
@@ -2010,6 +2072,7 @@ calcDescanso();
 loadCmpState();
 calcCompras();
 calcNovoAgente();
+if (initialTab !== 'agente') switchTab(initialTab);
 
 // ============================================================
 // EASTER EGG — título "Contratados": 2 cliques, 5 cliques, 1 clique

@@ -590,12 +590,16 @@
                     <span class="step-num">3</span>
                     <span class="step-title">Carrinho</span>
                     <button class="clear-tab-btn" onclick="limparCarrinho()" title="Esvaziar carrinho">🗑 Esvaziar carrinho</button>
-                    <div class="cmp-export-wrapper" id="cmp-export-wrapper">
-                        <button class="cmp-export-btn" onclick="toggleExportMenu(event)">📥 Exportar .txt ▾</button>
-                        <div class="cmp-export-menu" id="cmp-export-menu">
-                            <button onclick="exportarCarrinho('completa')">Completa</button>
-                            <button onclick="exportarCarrinho('custos')">Custos</button>
-                            <button onclick="exportarCarrinho('pesos')">Pesos</button>
+                    <div class="cmp-share-group">
+                        <button class="cmp-import-btn" onclick="abrirModalImportar()" title="Importar lista de outro jogador">📂 Importar</button>
+                        <button class="cmp-share-btn" onclick="abrirModalExportarCodigo()" title="Gerar código para compartilhar">🔗 Compartilhar</button>
+                        <div class="cmp-export-wrapper" id="cmp-export-wrapper">
+                            <button class="cmp-export-btn" onclick="toggleExportMenu(event)">📄 .txt ▾</button>
+                            <div class="cmp-export-menu" id="cmp-export-menu">
+                                <button onclick="exportarCarrinho('completa')">Completa</button>
+                                <button onclick="exportarCarrinho('custos')">Custos</button>
+                                <button onclick="exportarCarrinho('pesos')">Pesos</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -606,6 +610,31 @@
         </div><!-- /tab-compras -->
 
     </div><!-- /container -->
+
+    <!-- ===================== MODAL EXPORTAR CÓDIGO ===================== -->
+    <div class="cmp-modal-overlay hidden" id="cmp-modal-export-code">
+        <div class="cmp-modal-card">
+            <h3>Código da lista de compras</h3>
+            <textarea id="cmp-export-code-text" readonly onclick="this.select()"></textarea>
+            <div class="cmp-modal-actions">
+                <button class="cmp-modal-btn-secondary" onclick="fecharModalExportarCodigo()">Fechar</button>
+                <button class="cmp-modal-btn-primary" onclick="copiarCodigoCarrinho()">Copiar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL IMPORTAR ===================== -->
+    <div class="cmp-modal-overlay hidden" id="cmp-modal-import">
+        <div class="cmp-modal-card">
+            <h3>Importar lista de compras</h3>
+            <p class="cmp-modal-warn">⚠ Isso substituirá sua lista atual.</p>
+            <textarea id="cmp-import-text" placeholder="Cole o código aqui..."></textarea>
+            <div class="cmp-modal-actions">
+                <button class="cmp-modal-btn-secondary" onclick="fecharModalImportar()">Cancelar</button>
+                <button class="cmp-modal-btn-primary" onclick="importarCarrinho()">Importar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ===================== MODAL DE AJUDA ===================== -->
     <div class="help-overlay" id="help-overlay" onclick="closeHelpOnOverlay(event)">
