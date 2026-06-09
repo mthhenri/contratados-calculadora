@@ -1265,6 +1265,17 @@ function addToCart(cat, nome, custo, peso) {
     saveCmpState();
 }
 
+function limparCarrinho() {
+    if (comprasCart.length === 0 && comprasAmps.length === 0) return;
+    comprasCart = [];
+    comprasAmps = [];
+    cmpOpenPanels = new Set();
+    renderCmpSummary();
+    renderCmpCatalog();
+    renderCmpCart();
+    saveCmpState();
+}
+
 function removeFromCart(uid) {
     const item = comprasCart.find(i => i.uid === uid);
     if (!item) return;
