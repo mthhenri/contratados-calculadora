@@ -58,8 +58,7 @@ function getPatente(prest) {
 function calcularDeslocamento(des, isCivil) {
     if (isCivil) {
         if (des <= 1) return '6m';
-        if (des <= 3) return '7m';
-        return '8m';
+        return '7m';
     } else {
         if (des <= 0) return '8m';
         if (des <= 4) return '9m';
@@ -170,7 +169,7 @@ function calc() {
     document.getElementById('corpo').textContent = calcularDanoCorpo(f, v, isCivil);
     document.getElementById('inventario').textContent = calcularInventario(f, isCivil);
     document.getElementById('traumas').textContent = isCivil ? 'N/A' : (von + 1);
-    document.getElementById('sequelas').textContent = isCivil ? 'N/A' : ('VON (' + von + ')');
+    document.getElementById('sequelas').textContent = 'VON (' + von + ')';
     document.getElementById('percepcao').textContent = sen <= 0 ? '3 m' : (5 + sen * 5) + ' m';
 
     // Limite de Energia
@@ -193,7 +192,7 @@ function calc() {
             });
         }
     }
-    const habTurnoTotal = isCivil ? 'N/A' : (habTurnoBase + habTurnoGanhos);
+    const habTurnoTotal = isCivil ? 3 : (habTurnoBase + habTurnoGanhos);
     document.getElementById('habturno').textContent = habTurnoTotal;
     document.getElementById('habturno-sub').textContent = isCivil ? '' : ('base 4 + ' + habTurnoGanhos + ' ganhos');
 
@@ -228,8 +227,6 @@ function calc() {
                 else if (!b.startsWith('1 Habilidade de Classe') && !b.startsWith('+1 Habilidade')) total.atributos += 1;
                 else if (b === '+1 Atributo') total.atributos += 1;
             }
-            if (b === '+1 Atributo') total.atributos += 0; // já handled abaixo
-            if (b.startsWith('+1 Atributo')) total.atributos += 0;
             if (b.includes('Habilidade Geral') && !b.includes('Classe')) total.geral++;
             if (b.includes('Habilidade de Classe') && !b.includes('Classe ou Arquétipo') && !isCivil) total.classe++;
             if (b.includes('1 Habilidade de Classe') && isCivil) total.classe++;
