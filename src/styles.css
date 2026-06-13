@@ -1,5 +1,7 @@
-﻿:root {
+/* ── Tema padrão (Vermelho — SCP) ─────────────────────── */
+:root {
     --bg: linear-gradient(135deg, #0f0c20 0%, #15102a 50%, #060409 100%);
+    --bg-solid: #0f0c20;
     --glass: rgba(255, 255, 255, 0.03);
     --border: rgba(255, 255, 255, 0.08);
     --border-accent: rgba(216, 74, 74, 0.3);
@@ -7,10 +9,92 @@
     --txt2: #a39eb9;
     --accent: #ff5252;
     --accent-g: linear-gradient(135deg, #ff5252 0%, #b31010 100%);
+    --accent-rgb: 255, 82, 82;
     --glow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     --green: #52ffaa;
     --blue: #5299ff;
     --yellow: #ffd152;
+    --modal-bg: #15102a;
+    --modal-bg2: #1a1530;
+    --nav-bg: rgba(15, 12, 32, 0.97);
+    --select-bg: #15102a;
+    --select-opt-bg: #0f0c20;
+}
+
+/* ── Tema Azul — Cibernético ───────────────────────────── */
+[data-theme="azul"] {
+    --bg: linear-gradient(135deg, #060d1f 0%, #0a1628 50%, #020810 100%);
+    --bg-solid: #060d1f;
+    --glass: rgba(0, 212, 255, 0.03);
+    --border: rgba(0, 212, 255, 0.1);
+    --border-accent: rgba(0, 212, 255, 0.3);
+    --txt: #e8f4ff;
+    --txt2: #6ba8c9;
+    --accent: #00d4ff;
+    --accent-g: linear-gradient(135deg, #00d4ff 0%, #0080aa 100%);
+    --accent-rgb: 0, 212, 255;
+    --modal-bg: #0a1628;
+    --modal-bg2: #0d1e38;
+    --nav-bg: rgba(6, 13, 31, 0.97);
+    --select-bg: #0a1628;
+    --select-opt-bg: #060d1f;
+}
+
+/* ── Tema Verde — Tático ───────────────────────────────── */
+[data-theme="verde"] {
+    --bg: linear-gradient(135deg, #081208 0%, #0d1f0d 50%, #040904 100%);
+    --bg-solid: #081208;
+    --glass: rgba(57, 255, 20, 0.02);
+    --border: rgba(57, 255, 20, 0.08);
+    --border-accent: rgba(57, 255, 20, 0.25);
+    --txt: #e8f5e9;
+    --txt2: #6ab56a;
+    --accent: #39ff14;
+    --accent-g: linear-gradient(135deg, #39ff14 0%, #1a8000 100%);
+    --accent-rgb: 57, 255, 20;
+    --modal-bg: #0d1f0d;
+    --modal-bg2: #121f12;
+    --nav-bg: rgba(8, 18, 8, 0.97);
+    --select-bg: #0d1f0d;
+    --select-opt-bg: #081208;
+}
+
+/* ── Tema Roxo — Místico ───────────────────────────────── */
+[data-theme="roxo"] {
+    --bg: linear-gradient(135deg, #100820 0%, #1a0d35 50%, #080412 100%);
+    --bg-solid: #100820;
+    --glass: rgba(192, 132, 252, 0.03);
+    --border: rgba(192, 132, 252, 0.1);
+    --border-accent: rgba(192, 132, 252, 0.3);
+    --txt: #f0e8ff;
+    --txt2: #9b7bc0;
+    --accent: #c084fc;
+    --accent-g: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%);
+    --accent-rgb: 192, 132, 252;
+    --modal-bg: #1a0d35;
+    --modal-bg2: #1f1242;
+    --nav-bg: rgba(16, 8, 32, 0.97);
+    --select-bg: #1a0d35;
+    --select-opt-bg: #100820;
+}
+
+/* ── Tema Laranja — Operacional ────────────────────────── */
+[data-theme="laranja"] {
+    --bg: linear-gradient(135deg, #1a0f00 0%, #241800 50%, #0d0700 100%);
+    --bg-solid: #1a0f00;
+    --glass: rgba(255, 140, 0, 0.03);
+    --border: rgba(255, 140, 0, 0.1);
+    --border-accent: rgba(255, 140, 0, 0.3);
+    --txt: #fff8f0;
+    --txt2: #b88c5c;
+    --accent: #ff8c00;
+    --accent-g: linear-gradient(135deg, #ff8c00 0%, #cc5500 100%);
+    --accent-rgb: 255, 140, 0;
+    --modal-bg: #241800;
+    --modal-bg2: #2e1f00;
+    --nav-bg: rgba(26, 15, 0, 0.97);
+    --select-bg: #241800;
+    --select-opt-bg: #1a0f00;
 }
 
 *,
@@ -50,7 +134,7 @@ h1 {
     text-align: center;
     color: var(--txt2);
     font-size: .85rem;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
     letter-spacing: 1px;
     text-transform: uppercase
 }
@@ -106,11 +190,66 @@ h3 {
     border-left: 3px solid var(--yellow)
 }
 
+/* ── Seletor de Tema ────────────────────────────────── */
+.theme-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.theme-picker-label {
+    font-size: .72rem;
+    color: var(--txt2);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    font-weight: 600;
+}
+
+.theme-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+    outline: none;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.theme-dot:hover {
+    transform: scale(1.25);
+}
+
+.theme-dot.active {
+    border-color: var(--txt);
+    box-shadow: 0 0 10px rgba(255, 255, 255, .35);
+    transform: scale(1.2);
+}
+
+.theme-dot[data-theme="vermelho"] { background: #ff5252; }
+.theme-dot[data-theme="azul"]     { background: #00d4ff; }
+.theme-dot[data-theme="verde"]    { background: #39ff14; }
+.theme-dot[data-theme="roxo"]     { background: #c084fc; }
+.theme-dot[data-theme="laranja"]  { background: #ff8c00; }
+
+/* ── Tabs de navegação ──────────────────────────────── */
 .tabs {
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
-    flex-wrap: wrap
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
 }
 
 .tab {
@@ -122,14 +261,16 @@ h3 {
     font-size: .9rem;
     color: var(--txt2);
     transition: all .25s;
-    letter-spacing: .5px
+    letter-spacing: .5px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .tab.active {
     background: var(--accent-g);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 4px 16px rgba(255, 82, 82, .3)
+    box-shadow: 0 4px 16px rgba(var(--accent-rgb), .3)
 }
 
 .tab-panel {
@@ -137,7 +278,13 @@ h3 {
 }
 
 .tab-panel.active {
-    display: block
+    display: block;
+    animation: tabFadeIn .22s ease both;
+}
+
+@keyframes tabFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
 }
 
 .grid {
@@ -191,7 +338,7 @@ input:focus,
 select:focus {
     background: rgba(255, 255, 255, .08);
     border-color: var(--accent);
-    box-shadow: 0 0 12px rgba(255, 82, 82, .2)
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), .2)
 }
 
 input[type=range] {
@@ -206,7 +353,7 @@ input[type=range] {
 
 input[type=range]::-webkit-slider-runnable-track {
     height: 10px;
-    background: linear-gradient(90deg, rgba(255, 82, 82, .15), rgba(255, 82, 82, .35));
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), .15), rgba(var(--accent-rgb), .35));
     border: 1px solid rgba(255, 255, 255, .08);
     border-radius: 999px
 }
@@ -220,12 +367,12 @@ input[type=range]::-webkit-slider-thumb {
     background: var(--accent-g);
     border: 2px solid rgba(255, 255, 255, .5);
     margin-top: -7px;
-    box-shadow: 0 4px 14px rgba(255, 82, 82, .35)
+    box-shadow: 0 4px 14px rgba(var(--accent-rgb), .35)
 }
 
 input[type=range]::-moz-range-track {
     height: 10px;
-    background: linear-gradient(90deg, rgba(255, 82, 82, .15), rgba(255, 82, 82, .35));
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), .15), rgba(var(--accent-rgb), .35));
     border: 1px solid rgba(255, 255, 255, .08);
     border-radius: 999px
 }
@@ -236,7 +383,7 @@ input[type=range]::-moz-range-thumb {
     border-radius: 50%;
     background: var(--accent-g);
     border: 2px solid rgba(255, 255, 255, .5);
-    box-shadow: 0 4px 14px rgba(255, 82, 82, .35)
+    box-shadow: 0 4px 14px rgba(var(--accent-rgb), .35)
 }
 
 input[type=range]:focus {
@@ -245,12 +392,12 @@ input[type=range]:focus {
 }
 
 select option {
-    background: #15102a;
+    background: var(--select-bg);
     color: #fff
 }
 
 select optgroup {
-    background: #0f0c20;
+    background: var(--select-opt-bg);
     color: var(--accent);
     font-weight: bold
 }
@@ -267,8 +414,8 @@ select optgroup {
 }
 
 .stat-box.highlight {
-    border-color: rgba(255, 82, 82, .2);
-    background: rgba(255, 82, 82, .04)
+    border-color: rgba(var(--accent-rgb), .2);
+    background: rgba(var(--accent-rgb), .04)
 }
 
 .stat-box.green {
@@ -333,7 +480,7 @@ li strong {
 
 .bullet-list span.tag {
     display: inline-block;
-    background: rgba(255, 82, 82, .12);
+    background: rgba(var(--accent-rgb), .12);
     color: var(--accent);
     padding: 1px 7px;
     border-radius: 5px;
@@ -360,7 +507,7 @@ li strong {
     font-size: .78rem;
     font-weight: bold;
     letter-spacing: .5px;
-    box-shadow: 0 4px 12px rgba(216, 74, 74, .3)
+    box-shadow: 0 4px 12px rgba(var(--accent-rgb), .3)
 }
 
 .badge-green {
@@ -451,9 +598,9 @@ hr {
     color: var(--accent);
     text-align: center;
     padding: 16px;
-    background: rgba(255, 82, 82, .06);
+    background: rgba(var(--accent-rgb), .06);
     border-radius: 10px;
-    border: 1px solid rgba(255, 82, 82, .15)
+    border: 1px solid rgba(var(--accent-rgb), .15)
 }
 
 .dt-formula {
@@ -541,7 +688,7 @@ hr {
     font-size: .8rem;
     font-weight: 800;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(255,82,82,.35)
+    box-shadow: 0 4px 12px rgba(var(--accent-rgb), .35)
 }
 
 .step-title {
@@ -610,12 +757,12 @@ hr {
 }
 
 .step-btn:hover {
-    background: rgba(255,82,82,.2);
+    background: rgba(var(--accent-rgb), .18);
     color: var(--accent)
 }
 
 .step-btn:active {
-    background: rgba(255,82,82,.35)
+    background: rgba(var(--accent-rgb), .32)
 }
 
 /* ===== STATS HERO ===== */
@@ -650,7 +797,7 @@ hr {
 
     .subtitle {
         font-size: .75rem;
-        margin-bottom: 16px
+        margin-bottom: 10px
     }
 
     .card {
@@ -671,7 +818,7 @@ hr {
         left: 0;
         right: 0;
         z-index: 100;
-        background: rgba(15, 12, 32, 0.97);
+        background: var(--nav-bg);
         backdrop-filter: blur(20px);
         border-top: 1px solid var(--border);
         padding: 6px 0 env(safe-area-inset-bottom, 6px)
@@ -763,6 +910,12 @@ hr {
     .stepper input[type=number] {
         height: 48px
     }
+
+    /* Theme picker mobile — compacto */
+    .theme-picker {
+        margin-bottom: 12px;
+        gap: 8px;
+    }
 }
 
 /* ============================================================
@@ -794,7 +947,7 @@ hr {
     box-sizing: border-box;
     padding: 8px 12px;
     margin-bottom: 10px;
-    background: var(--card);
+    background: var(--glass);
     border: 1px solid var(--border);
     border-radius: 8px;
     color: var(--txt);
@@ -1094,7 +1247,7 @@ hr {
     position: absolute;
     right: 0;
     top: calc(100% + 4px);
-    background: var(--bg2, #1a1f2e);
+    background: var(--modal-bg2);
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
@@ -1155,7 +1308,7 @@ hr {
 .help-overlay.open { display: flex; }
 
 .help-modal {
-    background: #15102a;
+    background: var(--modal-bg);
     border: 1px solid rgba(82,153,255,.3);
     border-radius: 18px;
     box-shadow: 0 24px 64px rgba(0,0,0,.6);
@@ -1364,7 +1517,7 @@ hr {
 }
 .cmp-modal-overlay.hidden { display: none; }
 .cmp-modal-card {
-    background: #1a1530;
+    background: var(--modal-bg2);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 24px;

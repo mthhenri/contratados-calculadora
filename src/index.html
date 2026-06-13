@@ -14,6 +14,16 @@
         <h1><span id="easter-egg-title">Contratados</span> — Terminal de Agente</h1>
         <p class="subtitle">Fundação SCP · Classe E · Sistema de Progressão</p>
 
+        <!-- Seletor de tema de cores -->
+        <div class="theme-picker" id="theme-picker" role="group" aria-label="Selecionar tema de cores">
+            <span class="theme-picker-label">Tema:</span>
+            <button class="theme-dot" data-theme="vermelho" onclick="setTheme('vermelho')" title="Vermelho — SCP" aria-label="Tema Vermelho"></button>
+            <button class="theme-dot" data-theme="azul"     onclick="setTheme('azul')"     title="Azul — Cibernético" aria-label="Tema Azul"></button>
+            <button class="theme-dot" data-theme="verde"    onclick="setTheme('verde')"    title="Verde — Tático" aria-label="Tema Verde"></button>
+            <button class="theme-dot" data-theme="roxo"     onclick="setTheme('roxo')"     title="Roxo — Místico" aria-label="Tema Roxo"></button>
+            <button class="theme-dot" data-theme="laranja"  onclick="setTheme('laranja')"  title="Laranja — Operacional" aria-label="Tema Laranja"></button>
+        </div>
+
         <div class="tabs" id="tabs-desktop">
             <div class="tab active" data-tab="agente" onclick="switchTab('agente')">⚔ Agente / Civil</div>
             <div class="tab" data-tab="dt" onclick="switchTab('dt')">🎯 Calculadora de DT</div>
