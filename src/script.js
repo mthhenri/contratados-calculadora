@@ -2060,14 +2060,141 @@ document.addEventListener('click', () => {
 });
 
 // ============================================================
-// TEMA DE CORES
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('ct-theme', theme);
-    document.querySelectorAll('.theme-dot').forEach(d => {
-        d.classList.toggle('active', d.dataset.theme === theme);
+// SISTEMA DE TEMA V2
+const ACCENTS = {
+    vermelho: { hex: '#ff3333', rgb: '255,51,51',     g2: '#990000' },
+    azul:     { hex: '#0099dd', rgb: '0,153,221',     g2: '#005588' },
+    verde:    { hex: '#00e87a', rgb: '0,232,122',     g2: '#007a40' },
+    roxo:     { hex: '#c084fc', rgb: '192,132,252',   g2: '#7c3aed' },
+    laranja:  { hex: '#ff8c00', rgb: '255,140,0',     g2: '#cc5500' },
+    amarelo:  { hex: '#ffd166', rgb: '255,209,102',   g2: '#b38200' },
+    ciano:    { hex: '#00e5ff', rgb: '0,229,255',     g2: '#007799' },
+    branco:   { hex: '#ffffff', rgb: '255,255,255',   g2: '#999999' },
+};
+
+const BASES = {
+    preto:   { bg: '#05050a', modal: '#0c0c14', modal2: '#111120', nav: 'rgba(5,5,10,.97)',      sel: '#0c0c14', selopt: '#05050a', dark: true  },
+    cinza:   { bg: '#0c0e18', modal: '#131624', modal2: '#191c30', nav: 'rgba(12,14,24,.97)',    sel: '#131624', selopt: '#0c0e18', dark: true  },
+    ardosia: { bg: '#141a2e', modal: '#1c2440', modal2: '#222950', nav: 'rgba(20,26,46,.97)',    sel: '#1c2440', selopt: '#141a2e', dark: true  },
+    branco:  { bg: '#f0f2f8', modal: '#ffffff', modal2: '#f0f2f8', nav: 'rgba(240,242,248,.97)', sel: '#f0f2f8', selopt: '#ffffff', dark: false },
+};
+
+let _themeState = { accent: 'vermelho', base: 'preto', glass: true, liquid: true, ...JSON.parse(localStorage.getItem('ct-theme-v2') || 'null') };
+
+function applyTheme(accent, base, glass, liquid = _themeState.liquid) {
+    const a = ACCENTS[accent] || ACCENTS.vermelho;
+    const b = BASES[base] || BASES.preto;
+    const r = document.documentElement;
+
+    r.style.setProperty('--accent', a.hex);
+    r.style.setProperty('--accent-rgb', a.rgb);
+    r.style.setProperty('--bg-solid', b.bg);
+    r.style.setProperty('--modal-bg', b.modal);
+    r.style.setProperty('--modal-bg2', b.modal2);
+    r.style.setProperty('--nav-bg', b.nav);
+    r.style.setProperty('--select-bg', b.sel);
+    r.style.setProperty('--select-opt-bg', b.selopt);
+    r.setAttribute('data-base', base);
+
+    if (b.dark) {
+        r.style.setProperty('--txt', '#f0eef6');
+        r.style.setProperty('--txt2', '#6a6880');
+        r.style.setProperty('--border', 'rgba(255,255,255,0.07)');
+        r.style.setProperty('--card-bg', 'rgba(255,255,255,0.035)');
+        r.style.setProperty('--glass-solid', 'rgba(255,255,255,0.06)');
+        r.style.setProperty('--green', '#00e87a');
+        r.style.setProperty('--blue', '#0099dd');
+        r.style.setProperty('--yellow', '#ffd166');
+    } else {
+        r.style.setProperty('--txt', '#151825');
+        r.style.setProperty('--txt2', '#5a5e7a');
+        r.style.setProperty('--border', 'rgba(0,0,0,0.1)');
+        r.style.setProperty('--card-bg', 'rgba(0,0,0,0.04)');
+        r.style.setProperty('--glass-solid', 'rgba(0,0,0,0.07)');
+        r.style.setProperty('--green', '#008844');
+        r.style.setProperty('--blue', '#0066aa');
+        r.style.setProperty('--yellow', '#885500');
+    }
+
+    if (glass) {
+        r.classList.remove('no-glass');
+    } else {
+        r.classList.add('no-glass');
+    }
+
+    if (liquid) {
+        r.classList.remove('no-liquid');
+    } else {
+        r.classList.add('no-liquid');
+    }
+}
+
+function setAccent(accent) {
+    _themeState.accent = accent;
+    applyTheme(_themeState.accent, _themeState.base, _themeState.glass);
+    saveTheme();
+    document.querySelectorAll('.swatch-accent').forEach(s => {
+        s.classList.toggle('active', s.dataset.accent === accent);
     });
 }
+
+function setBase(base) {
+    _themeState.base = base;
+    applyTheme(_themeState.accent, _themeState.base, _themeState.glass);
+    saveTheme();
+    document.querySelectorAll('.swatch-base').forEach(s => {
+        s.classList.toggle('active', s.dataset.base === base);
+    });
+}
+
+function toggleGlass() {
+    _themeState.glass = !_themeState.glass;
+    applyTheme(_themeState.accent, _themeState.base, _themeState.glass);
+    saveTheme();
+    const btn = document.getElementById('glass-toggle');
+    if (btn) btn.classList.toggle('on', _themeState.glass);
+}
+
+function toggleLiquid() {
+    _themeState.liquid = !_themeState.liquid;
+    applyTheme(_themeState.accent, _themeState.base, _themeState.glass, _themeState.liquid);
+    saveTheme();
+    const btn = document.getElementById('liquid-toggle');
+    if (btn) btn.classList.toggle('on', _themeState.liquid);
+}
+
+function saveTheme() {
+    localStorage.setItem('ct-theme-v2', JSON.stringify(_themeState));
+}
+
+function openSettings() {
+    const overlay = document.getElementById('settings-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('hidden');
+    // sync UI state
+    document.querySelectorAll('.swatch-accent').forEach(s => {
+        s.classList.toggle('active', s.dataset.accent === _themeState.accent);
+    });
+    document.querySelectorAll('.swatch-base').forEach(s => {
+        s.classList.toggle('active', s.dataset.base === _themeState.base);
+    });
+    const glassBtn = document.getElementById('glass-toggle');
+    if (glassBtn) glassBtn.classList.toggle('on', _themeState.glass);
+    const liquidBtn = document.getElementById('liquid-toggle');
+    if (liquidBtn) liquidBtn.classList.toggle('on', _themeState.liquid);
+}
+
+function closeSettings() {
+    const overlay = document.getElementById('settings-overlay');
+    if (overlay) overlay.classList.add('hidden');
+}
+
+function closeSettingsOnOverlay(e) {
+    if (e.target === document.getElementById('settings-overlay')) closeSettings();
+}
+
+// Legado — mantido para compatibilidade
+function setTheme(theme) {}
 
 // ============================================================
 // Init
@@ -2081,8 +2208,8 @@ calcCompras();
 calcNovoAgente();
 if (initialTab !== 'agente') switchTab(initialTab);
 
-// Aplica tema salvo (após renderização inicial)
-setTheme(localStorage.getItem('ct-theme') || 'vermelho');
+// Aplica tema salvo
+applyTheme(_themeState.accent, _themeState.base, _themeState.glass, _themeState.liquid);
 
 // ============================================================
 // EASTER EGG — título "Contratados": 2 cliques, 5 cliques, 1 clique

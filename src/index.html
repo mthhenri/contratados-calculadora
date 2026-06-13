@@ -6,23 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contratados - Terminal de Agente</title>
     <link rel="icon" type="image/png" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>
+    (function(){
+        var s = JSON.parse(localStorage.getItem('ct-theme-v2')||'null')||{accent:'vermelho',base:'preto',glass:true,liquid:true};
+        var AH={vermelho:'#ff3333',azul:'#0099dd',verde:'#00e87a',roxo:'#c084fc',laranja:'#ff8c00',amarelo:'#ffd166',ciano:'#00e5ff',branco:'#ffffff'};
+        var AR={vermelho:'255,51,51',azul:'0,153,221',verde:'0,232,122',roxo:'192,132,252',laranja:'255,140,0',amarelo:'255,209,102',ciano:'0,229,255',branco:'255,255,255'};
+        var BB={preto:'#05050a',cinza:'#0c0e18',ardosia:'#141a2e',branco:'#f0f2f8'};
+        var r=document.documentElement;
+        r.style.setProperty('--accent',AH[s.accent]||'#ff3333');
+        r.style.setProperty('--accent-rgb',AR[s.accent]||'255,51,51');
+        r.style.setProperty('--bg-solid',BB[s.base]||'#05050a');
+        if(!s.glass)r.classList.add('no-glass');
+        if(s.liquid===false)r.classList.add('no-liquid');
+        r.setAttribute('data-base',s.base||'preto');
+    })();
+    </script>
 </head>
 
 <body>
+    <!-- Fundo líquido animado -->
+    <div class="liquid-bg" id="liquid-bg">
+        <div class="liquid-blob liqd-1"></div>
+        <div class="liquid-blob liqd-2"></div>
+        <div class="liquid-blob liqd-3"></div>
+    </div>
+
     <div class="container">
         <h1><span id="easter-egg-title">Contratados</span> — Terminal de Agente</h1>
         <p class="subtitle">Fundação SCP · Classe E · Sistema de Progressão</p>
 
-        <!-- Seletor de tema de cores -->
-        <div class="theme-picker" id="theme-picker" role="group" aria-label="Selecionar tema de cores">
-            <span class="theme-picker-label">Tema:</span>
-            <button class="theme-dot" data-theme="vermelho" onclick="setTheme('vermelho')" title="Vermelho — SCP" aria-label="Tema Vermelho"></button>
-            <button class="theme-dot" data-theme="azul"     onclick="setTheme('azul')"     title="Azul — Cibernético" aria-label="Tema Azul"></button>
-            <button class="theme-dot" data-theme="verde"    onclick="setTheme('verde')"    title="Verde — Tático" aria-label="Tema Verde"></button>
-            <button class="theme-dot" data-theme="roxo"     onclick="setTheme('roxo')"     title="Roxo — Místico" aria-label="Tema Roxo"></button>
-            <button class="theme-dot" data-theme="laranja"  onclick="setTheme('laranja')"  title="Laranja — Operacional" aria-label="Tema Laranja"></button>
-        </div>
+        <!-- theme-picker legado (oculto) -->
+        <div id="theme-picker" style="display:none"></div>
 
         <div class="tabs" id="tabs-desktop">
             <div class="tab active" data-tab="agente" onclick="switchTab('agente')">⚔ Agente / Civil</div>
@@ -684,6 +702,72 @@
             <span class="bnav-label">Compras</span>
         </button>
     </nav>
+
+    <!-- Botão de configurações (FAB) -->
+    <button class="settings-fab" id="settings-fab" onclick="openSettings()" aria-label="Configurações de tema" title="Configurações">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+
+    <!-- Modal de configurações -->
+    <div class="settings-overlay hidden" id="settings-overlay" onclick="closeSettingsOnOverlay(event)">
+        <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+            <div class="settings-header">
+                <span class="settings-title" id="settings-title">Configurações</span>
+                <button class="settings-close" onclick="closeSettings()" aria-label="Fechar">✕</button>
+            </div>
+            <div class="settings-body">
+
+                <div class="settings-section">
+                    <div class="settings-section-label">Cor Principal</div>
+                    <div class="settings-swatches" id="accent-swatches">
+                        <button class="swatch swatch-accent active" data-accent="vermelho" onclick="setAccent('vermelho')" title="Vermelho"><span class="swatch-dot" style="background:#ff3333"></span><span class="swatch-name">Vermelho</span></button>
+                        <button class="swatch swatch-accent" data-accent="azul"     onclick="setAccent('azul')"     title="Azul"><span class="swatch-dot" style="background:#0099dd"></span><span class="swatch-name">Azul</span></button>
+                        <button class="swatch swatch-accent" data-accent="verde"    onclick="setAccent('verde')"    title="Verde"><span class="swatch-dot" style="background:#00e87a"></span><span class="swatch-name">Verde</span></button>
+                        <button class="swatch swatch-accent" data-accent="roxo"     onclick="setAccent('roxo')"     title="Roxo"><span class="swatch-dot" style="background:#c084fc"></span><span class="swatch-name">Roxo</span></button>
+                        <button class="swatch swatch-accent" data-accent="laranja"  onclick="setAccent('laranja')"  title="Laranja"><span class="swatch-dot" style="background:#ff8c00"></span><span class="swatch-name">Laranja</span></button>
+                        <button class="swatch swatch-accent" data-accent="amarelo"  onclick="setAccent('amarelo')"  title="Amarelo"><span class="swatch-dot" style="background:#ffd166"></span><span class="swatch-name">Amarelo</span></button>
+                        <button class="swatch swatch-accent" data-accent="ciano"    onclick="setAccent('ciano')"    title="Ciano"><span class="swatch-dot" style="background:#00e5ff"></span><span class="swatch-name">Ciano</span></button>
+                        <button class="swatch swatch-accent" data-accent="branco"   onclick="setAccent('branco')"   title="Branco"><span class="swatch-dot" style="background:#ffffff;border:1px solid rgba(255,255,255,.3)"></span><span class="swatch-name">Branco</span></button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-section-label">Base</div>
+                    <div class="settings-swatches" id="base-swatches">
+                        <button class="swatch swatch-base active" data-base="preto"    onclick="setBase('preto')"    title="Preto"><span class="swatch-dot" style="background:#05050a;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Preto</span></button>
+                        <button class="swatch swatch-base" data-base="cinza"    onclick="setBase('cinza')"    title="Cinza Escuro"><span class="swatch-dot" style="background:#0c0e18;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Cinza</span></button>
+                        <button class="swatch swatch-base" data-base="ardosia"  onclick="setBase('ardosia')"  title="Ardósia"><span class="swatch-dot" style="background:#141a2e;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Ardósia</span></button>
+                        <button class="swatch swatch-base" data-base="branco"   onclick="setBase('branco')"   title="Branco"><span class="swatch-dot" style="background:#f0f2f8;border:1px solid rgba(0,0,0,.15)"></span><span class="swatch-name">Branco</span></button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-toggle-row">
+                        <div>
+                            <div class="settings-section-label" style="margin-bottom:2px">Glassmorphism</div>
+                            <div class="settings-toggle-desc">Transparência e desfoque nos cards</div>
+                        </div>
+                        <button class="settings-toggle" id="glass-toggle" onclick="toggleGlass()" aria-label="Toggle glassmorphism">
+                            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-toggle-row">
+                        <div>
+                            <div class="settings-section-label" style="margin-bottom:2px">Fundo Líquido</div>
+                            <div class="settings-toggle-desc">Blobs animados reagindo à cor de destaque</div>
+                        </div>
+                        <button class="settings-toggle" id="liquid-toggle" onclick="toggleLiquid()" aria-label="Toggle fundo líquido">
+                            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
