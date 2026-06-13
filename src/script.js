@@ -2060,6 +2060,16 @@ document.addEventListener('click', () => {
 });
 
 // ============================================================
+// TEMA DE CORES
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('ct-theme', theme);
+    document.querySelectorAll('.theme-dot').forEach(d => {
+        d.classList.toggle('active', d.dataset.theme === theme);
+    });
+}
+
+// ============================================================
 // Init
 aplicarLimitesPorClasse(document.getElementById('classe').value);
 calc();
@@ -2070,6 +2080,9 @@ loadCmpState();
 calcCompras();
 calcNovoAgente();
 if (initialTab !== 'agente') switchTab(initialTab);
+
+// Aplica tema salvo (após renderização inicial)
+setTheme(localStorage.getItem('ct-theme') || 'vermelho');
 
 // ============================================================
 // EASTER EGG — título "Contratados": 2 cliques, 5 cliques, 1 clique
