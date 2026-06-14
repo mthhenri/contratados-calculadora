@@ -1,0 +1,70 @@
+.descanso-result {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--green);
+    text-align: center;
+    padding: 12px;
+    background: rgba(82, 255, 170, .05);
+    border-radius: 10px;
+    border: 1px solid rgba(82, 255, 170, .12)
+}
+
+/* ============================================================
+   DICE ROLLER — BOTÃO E ANIMAÇÕES
+   ============================================================ */
+.btn-roll {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #52ffaa 0%, #1fc97a 100%);
+    color: #071a0f;
+    border: none;
+    border-radius: 14px;
+    padding: 13px 32px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: .6px;
+    cursor: pointer;
+    box-shadow: 0 4px 22px rgba(82, 255, 170, .30), 0 1px 4px rgba(0,0,0,.4);
+    transition: box-shadow .2s, transform .15s, filter .15s;
+    user-select: none;
+}
+.btn-roll:hover {
+    box-shadow: 0 6px 32px rgba(82, 255, 170, .52), 0 1px 6px rgba(0,0,0,.4);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+.btn-roll:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 12px rgba(82, 255, 170, .2);
+    filter: brightness(.95);
+}
+.btn-roll.rolling {
+    opacity: .65;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.dice-icon {
+    display: inline-block;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+.btn-roll.rolling .dice-icon {
+    animation: dice-shake .35s ease-in-out infinite;
+}
+@keyframes dice-shake {
+    0%   { transform: rotate(0deg)   scale(1);    }
+    20%  { transform: rotate(-18deg) scale(1.25); }
+    45%  { transform: rotate(22deg)  scale(1.1);  }
+    65%  { transform: rotate(-12deg) scale(1.2);  }
+    85%  { transform: rotate(15deg)  scale(1.05); }
+    100% { transform: rotate(0deg)   scale(1);    }
+}
+@keyframes roll-pop {
+    0%   { transform: scale(.5) rotate(-8deg); opacity: 0; }
+    65%  { transform: scale(1.18) rotate(2deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); }
+}
+.roll-pop {
+    animation: roll-pop .4s cubic-bezier(.34, 1.56, .64, 1) both;
+}

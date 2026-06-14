@@ -1,0 +1,10 @@
+.patente-box {
+    background: rgba(255, 255, 255, .02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px
+}
+.patente-nome { font-size: 1.3rem; font-weight: 800; color: var(--accent) }
+.patente-info { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px }
+.patente-item { font-size: .85rem; color: var(--txt2) }
+.patente-item strong { color: var(--txt) }

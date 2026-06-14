@@ -1,0 +1,118 @@
+
+            <!-- Passo 1: Configuração -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Configuração do Agente</span>
+                    <button class="help-btn" onclick="openHelp('compras')">? Ajuda</button>
+                    <button class="clear-tab-btn" onclick="clearTab('compras')" title="Limpar carrinho e restaurar padrões">🗑 Limpar</button>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Dinheiro Disponível ($)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-dinheiro',-100)">−</button>
+                            <input id="cmp-dinheiro" type="number" min="0" step="100" value="1000" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-dinheiro',100)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Prestígio Atual</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-prestigio',-1)">−</button>
+                            <input id="cmp-prestigio" type="number" min="0" value="0" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-prestigio',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Inventário Máximo (slots)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-inventario',-1)">−</button>
+                            <input id="cmp-inventario" type="number" min="0" step="0.5" value="5" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInputFloat('cmp-inventario',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Vontade (limite de Amplificadores)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-vontade',-1)">−</button>
+                            <input id="cmp-vontade" type="number" min="0" max="12" value="1" oninput="calcCompras()">
+                            <button type="button" class="step-btn" onclick="stepInput('cmp-vontade',1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo de limites e gastos -->
+            <div class="card" id="cmp-summary-card">
+                <div class="cmp-summary-grid">
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Patente</div>
+                        <div class="cmp-summary-val" id="cmp-s-patente">—</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Dinheiro Restante</div>
+                        <div class="cmp-summary-val cmp-money" id="cmp-s-dinheiro">$0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Gasto Total</div>
+                        <div class="cmp-summary-val" id="cmp-s-gasto" style="color:var(--accent)">$0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Inventário Usado</div>
+                        <div class="cmp-summary-val" id="cmp-s-inv">0 / 0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Amplificadores</div>
+                        <div class="cmp-summary-val" id="cmp-s-amps">0 / 0</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Mods por Item</div>
+                        <div class="cmp-summary-val" id="cmp-s-modlimit">—</div>
+                    </div>
+                    <div class="cmp-summary-item">
+                        <div class="cmp-summary-label">Penalidade Amps</div>
+                        <div class="cmp-summary-val" id="cmp-s-vontade-pen">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 2: Catálogo -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Catálogo de Equipamentos</span>
+                </div>
+                <input
+                    id="cmp-search"
+                    type="search"
+                    placeholder="Pesquisar item..."
+                    oninput="setCmpSearch(this.value)"
+                    autocomplete="off"
+                />
+                <div class="cmp-cat-tabs" id="cmp-cat-tabs"></div>
+                <div id="cmp-catalog"></div>
+            </div>
+
+            <!-- Passo 3: Carrinho -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Carrinho</span>
+                    <button class="clear-tab-btn" onclick="limparCarrinho()" title="Esvaziar carrinho">🗑 Esvaziar carrinho</button>
+                    <div class="cmp-share-group">
+                        <button class="cmp-import-btn" onclick="abrirModalImportar()" title="Importar lista de outro jogador">📂 Importar</button>
+                        <button class="cmp-share-btn" onclick="abrirModalExportarCodigo()" title="Gerar código para compartilhar">🔗 Compartilhar</button>
+                        <div class="cmp-export-wrapper" id="cmp-export-wrapper">
+                            <button class="cmp-export-btn" onclick="toggleExportMenu(event)">📄 .txt ▾</button>
+                            <div class="cmp-export-menu" id="cmp-export-menu">
+                                <button onclick="exportarCarrinho('completa')">Completa</button>
+                                <button onclick="exportarCarrinho('custos')">Custos</button>
+                                <button onclick="exportarCarrinho('pesos')">Pesos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cmp-cart-empty" style="color:var(--txt2);text-align:center;padding:20px 0">Nenhum item adicionado ainda.</div>
+                <div id="cmp-cart"></div>
+            </div>

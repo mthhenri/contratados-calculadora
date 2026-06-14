@@ -1,0 +1,6 @@
+.novo-agente-result {
+    background: rgba(82, 153, 255, .05);
+    border: 1px solid rgba(82, 153, 255, .15);
+    border-radius: 12px;
+    padding: 18px
+}

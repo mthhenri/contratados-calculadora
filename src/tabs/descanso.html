@@ -1,0 +1,122 @@
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Configuração do Descanso</span>
+                    <button class="help-btn" onclick="openHelp('descanso')">? Ajuda</button>
+                    <button class="clear-tab-btn" onclick="clearTab('descanso')" title="Restaurar padrões">🗑 Limpar</button>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Tipo de Descanso</label>
+                        <select id="desc-tipo" onchange="calcDescanso()">
+                            <option value="curto">Curto (~15 min) — 1D4</option>
+                            <option value="medio">Médio (2–4h) — 1D6</option>
+                            <option value="longo">Longo (6–8h) — 1D8 · Uma vez por dia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Qualidade do Ambiente</label>
+                        <select id="desc-qualidade" onchange="calcDescanso()">
+                            <option value="insalubre">Insalubre (−1 tipo de dado)</option>
+                            <option value="adequado" selected>Adequado (padrão)</option>
+                            <option value="confortavel">Confortável (+1 tipo de dado)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Vigor (para Vida)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-vig',-1)">−</button>
+                            <input id="desc-vig" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-vig',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Destreza (para Energia)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-des',-1)">−</button>
+                            <input id="desc-des" type="number" min="0" max="12" value="1" oninput="calcDescanso()">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-des',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Nível</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-nivel',-1)">−</button>
+                            <input id="desc-nivel" type="number" min="0" max="20" value="0" oninput="calcDescanso()">
+                            <button type="button" class="step-btn" onclick="stepInput('desc-nivel',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Refeição consumida?</label>
+                        <select id="desc-refeicao" onchange="calcDescanso()">
+                            <option value="nao">Não</option>
+                            <option value="sim">Sim (+1 tipo de dado)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Foi interrompido?</label>
+                        <select id="desc-interrupcao" onchange="calcDescanso()">
+                            <option value="nao">Não</option>
+                            <option value="sim">Sim (÷2 no resultado)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Resultado</span>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <div class="stat-label" style="margin-bottom:8px">Recuperação de Vida</div>
+                        <div class="descanso-result" id="desc-vida-result">—</div>
+                        <div class="dt-formula" id="desc-vida-formula">—</div>
+                    </div>
+                    <div>
+                        <div class="stat-label" style="margin-bottom:8px">Recuperação de Energia</div>
+                        <div class="descanso-result" id="desc-energia-result"
+                            style="color:var(--blue);background:rgba(82,153,255,.05);border-color:rgba(82,153,255,.15)">
+                            —</div>
+                        <div class="dt-formula" id="desc-energia-formula">—</div>
+                    </div>
+                </div>
+                <div class="info-box" style="margin-top:16px" id="desc-notas"></div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Rolar Dados</span>
+                </div>
+                <div class="grid grid-2col" style="margin-bottom:16px">
+                    <div>
+                        <label>Dados Extras de Vida <span style="opacity:.6;font-size:.8em">(ex: 2d6, 1d8)</span></label>
+                        <input id="desc-extra-vida" type="text" placeholder="0" oninput="rollDescansoIfVisible()">
+                    </div>
+                    <div>
+                        <label>Dados Extras de Energia <span style="opacity:.6;font-size:.8em">(ex: 2d6, 1d8)</span></label>
+                        <input id="desc-extra-energia" type="text" placeholder="0" oninput="rollDescansoIfVisible()">
+                    </div>
+                </div>
+                <div style="margin-bottom:16px">
+                    <button class="btn-roll" id="desc-roll-btn" onclick="rollDescanso()">
+                        <span class="dice-icon">🎲</span> Rolar
+                    </button>
+                </div>
+                <div class="grid grid-2col" id="desc-roll-container" style="display:none">
+                    <div>
+                        <div class="stat-label" style="margin-bottom:8px">Vida Recuperada</div>
+                        <div class="descanso-result" id="desc-roll-vida" style="font-size:2rem">—</div>
+                        <div class="dt-formula" id="desc-roll-vida-breakdown">—</div>
+                    </div>
+                    <div>
+                        <div class="stat-label" style="margin-bottom:8px">Energia Recuperada</div>
+                        <div class="descanso-result" id="desc-roll-energia"
+                            style="color:var(--blue);background:rgba(82,153,255,.05);border-color:rgba(82,153,255,.15);font-size:2rem">—</div>
+                        <div class="dt-formula" id="desc-roll-energia-breakdown">—</div>
+                    </div>
+                </div>
+            </div>
