@@ -1,0 +1,40 @@
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Calculadora de DT</span>
+                    <button class="help-btn" onclick="openHelp('dt')">? Ajuda</button>
+                    <button class="clear-tab-btn" onclick="clearTab('dt')" title="Restaurar padrões">🗑 Limpar</button>
+                </div>
+                <p style="color:var(--txt2);font-size:.9rem;margin:0 0 18px">Calcula a DT que seus aliados e inimigos precisam superar para resistir às suas ações.</p>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Nível do personagem</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-nivel',-1)">−</button>
+                            <input id="dt-attr-nivel" type="number" min="0" max="20" value="0" oninput="calcDT()">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-nivel',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Atributo usado</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-attr',-1)">−</button>
+                            <input id="dt-attr-attr" type="number" min="0" max="12" value="1" oninput="calcDT()">
+                            <button type="button" class="step-btn" onclick="stepInput('dt-attr-attr',1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dt-result" id="dt-attr-result"
+                    style="color:var(--green);background:rgba(82,255,170,.06);border-color:rgba(82,255,170,.2);margin-top:14px">
+                    —</div>
+                <div class="dt-formula">Fórmula: 10 + Nível + (Atributo × 2)</div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Tabela de Referência Rápida</span>
+                </div>
+                <div id="dt-tabela" style="overflow-x:auto;margin-top:10px"></div>
+            </div>

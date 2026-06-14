@@ -1,0 +1,70 @@
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Configuração</span>
+                    <button class="help-btn" onclick="openHelp('novo')">? Ajuda</button>
+                    <button class="clear-tab-btn" onclick="clearTab('novo')" title="Restaurar padrões">🗑 Limpar</button>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Motivo de entrada</label>
+                        <select id="novo-motivo" onchange="calcNovoAgente()">
+                            <option value="morte">Morte / Entrada do zero</option>
+                            <option value="aposent">Aposentadoria</option>
+                            <option value="exp_regular">Experimento (subclasse) — novo regular</option>
+                            <option value="exp_exp">Experimento (subclasse) — novo Experimento</option>
+                            <option value="extinto_regular">Contido/Exterminado → Regular</option>
+                            <option value="extinto_exp">Contido/Exterminado → Experimento</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Média de Nível do grupo <span style="color:var(--txt2);font-weight:400">(excl. saindo)</span></label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-nivel',-1)">−</button>
+                            <input id="novo-media-nivel" type="number" min="0" max="20" step="0.1" value="5" oninput="calcNovoAgente()">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-nivel',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Média de Prestígio do grupo <span style="color:var(--txt2);font-weight:400">(excl. saindo)</span></label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-prest',-1)">−</button>
+                            <input id="novo-media-prest" type="number" min="0" value="10" oninput="calcNovoAgente()">
+                            <button type="button" class="step-btn" onclick="stepInput('novo-media-prest',1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Resultado</span>
+                </div>
+                <div class="novo-agente-result" id="novo-resultado">—</div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Bônus Monetário Inicial</span>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Prestígio Inicial (calculado acima ou manual)</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('bonus-prest',-1)">−</button>
+                            <input id="bonus-prest" type="number" min="0" value="0" oninput="calcBonus()">
+                            <button type="button" class="step-btn" onclick="stepInput('bonus-prest',1)">+</button>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-end">
+                        <div class="dt-result" id="bonus-result"
+                            style="color:var(--yellow);background:rgba(255,209,82,.05);border-color:rgba(255,209,82,.2);width:100%">
+                            $0</div>
+                    </div>
+                </div>
+                <div class="dt-formula" style="text-align:left;margin-top:8px">Fórmula: Prestígio × (500 × Multiplicador de Patente) + Dinheiro Inicial padrão</div>
+                <div id="bonus-patente-info" style="margin-top:10px;color:var(--txt2);font-size:.85rem"></div>
+            </div>

@@ -1,0 +1,180 @@
+
+            <!-- Passo 1: Classe & Nível -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Classe &amp; Nível</span>
+                    <button class="help-btn" onclick="openHelp('agente')">? Ajuda</button>
+                    <button class="clear-tab-btn" onclick="clearTab('agente')" title="Restaurar padrões">🗑 Limpar</button>
+                </div>
+                <div class="grid grid-2col">
+                    <div>
+                        <label>Classe / Registro</label>
+                        <select id="classe" onchange="calc()">
+                            <optgroup label="Classes Base">
+                                <option>Combatente</option>
+                                <option>Especialista</option>
+                                <option>Suporte</option>
+                            </optgroup>
+                            <optgroup label="Subclasses de Experimento">
+                                <option>Experimento Bestial</option>
+                                <option>Experimento Artificial</option>
+                                <option>Experimento Híbrido</option>
+                            </optgroup>
+                            <optgroup label="Funcionários Não-Agentes">
+                                <option>Civil</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="row-split" style="justify-content:space-between;align-items:flex-end;margin-bottom:7px">
+                            <label id="label-nivel" style="margin-bottom:0">Nível</label>
+                            <span id="nivel-valor" class="badge badge-yellow">0</span>
+                        </div>
+                        <input id="nivel" type="range" min="0" max="20" step="1" value="0" oninput="calc()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 2: Atributos -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Atributos</span>
+                </div>
+                <div class="grid grid-attrs">
+                    <div>
+                        <label>Vigor</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('vig',-1)">−</button>
+                            <input id="vig" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('vig',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Destreza</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('des',-1)">−</button>
+                            <input id="des" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('des',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Força</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('for',-1)">−</button>
+                            <input id="for" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('for',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Vontade</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('von',-1)">−</button>
+                            <input id="von" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('von',1)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Sentidos</label>
+                        <div class="stepper">
+                            <button type="button" class="step-btn" onclick="stepInput('sen',-1)">−</button>
+                            <input id="sen" type="number" min="-5" max="12" value="1" oninput="calc()">
+                            <button type="button" class="step-btn" onclick="stepInput('sen',1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 3: Resultados -->
+            <div class="card step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Status do Personagem</span>
+                </div>
+
+                <!-- Stats primários em destaque -->
+                <div class="grid-stats-hero">
+                    <div class="stat-box highlight stat-hero">
+                        <div class="stat-label">Vida</div>
+                        <div id="vida" class="stat"></div>
+                    </div>
+                    <div class="stat-box highlight stat-hero" style="border-color:rgba(82,153,255,.25);background:rgba(82,153,255,.06)">
+                        <div class="stat-label">Energia</div>
+                        <div id="energia" class="stat" style="color:var(--blue)"></div>
+                    </div>
+                    <div class="stat-box blue stat-hero">
+                        <div class="stat-label">Defesa Base</div>
+                        <div id="defesa" class="stat"></div>
+                    </div>
+                    <div class="stat-box blue stat-hero">
+                        <div class="stat-label">Proficiência</div>
+                        <div id="prof" class="stat"></div>
+                    </div>
+                </div>
+
+                <!-- Stats secundários -->
+                <div class="grid-stats" style="margin-top:14px">
+                    <div class="stat-box">
+                        <div class="stat-label">Deslocamento</div>
+                        <div id="deslocamento" class="stat stat-sm"></div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Inventário Máx.</div>
+                        <div id="inventario" class="stat"></div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Corpo (Dano)</div>
+                        <div id="corpo" class="stat stat-sm"></div>
+                    </div>
+                    <div class="stat-box green">
+                        <div class="stat-label">Dano Furtivo</div>
+                        <div id="furtivo" class="stat stat-sm"></div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Limite Energia</div>
+                        <div id="limiteenergia" class="stat stat-sm"></div>
+                        <div class="stat-sub">(VIG+DES)×2</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Traumas Suport.</div>
+                        <div id="traumas" class="stat"></div>
+                        <div class="stat-sub">VON + 1</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Hab. / Turno</div>
+                        <div id="habturno" class="stat"></div>
+                        <div id="habturno-sub" class="stat-sub"></div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Sequelas (Desc.)</div>
+                        <div id="sequelas" class="stat stat-xs"></div>
+                        <div class="stat-sub">VON ao encerrar missão</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Área de Percepção</div>
+                        <div id="percepcao" class="stat stat-sm"></div>
+                        <div class="stat-sub">5 + SEN×5 metros</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 id="titulo-beneficios">Benefícios deste Nível</h2>
+                <div id="atual" class="bullet-list"></div>
+            </div>
+
+            <div class="card">
+                <h2>Habilidades Acumuladas</h2>
+                <div id="acumulados"></div>
+            </div>
+
+            <div class="card">
+                <h2 id="titulo-historico">Progressão Detalhada</h2>
+                <div id="historico"></div>
+            </div>
+
+            <div class="card">
+                <h2 id="titulo-proximo">Próximo Nível</h2>
+                <div id="proximo" class="bullet-list"></div>
+            </div>
