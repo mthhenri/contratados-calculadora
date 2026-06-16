@@ -14,6 +14,8 @@
     --txt2: #6a6880;
     --accent-g: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 60%, black 40%) 100%);
     --glow: 0 8px 32px rgba(0,0,0,0.5);
+    --health: #ff4040;
+    --health-rgb: 255, 64, 64;
     --green: #00e87a;
     --blue: #0099dd;
     --yellow: #ffd166;
@@ -39,6 +41,8 @@
     --select-bg: #f0f2f8;
     --select-opt-bg: #ffffff;
     --card-bg: rgba(0,0,0,0.04);
+    --health: #cc1111;
+    --health-rgb: 204, 17, 17;
     --green: #008844;
     --blue: #0066aa;
     --yellow: #885500;
@@ -64,7 +68,27 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--accent-rgb), .22) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: rgba(var(--accent-rgb), .22);
+    border-radius: 99px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--accent-rgb), .45);
 }
 
 body {
@@ -474,6 +498,11 @@ select optgroup {
     background: rgba(82, 153, 255, .03)
 }
 
+.stat-box.red {
+    border-color: rgba(var(--health-rgb), .22);
+    background: rgba(var(--health-rgb), .05)
+}
+
 .stat-label {
     font-size: .68rem;
     color: var(--txt2);
@@ -572,12 +601,21 @@ li strong {
     color: #000
 }
 
+.hist-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .hist-cols { grid-template-columns: 1fr; }
+}
+
 .hist-item {
     background: rgba(255, 255, 255, .01);
     border: 1px solid rgba(255, 255, 255, .03);
     border-radius: 10px;
     padding: 14px;
-    margin-bottom: 10px
 }
 
 .hist-item ul {
@@ -1600,21 +1638,6 @@ hr {
     font-size: .8rem;
     padding: 10px;
     resize: vertical;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,.15) transparent;
-}
-.cmp-modal-card textarea::-webkit-scrollbar {
-    width: 4px;
-}
-.cmp-modal-card textarea::-webkit-scrollbar-track {
-    background: transparent;
-}
-.cmp-modal-card textarea::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,.15);
-    border-radius: 4px;
-}
-.cmp-modal-card textarea::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,.28);
 }
 .cmp-modal-actions {
     display: flex;

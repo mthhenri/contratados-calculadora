@@ -163,7 +163,10 @@ function calc() {
 
     document.getElementById('vida').textContent = Math.floor(vida);
     document.getElementById('energia').textContent = Math.floor(energia);
-    document.getElementById('defesa').textContent = isCivil ? 'N/A' : (10 + n);
+    const defBase = 10 + n;
+    document.getElementById('defesa').textContent = isCivil ? 'N/A' : defBase;
+    document.getElementById('esquiva').textContent = isCivil ? 'N/A' : (defBase + d);
+    document.getElementById('bloqueio').textContent = isCivil ? 'N/A' : (defBase + v);
     document.getElementById('prof').textContent = isCivil ? 'N/A' : ('+' + n);
     document.getElementById('deslocamento').textContent = calcularDeslocamento(d, isCivil);
     document.getElementById('corpo').textContent = calcularDanoCorpo(f, v, isCivil);
@@ -255,7 +258,9 @@ function calc() {
         }
     }
 
-    document.getElementById('historico').innerHTML = hist || (isCivil ? 'Sem treinamentos ainda.' : 'Nenhum nível adquirido.');
+    document.getElementById('historico').innerHTML = hist
+        ? `<div class="hist-cols">${hist}</div>`
+        : (isCivil ? 'Sem treinamentos ainda.' : 'Nenhum nível adquirido.');
 
     // Painel Acumulados
     let htmlAcc = '<ul>';
@@ -1906,7 +1911,7 @@ const HELP_CONTENT = {
 <tr><td>Hab. / Turno</td><td>Começa em 4; +1 em níveis pares, +2 extra nos níveis 10 e 20.</td></tr>
 <tr><td>Área de Percepção</td><td>Sentidos ≤ 0 → 3 m; senão 5 + (Sentidos × 5) m.</td></tr>
 </tbody></table>
-<div class="help-note"><strong>Seções de progressão:</strong> "Benefícios deste Nível" mostra ganhos do nível atual. "Habilidades Acumuladas" exibe totais até agora. "Progressão Detalhada" lista nível a nível. "Próximo Nível" antecipa o próximo ganho.</div>`
+<div class="help-note"><strong>Seções de progressão:</strong> "Benefícios deste Nível" mostra ganhos do nível atual. "Melhorias Acumuladas" exibe totais até agora. "Progressão Detalhada" lista nível a nível em duas colunas. "Próximo Nível" antecipa o próximo ganho.</div>`
     },
     dt: {
         title: 'Ajuda — Calculadora de DT',

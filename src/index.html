@@ -150,11 +150,11 @@
 
                 <!-- Stats primários em destaque -->
                 <div class="grid-stats-hero">
-                    <div class="stat-box highlight stat-hero">
+                    <div class="stat-box red stat-hero">
                         <div class="stat-label">Vida</div>
-                        <div id="vida" class="stat"></div>
+                        <div id="vida" class="stat" style="color:var(--health)"></div>
                     </div>
-                    <div class="stat-box highlight stat-hero" style="border-color:rgba(82,153,255,.25);background:rgba(82,153,255,.06)">
+                    <div class="stat-box blue stat-hero">
                         <div class="stat-label">Energia</div>
                         <div id="energia" class="stat" style="color:var(--blue)"></div>
                     </div>
@@ -170,6 +170,16 @@
 
                 <!-- Stats secundários -->
                 <div class="grid-stats" style="margin-top:14px">
+                    <div class="stat-box">
+                        <div class="stat-label">Esquiva</div>
+                        <div id="esquiva" class="stat stat-sm"></div>
+                        <div class="stat-sub">Defesa + DES</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Bloqueio</div>
+                        <div id="bloqueio" class="stat stat-sm"></div>
+                        <div class="stat-sub">Defesa + VIG</div>
+                    </div>
                     <div class="stat-box">
                         <div class="stat-label">Deslocamento</div>
                         <div id="deslocamento" class="stat stat-sm"></div>
@@ -220,7 +230,7 @@
             </div>
 
             <div class="card">
-                <h2>Habilidades Acumuladas</h2>
+                <h2>Melhorias Acumuladas</h2>
                 <div id="acumulados"></div>
             </div>
 
@@ -463,7 +473,9 @@
                 <div class="grid grid-2col">
                     <div>
                         <div class="stat-label" style="margin-bottom:8px">Recuperação de Vida</div>
-                        <div class="descanso-result" id="desc-vida-result">—</div>
+                        <div class="descanso-result" id="desc-vida-result"
+                            style="color:var(--health);background:rgba(var(--health-rgb),.05);border-color:rgba(var(--health-rgb),.15)">
+                            —</div>
                         <div class="dt-formula" id="desc-vida-formula">—</div>
                     </div>
                     <div>
@@ -500,7 +512,8 @@
                 <div class="grid grid-2col" id="desc-roll-container" style="display:none">
                     <div>
                         <div class="stat-label" style="margin-bottom:8px">Vida Recuperada</div>
-                        <div class="descanso-result" id="desc-roll-vida" style="font-size:2rem">—</div>
+                        <div class="descanso-result" id="desc-roll-vida"
+                            style="color:var(--health);background:rgba(var(--health-rgb),.05);border-color:rgba(var(--health-rgb),.15);font-size:2rem">—</div>
                         <div class="dt-formula" id="desc-roll-vida-breakdown">—</div>
                     </div>
                     <div>
