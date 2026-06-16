@@ -13,8 +13,8 @@
     <script>
     (function(){
         var s = JSON.parse(localStorage.getItem('ct-theme-v2')||'null')||{accent:'vermelho',base:'preto',glass:true,liquid:true};
-        var AH={vermelho:'#ff3333',azul:'#0099dd',verde:'#00e87a',roxo:'#c084fc',laranja:'#ff8c00',amarelo:'#ffd166',ciano:'#00e5ff',branco:'#ffffff'};
-        var AR={vermelho:'255,51,51',azul:'0,153,221',verde:'0,232,122',roxo:'192,132,252',laranja:'255,140,0',amarelo:'255,209,102',ciano:'0,229,255',branco:'255,255,255'};
+        var AH={vermelho:'#ff3333',azul:'#0099dd',verde:'#00e87a',roxo:'#c084fc',rosa:'#d61586',laranja:'#ff8c00',amarelo:'#ffd166',ciano:'#00e5ff',branco:'#ffffff'};
+        var AR={vermelho:'255,51,51',azul:'0,153,221',verde:'0,232,122',roxo:'192,132,252',rosa:'214, 21, 134',laranja:'255,140,0',amarelo:'255,209,102',ciano:'0,229,255',branco:'255,255,255'};
         var BB={preto:'#05050a',cinza:'#0c0e18',ardosia:'#141a2e',branco:'#f0f2f8'};
         var r=document.documentElement;
         r.style.setProperty('--accent',AH[s.accent]||'#ff3333');
@@ -724,6 +724,7 @@
                         <button class="swatch swatch-accent" data-accent="azul"     onclick="setAccent('azul')"     title="Azul"><span class="swatch-dot" style="background:#0099dd"></span><span class="swatch-name">Azul</span></button>
                         <button class="swatch swatch-accent" data-accent="verde"    onclick="setAccent('verde')"    title="Verde"><span class="swatch-dot" style="background:#00e87a"></span><span class="swatch-name">Verde</span></button>
                         <button class="swatch swatch-accent" data-accent="roxo"     onclick="setAccent('roxo')"     title="Roxo"><span class="swatch-dot" style="background:#c084fc"></span><span class="swatch-name">Roxo</span></button>
+                        <button class="swatch swatch-accent" data-accent="rosa"     onclick="setAccent('rosa')"     title="Rosa"><span class="swatch-dot" style="background:#d61586"></span><span class="swatch-name">Rosa</span></button>
                         <button class="swatch swatch-accent" data-accent="laranja"  onclick="setAccent('laranja')"  title="Laranja"><span class="swatch-dot" style="background:#ff8c00"></span><span class="swatch-name">Laranja</span></button>
                         <button class="swatch swatch-accent" data-accent="amarelo"  onclick="setAccent('amarelo')"  title="Amarelo"><span class="swatch-dot" style="background:#ffd166"></span><span class="swatch-name">Amarelo</span></button>
                         <button class="swatch swatch-accent" data-accent="ciano"    onclick="setAccent('ciano')"    title="Ciano"><span class="swatch-dot" style="background:#00e5ff"></span><span class="swatch-name">Ciano</span></button>

@@ -2066,6 +2066,7 @@ const ACCENTS = {
     azul:     { hex: '#0099dd', rgb: '0,153,221',     g2: '#005588' },
     verde:    { hex: '#00e87a', rgb: '0,232,122',     g2: '#007a40' },
     roxo:     { hex: '#c084fc', rgb: '192,132,252',   g2: '#7c3aed' },
+    rosa:     { hex: '#d61586', rgb: '214, 21, 134',  g2: '#8a0753' },
     laranja:  { hex: '#ff8c00', rgb: '255,140,0',     g2: '#cc5500' },
     amarelo:  { hex: '#ffd166', rgb: '255,209,102',   g2: '#b38200' },
     ciano:    { hex: '#00e5ff', rgb: '0,229,255',     g2: '#007799' },
