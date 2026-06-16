@@ -51,7 +51,14 @@
 .no-glass .patente-box {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: var(--glass-solid) !important;
+}
+.no-glass .card {
+    background: var(--modal-bg) !important;
+}
+.no-glass .stat-box,
+.no-glass .info-box,
+.no-glass .patente-box {
+    background: var(--modal-bg2) !important;
 }
 
 *,
@@ -1791,6 +1798,50 @@ hr {
 .swatch.active .swatch-name {
     color: var(--accent);
 }
+.swatch.swatch-locked {
+    opacity: 0.2;
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: grayscale(0.4);
+}
+
+.swatch-custom-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.swatch-custom-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--txt2);
+}
+.color-picker-input {
+    width: 40px;
+    height: 30px;
+    padding: 2px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+.color-picker-input:hover {
+    border-color: rgba(var(--accent-rgb), .4);
+}
+.color-picker-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(var(--accent-rgb), .2);
+}
+.color-picker-input::-webkit-color-swatch-wrapper { padding: 0; border-radius: 6px; }
+.color-picker-input::-webkit-color-swatch { border: none; border-radius: 6px; }
+.color-picker-input::-moz-color-swatch { border: none; border-radius: 6px; }
 
 .settings-toggle-row {
     display: flex;

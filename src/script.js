@@ -2061,30 +2061,97 @@ document.addEventListener('click', () => {
 
 // ============================================================
 // SISTEMA DE TEMA V2
+
+function hexToRgbStr(hex) {
+    return [1,3,5].map(i => parseInt(hex.slice(i,i+2),16)).join(',');
+}
+function darkenHex(hex, f) {
+    return '#'+[1,3,5].map(i => Math.max(0,Math.floor(parseInt(hex.slice(i,i+2),16)*(1-f))).toString(16).padStart(2,'0')).join('');
+}
+function lightenHex(hex, f) {
+    return '#'+[1,3,5].map(i => Math.min(255,Math.round(parseInt(hex.slice(i,i+2),16)+(255-parseInt(hex.slice(i,i+2),16))*f)).toString(16).padStart(2,'0')).join('');
+}
+function relativeLuminance(hex) {
+    return [1,3,5].reduce((acc, i, idx) => {
+        const v = parseInt(hex.slice(i,i+2),16)/255;
+        const lin = v <= 0.04045 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+        return acc + lin * [0.2126, 0.7152, 0.0722][idx];
+    }, 0);
+}
+function contrastRatio(hex1, hex2) {
+    const l1 = relativeLuminance(hex1), l2 = relativeLuminance(hex2);
+    return (Math.max(l1,l2)+0.05) / (Math.min(l1,l2)+0.05);
+}
+function buildCustomAccent(hex) {
+    return { hex, rgb: hexToRgbStr(hex), g2: darkenHex(hex, 0.4) };
+}
+function buildCustomBase(hex) {
+    const isDark = relativeLuminance(hex) < 0.18;
+    const [r,g,b] = [1,3,5].map(i => parseInt(hex.slice(i,i+2),16));
+    const modal = isDark ? lightenHex(hex, 0.08) : '#ffffff';
+    const modal2 = isDark ? lightenHex(hex, 0.14) : hex;
+    return { bg: hex, modal, modal2, nav: `rgba(${r},${g},${b},.97)`, sel: modal, selopt: isDark ? hex : '#ffffff', dark: isDark };
+}
+
 const ACCENTS = {
     vermelho: { hex: '#ff3333', rgb: '255,51,51',     g2: '#990000' },
     azul:     { hex: '#0099dd', rgb: '0,153,221',     g2: '#005588' },
     verde:    { hex: '#00e87a', rgb: '0,232,122',     g2: '#007a40' },
     roxo:     { hex: '#c084fc', rgb: '192,132,252',   g2: '#7c3aed' },
-    rosa:     { hex: '#d61586', rgb: '214, 21, 134',  g2: '#8a0753' },
+    rosa:     { hex: '#d61586', rgb: '214,21,134',    g2: '#8a0753' },
     laranja:  { hex: '#ff8c00', rgb: '255,140,0',     g2: '#cc5500' },
     amarelo:  { hex: '#ffd166', rgb: '255,209,102',   g2: '#b38200' },
     ciano:    { hex: '#00e5ff', rgb: '0,229,255',     g2: '#007799' },
     branco:   { hex: '#ffffff', rgb: '255,255,255',   g2: '#999999' },
+    preto:    { hex: '#111111', rgb: '17,17,17',      g2: '#000000' },
+    dourado:  { hex: '#f0b429', rgb: '240,180,41',    g2: '#8a6100' },
+    coral:    { hex: '#ff6b6b', rgb: '255,107,107',   g2: '#cc2222' },
+    turquesa: { hex: '#00c4b8', rgb: '0,196,184',     g2: '#007a72' },
 };
 
 const BASES = {
     preto:   { bg: '#05050a', modal: '#0c0c14', modal2: '#111120', nav: 'rgba(5,5,10,.97)',      sel: '#0c0c14', selopt: '#05050a', dark: true  },
     cinza:   { bg: '#0c0e18', modal: '#131624', modal2: '#191c30', nav: 'rgba(12,14,24,.97)',    sel: '#131624', selopt: '#0c0e18', dark: true  },
     ardosia: { bg: '#141a2e', modal: '#1c2440', modal2: '#222950', nav: 'rgba(20,26,46,.97)',    sel: '#1c2440', selopt: '#141a2e', dark: true  },
+    marinho: { bg: '#090e1a', modal: '#111828', modal2: '#161f30', nav: 'rgba(9,14,26,.97)',     sel: '#111828', selopt: '#090e1a', dark: true  },
+    cafe:    { bg: '#100c07', modal: '#1c1510', modal2: '#221a12', nav: 'rgba(16,12,7,.97)',     sel: '#1c1510', selopt: '#100c07', dark: true  },
     branco:  { bg: '#f0f2f8', modal: '#ffffff', modal2: '#f0f2f8', nav: 'rgba(240,242,248,.97)', sel: '#f0f2f8', selopt: '#ffffff', dark: false },
 };
 
-let _themeState = { accent: 'vermelho', base: 'preto', glass: true, liquid: true, ...JSON.parse(localStorage.getItem('ct-theme-v2') || 'null') };
+const SIMILAR_THRESHOLD = 1.5;
+
+function _getBaseHex(base, customHex) {
+    if (base === 'custom') return customHex || '#05050a';
+    return BASES[base]?.bg || '#05050a';
+}
+function _getAccentHex(accent, customHex) {
+    if (accent === 'custom') return customHex || '#ff3333';
+    return ACCENTS[accent]?.hex || '#ff3333';
+}
+function fallbackAccentForBase(baseHex) {
+    const preferred = relativeLuminance(baseHex) > 0.5 ? 'preto' : 'vermelho';
+    if (contrastRatio(ACCENTS[preferred].hex, baseHex) >= SIMILAR_THRESHOLD) return preferred;
+    return Object.keys(ACCENTS).find(k => contrastRatio(ACCENTS[k].hex, baseHex) >= SIMILAR_THRESHOLD) || 'vermelho';
+}
+
+let _themeState = { accent: 'vermelho', base: 'preto', glass: true, liquid: true, customAccentHex: null, customBaseHex: null, ...JSON.parse(localStorage.getItem('ct-theme-v2') || 'null') };
+// Corrige estado salvo incompatível no localStorage
+(function () {
+    const baseHex = _getBaseHex(_themeState.base, _themeState.customBaseHex);
+    const accentHex = _getAccentHex(_themeState.accent, _themeState.customAccentHex);
+    if (contrastRatio(accentHex, baseHex) < SIMILAR_THRESHOLD) {
+        _themeState.accent = fallbackAccentForBase(baseHex);
+        _themeState.customAccentHex = null;
+    }
+}());
 
 function applyTheme(accent, base, glass, liquid = _themeState.liquid) {
-    const a = ACCENTS[accent] || ACCENTS.vermelho;
-    const b = BASES[base] || BASES.preto;
+    const a = accent === 'custom' && _themeState.customAccentHex
+        ? buildCustomAccent(_themeState.customAccentHex)
+        : (ACCENTS[accent] || ACCENTS.vermelho);
+    const b = base === 'custom' && _themeState.customBaseHex
+        ? buildCustomBase(_themeState.customBaseHex)
+        : (BASES[base] || BASES.preto);
     const r = document.documentElement;
 
     r.style.setProperty('--accent', a.hex);
@@ -2095,7 +2162,7 @@ function applyTheme(accent, base, glass, liquid = _themeState.liquid) {
     r.style.setProperty('--nav-bg', b.nav);
     r.style.setProperty('--select-bg', b.sel);
     r.style.setProperty('--select-opt-bg', b.selopt);
-    r.setAttribute('data-base', base);
+    r.setAttribute('data-base', base === 'custom' ? (b.dark ? 'preto' : 'branco') : base);
 
     if (b.dark) {
         r.style.setProperty('--txt', '#f0eef6');
@@ -2130,22 +2197,92 @@ function applyTheme(accent, base, glass, liquid = _themeState.liquid) {
     }
 }
 
+function updateSwatchLocks() {
+    const baseHex = _getBaseHex(_themeState.base, _themeState.customBaseHex);
+    const accentHex = _getAccentHex(_themeState.accent, _themeState.customAccentHex);
+    document.querySelectorAll('.swatch-accent').forEach(s => {
+        const aHex = ACCENTS[s.dataset.accent]?.hex;
+        if (!aHex) return;
+        const locked = contrastRatio(aHex, baseHex) < SIMILAR_THRESHOLD;
+        s.classList.toggle('swatch-locked', locked);
+        if (locked) s.setAttribute('title', 'Muito parecido com a base atual');
+        else s.setAttribute('title', s.dataset.accent.charAt(0).toUpperCase() + s.dataset.accent.slice(1));
+    });
+    document.querySelectorAll('.swatch-base').forEach(s => {
+        const bHex = BASES[s.dataset.base]?.bg;
+        if (!bHex) return;
+        const locked = contrastRatio(accentHex, bHex) < SIMILAR_THRESHOLD;
+        s.classList.toggle('swatch-locked', locked);
+        if (locked) s.setAttribute('title', 'Muito parecido com a cor principal atual');
+        else s.setAttribute('title', s.dataset.base.charAt(0).toUpperCase() + s.dataset.base.slice(1));
+    });
+}
+
 function setAccent(accent) {
+    const baseHex = _getBaseHex(_themeState.base, _themeState.customBaseHex);
+    if (contrastRatio(ACCENTS[accent]?.hex || '#ff3333', baseHex) < SIMILAR_THRESHOLD) return;
     _themeState.accent = accent;
+    _themeState.customAccentHex = null;
     applyTheme(_themeState.accent, _themeState.base, _themeState.glass);
     saveTheme();
     document.querySelectorAll('.swatch-accent').forEach(s => {
         s.classList.toggle('active', s.dataset.accent === accent);
     });
+    const picker = document.getElementById('accent-custom-picker');
+    if (picker) picker.value = ACCENTS[accent]?.hex || '#ff3333';
+    updateSwatchLocks();
 }
 
 function setBase(base) {
     _themeState.base = base;
+    _themeState.customBaseHex = null;
+    const newBaseHex = BASES[base]?.bg || '#05050a';
+    const accentHex = _getAccentHex(_themeState.accent, _themeState.customAccentHex);
+    if (contrastRatio(accentHex, newBaseHex) < SIMILAR_THRESHOLD) {
+        _themeState.accent = fallbackAccentForBase(newBaseHex);
+        _themeState.customAccentHex = null;
+        const ap = document.getElementById('accent-custom-picker');
+        if (ap) ap.value = ACCENTS[_themeState.accent]?.hex || '#ff3333';
+    }
     applyTheme(_themeState.accent, _themeState.base, _themeState.glass);
     saveTheme();
+    document.querySelectorAll('.swatch-accent').forEach(s => {
+        s.classList.toggle('active', s.dataset.accent === _themeState.accent);
+    });
     document.querySelectorAll('.swatch-base').forEach(s => {
         s.classList.toggle('active', s.dataset.base === base);
     });
+    const picker = document.getElementById('base-custom-picker');
+    if (picker) picker.value = BASES[base]?.bg || '#05050a';
+    updateSwatchLocks();
+}
+
+function setCustomAccent(hex) {
+    _themeState.customAccentHex = hex;
+    _themeState.accent = 'custom';
+    document.querySelectorAll('.swatch-accent').forEach(s => s.classList.remove('active'));
+    applyTheme('custom', _themeState.base, _themeState.glass);
+    saveTheme();
+    updateSwatchLocks();
+}
+
+function setCustomBase(hex) {
+    _themeState.customBaseHex = hex;
+    _themeState.base = 'custom';
+    const accentHex = _getAccentHex(_themeState.accent, _themeState.customAccentHex);
+    if (contrastRatio(accentHex, hex) < SIMILAR_THRESHOLD) {
+        _themeState.accent = fallbackAccentForBase(hex);
+        _themeState.customAccentHex = null;
+        const ap = document.getElementById('accent-custom-picker');
+        if (ap) ap.value = ACCENTS[_themeState.accent]?.hex || '#ff3333';
+        document.querySelectorAll('.swatch-accent').forEach(s => {
+            s.classList.toggle('active', s.dataset.accent === _themeState.accent);
+        });
+    }
+    document.querySelectorAll('.swatch-base').forEach(s => s.classList.remove('active'));
+    applyTheme(_themeState.accent, 'custom', _themeState.glass);
+    saveTheme();
+    updateSwatchLocks();
 }
 
 function toggleGlass() {
@@ -2172,7 +2309,6 @@ function openSettings() {
     const overlay = document.getElementById('settings-overlay');
     if (!overlay) return;
     overlay.classList.remove('hidden');
-    // sync UI state
     document.querySelectorAll('.swatch-accent').forEach(s => {
         s.classList.toggle('active', s.dataset.accent === _themeState.accent);
     });
@@ -2183,6 +2319,11 @@ function openSettings() {
     if (glassBtn) glassBtn.classList.toggle('on', _themeState.glass);
     const liquidBtn = document.getElementById('liquid-toggle');
     if (liquidBtn) liquidBtn.classList.toggle('on', _themeState.liquid);
+    const accentPicker = document.getElementById('accent-custom-picker');
+    if (accentPicker) accentPicker.value = (_themeState.accent === 'custom' && _themeState.customAccentHex) ? _themeState.customAccentHex : (ACCENTS[_themeState.accent]?.hex || '#ff3333');
+    const basePicker = document.getElementById('base-custom-picker');
+    if (basePicker) basePicker.value = (_themeState.base === 'custom' && _themeState.customBaseHex) ? _themeState.customBaseHex : (BASES[_themeState.base]?.bg || '#05050a');
+    updateSwatchLocks();
 }
 
 function closeSettings() {
@@ -2211,6 +2352,7 @@ if (initialTab !== 'agente') switchTab(initialTab);
 
 // Aplica tema salvo
 applyTheme(_themeState.accent, _themeState.base, _themeState.glass, _themeState.liquid);
+updateSwatchLocks();
 
 // ============================================================
 // EASTER EGG — título "Contratados": 2 cliques, 5 cliques, 1 clique

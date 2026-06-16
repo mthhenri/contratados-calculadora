@@ -729,6 +729,14 @@
                         <button class="swatch swatch-accent" data-accent="amarelo"  onclick="setAccent('amarelo')"  title="Amarelo"><span class="swatch-dot" style="background:#ffd166"></span><span class="swatch-name">Amarelo</span></button>
                         <button class="swatch swatch-accent" data-accent="ciano"    onclick="setAccent('ciano')"    title="Ciano"><span class="swatch-dot" style="background:#00e5ff"></span><span class="swatch-name">Ciano</span></button>
                         <button class="swatch swatch-accent" data-accent="branco"   onclick="setAccent('branco')"   title="Branco"><span class="swatch-dot" style="background:#ffffff;border:1px solid rgba(255,255,255,.3)"></span><span class="swatch-name">Branco</span></button>
+                        <button class="swatch swatch-accent" data-accent="preto"    onclick="setAccent('preto')"    title="Preto"><span class="swatch-dot" style="background:#111111;border:1px solid rgba(255,255,255,.2)"></span><span class="swatch-name">Preto</span></button>
+                        <button class="swatch swatch-accent" data-accent="dourado"  onclick="setAccent('dourado')"  title="Dourado"><span class="swatch-dot" style="background:#f0b429"></span><span class="swatch-name">Dourado</span></button>
+                        <button class="swatch swatch-accent" data-accent="coral"    onclick="setAccent('coral')"    title="Coral"><span class="swatch-dot" style="background:#ff6b6b"></span><span class="swatch-name">Coral</span></button>
+                        <button class="swatch swatch-accent" data-accent="turquesa" onclick="setAccent('turquesa')" title="Turquesa"><span class="swatch-dot" style="background:#00c4b8"></span><span class="swatch-name">Turquesa</span></button>
+                    </div>
+                    <div class="swatch-custom-wrap">
+                        <label class="swatch-custom-label" for="accent-custom-picker">Personalizado</label>
+                        <input type="color" id="accent-custom-picker" class="color-picker-input" value="#ff3333" oninput="setCustomAccent(this.value)" title="Escolher cor personalizada">
                     </div>
                 </div>
 
@@ -738,7 +746,13 @@
                         <button class="swatch swatch-base active" data-base="preto"    onclick="setBase('preto')"    title="Preto"><span class="swatch-dot" style="background:#05050a;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Preto</span></button>
                         <button class="swatch swatch-base" data-base="cinza"    onclick="setBase('cinza')"    title="Cinza Escuro"><span class="swatch-dot" style="background:#0c0e18;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Cinza</span></button>
                         <button class="swatch swatch-base" data-base="ardosia"  onclick="setBase('ardosia')"  title="Ardósia"><span class="swatch-dot" style="background:#141a2e;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Ardósia</span></button>
+                        <button class="swatch swatch-base" data-base="marinho"  onclick="setBase('marinho')"  title="Marinho"><span class="swatch-dot" style="background:#090e1a;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Marinho</span></button>
+                        <button class="swatch swatch-base" data-base="cafe"     onclick="setBase('cafe')"     title="Café"><span class="swatch-dot" style="background:#100c07;border:1px solid rgba(255,255,255,.15)"></span><span class="swatch-name">Café</span></button>
                         <button class="swatch swatch-base" data-base="branco"   onclick="setBase('branco')"   title="Branco"><span class="swatch-dot" style="background:#f0f2f8;border:1px solid rgba(0,0,0,.15)"></span><span class="swatch-name">Branco</span></button>
+                    </div>
+                    <div class="swatch-custom-wrap">
+                        <label class="swatch-custom-label" for="base-custom-picker">Personalizado</label>
+                        <input type="color" id="base-custom-picker" class="color-picker-input" value="#05050a" oninput="setCustomBase(this.value)" title="Escolher cor de fundo personalizada">
                     </div>
                 </div>
 
