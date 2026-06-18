@@ -943,14 +943,16 @@ const MODIFICACOES = {
         { nome: 'Tóxica',        initStacks: 1, maxStack: 5, bloqueia: ['Estilhaços','Ponta Oca'],       desc: '+1D6 [Químico] por stack',                                     statEffect: '+1D6 [Químico]' },
     ],
     protecoes: [
-        { nome: 'Antibombas',  initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Espinhos','Hazmat','Flexível'], desc: '+2 resist. [Explosão] por stack',              statEffect: '+2 [Explosão]' },
-        { nome: 'Blindada',    initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Flexível','Reforçada'],         desc: '+2 na resist. principal, +0,5 peso/stack',     statEffect: '+2 resist.', peso: 0.5 },
-        { nome: 'Camuflada',   initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Blindada','Espinhos'],         desc: '−1 peso (mín. 1), −1 resist. por stack',       statEffect: '−1 resist.' },
-        { nome: 'Espinhos',    initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Camuflada','Hazmat'],          desc: '1D6+VIG [Físico] ao atacante. +1 dado/stack',  statEffect: null },
-        { nome: 'Flexível',    initStacks: 2, maxStack: 5, bloqueia: ['Antibombas','Blindada','Resistente'],       desc: '+1 ao Esquivar por stack',                     statEffect: null },
-        { nome: 'Hazmat',      initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Espinhos'],                    desc: '+2 resist. [Químico] por stack',                statEffect: '+2 [Químico]' },
-        { nome: 'Reforçada',   initStacks: 1, maxStack: 5, bloqueia: ['Blindada'],                                 desc: '+1 na resist. principal por stack',            statEffect: '+1 resist.' },
-        { nome: 'Resistente',  initStacks: 2, maxStack: 5, bloqueia: ['Flexível'],                                 desc: '+1 ao Bloquear por stack',                     statEffect: null },
+        { nome: 'Antibombas',  initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Espinhos','Hazmat','Flexível'],                    desc: '+2 resist. [Explosão] por stack',                                                              statEffect: '+2 [Explosão]' },
+        { nome: 'Arremesso',   initStacks: 2, maxStack: 5, bloqueia: ['Flexível'],                                                    desc: '(Apenas escudos) Arremessa o escudo em alcance curto (FOR). Dano: (Peso)D4+FOR [Físico] máx 6 dados. 3º: retorno automático; 4º e 5º: +1 dado. Recuperar: ação padrão', statEffect: null },
+        { nome: 'Blindada',    initStacks: 1, maxStack: 5, bloqueia: ['Camuflada','Flexível','Reforçada'],                            desc: '+2 na resist. principal, +0,5 peso/stack',                                                     statEffect: '+2 resist.', peso: 0.5 },
+        { nome: 'Camuflada',   initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Blindada','Espinhos'],                            desc: '−1 peso (mín. 1), −1 resist. por stack',                                                      statEffect: '−1 resist.' },
+        { nome: 'Combativo',   initStacks: 1, maxStack: 5, bloqueia: ['Flexível'],                                                    desc: '(Apenas escudos) Usa o escudo como arma CaC. Dano: (Peso)D3+FOR [Físico] máx 5 dados. Sem resist. ao atacar. +1 dado/stack extra',                              statEffect: null },
+        { nome: 'Espinhos',    initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Camuflada','Hazmat'],                             desc: '1D6+VIG [Físico] ao atacante. +1 dado/stack',                                                  statEffect: null },
+        { nome: 'Flexível',    initStacks: 2, maxStack: 5, bloqueia: ['Antibombas','Arremesso','Blindada','Combativo','Resistente'],   desc: '+1 ao Esquivar por stack',                                                                     statEffect: null },
+        { nome: 'Hazmat',      initStacks: 1, maxStack: 5, bloqueia: ['Antibombas','Espinhos'],                                       desc: '+2 resist. [Químico] por stack',                                                               statEffect: '+2 [Químico]' },
+        { nome: 'Reforçada',   initStacks: 1, maxStack: 5, bloqueia: ['Blindada'],                                                    desc: '+1 na resist. principal por stack',                                                            statEffect: '+1 resist.' },
+        { nome: 'Resistente',  initStacks: 2, maxStack: 5, bloqueia: ['Flexível'],                                                    desc: '+1 ao Bloquear por stack',                                                                     statEffect: null },
     ],
     exoticos: [
         { nome: 'Antimatéria', initStacks: 4, maxStack: 4, bloqueia: ['Faz Parte','Vibrante','Flamejante'], desc: 'Muda o tipo de dano da arma para Dano Geral',                  statEffect: null },
@@ -1035,11 +1037,16 @@ function parseStorageBonus(bonusStr) {
 
 // Returns the borrowed category key for an exotic item when "Faz Parte" is active, else null.
 function getFazParteBorrowedCat(item) {
-    if (item.cat !== 'exoticos') return null;
-    const hasFazParte = item.mods.some(m => m.nome === 'Faz Parte');
-    if (!hasFazParte) return null;
-    const ci = CATALOGO_ITENS.exoticos.find(i => i.nome === item.nome);
-    return (ci && ci.fazParteCat) || null;
+    if (item.cat === 'exoticos') {
+        const hasFazParte = item.mods.some(m => m.nome === 'Faz Parte');
+        if (!hasFazParte) return null;
+        const ci = CATALOGO_ITENS.exoticos.find(i => i.nome === item.nome);
+        return (ci && ci.fazParteCat) || null;
+    }
+    if (item.cat === 'protecoes') {
+        if (item.mods.some(m => m.nome === 'Combativo')) return 'cac';
+    }
+    return null;
 }
 
 // Returns the full mod definition list available for an item (base + borrowed if applicable).
@@ -1199,7 +1206,7 @@ function buildAmpCatalogHtml(search) {
                 <span class="cmp-item-weight">máx. ${effectiveMax} stacks</span>
             </div>
             ${curStacks > 0 ? `<div class="cmp-amp-stacks">Ativo: ${curStacks}/${effectiveMax} stack${curStacks > 1 ? 's' : ''}
-                ${curStacks >= 2 ? '<span class="cmp-penalty-tag">-2 Vontade</span>' : ''}</div>` : ''}
+                ${curStacks >= 2 ? '<span class="cmp-penalty-tag">−2 Vontade</span>' : ''}</div>` : ''}
             <div class="cmp-item-actions">
                 ${curStacks > 0 ? `<button class="cmp-btn-remove" onclick="removeAmp('${amp.nome}')">−</button>` : ''}
                 <button class="cmp-btn-add${!canAdd ? ' disabled' : ''}" onclick="addAmp('${amp.nome}',${amp.initStacks},${amp.maxStack})"${!canAdd ? ' disabled' : ''}>
@@ -1262,7 +1269,8 @@ function setCmpSearch(val) {
 }
 
 function addToCart(cat, nome, custo, peso) {
-    const existing = comprasCart.find(i => i.cat === cat && i.nome === nome);
+    const stackable = cat === 'operacional' || cat === 'medicinal';
+    const existing = stackable ? comprasCart.find(i => i.cat === cat && i.nome === nome) : null;
     if (existing) { existing.qty = (existing.qty || 1) + 1; }
     else { comprasCart.push({ uid: cmpUidCounter++, nome, cat, custo, peso, qty: 1, mods: [], stored: false }); }
     renderCmpSummary();
@@ -1626,7 +1634,10 @@ function renderCmpCart() {
             html += renderModSection(modList, item.cat);
             if (borrowedCat && borrowedModList.length > 0) {
                 const borrowedCatLabel = CATALOGO_CATS.find(c => c.key === borrowedCat)?.label || borrowedCat;
-                html += `</div><div class="cmp-mod-section-header">Via Faz Parte — ${borrowedCatLabel}</div><div class="cmp-mod-grid">`;
+                const borrowedVia = (item.cat === 'protecoes' && item.mods.some(m => m.nome === 'Combativo'))
+                    ? 'Via Combativo'
+                    : 'Via Faz Parte';
+                html += `</div><div class="cmp-mod-section-header">${borrowedVia} — ${borrowedCatLabel}</div><div class="cmp-mod-grid">`;
                 html += renderModSection(borrowedModList, borrowedCat);
             }
             html += `</div></div>`;
