@@ -1418,9 +1418,14 @@ function computeItemStat(item) {
         let flat = 0;
 
         if (item.cat === 'cac') {
+            const baseSides = sides;
             // Pesada: initStacks=3 = 1 upgrade; each extra stack = +1 more upgrade (máx D10)
             if (M['Pesada'])    sides = _upgradeDie(sides, 1 + Math.max(0, M['Pesada'] - 3), 10);
-            if (M['Reforçada']) dice += M['Reforçada'];
+            // Reforçada adiciona dados do tipo BASE da arma, não do tipo já modificado (Pesada).
+            if (M['Reforçada']) {
+                if (sides === baseSides) dice += M['Reforçada'];
+                else extra.push({ dice: M['Reforçada'], sides: baseSides, type });
+            }
             if (M['Letal'])     flat += M['Letal'] * 2;
             if (M['Explosiva']) extra.push({ dice: M['Explosiva'], sides: 4,  type: 'Explosão' });
             if (M['Fervente'])  extra.push({ dice: M['Fervente'],  sides: 4,  type: 'Químico'  });
@@ -1437,9 +1442,21 @@ function computeItemStat(item) {
             if (M['Potente'])   dice += M['Potente'] * 2;
         }
 
+        // Agrupa os dados por tipo de dano: dados do mesmo tipo se juntam num único colchete.
+        // O grupo do tipo base carrega o modificador de atributo (+FOR/+DES) e o flat.
+        const groups = []; // {type, dice: ['3D6', '1D4']}
+        const getGroup = (t) => {
+            let g = groups.find(g => g.type === t);
+            if (!g) { g = { type: t, dice: [] }; groups.push(g); }
+            return g;
+        };
+        getGroup(type).dice.push(`${dice}D${sides}`);
+        extra.forEach(e => getGroup(e.type).dice.push(`${e.dice}D${e.sides}`));
+
         const flatStr = flat > 0 ? `+${flat}` : '';
-        const baseStr = `${dice}D${sides}${mod}${flatStr} [${type}]`;
-        const parts = [baseStr, ...extra.map(e => `${e.dice}D${e.sides} [${e.type}]`)];
+        const parts = groups.map(g =>
+            `${g.dice.join('+')}${g.type === type ? mod + flatStr : ''} [${g.type}]`
+        );
         let infoStr = ci.info || '';
         if (item.cat === 'armasFogo' && M['Plasma']) {
             infoStr = infoStr.replace(/Mun:[^·\n]+/, 'Mun: Células de Plasma');
