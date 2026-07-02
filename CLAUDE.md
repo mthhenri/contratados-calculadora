@@ -20,7 +20,8 @@ This is a vanilla JS SPA with three files under `src/`:
 
 ## Source of Truth
 
-All game rules are in [docs/sistema-v4.0.0.md](docs/sistema-v4.0.0.md). Consult it before changing any formula, progression table, or domain rule. If there is any conflict between the code and the document, the document wins.
+- **[docs/sistema-v4.1.0.md](docs/sistema-v4.1.0.md)** — player-facing rules: attributes, progression tables, classes, DT formulas, resting, purchases. Consult it before changing any formula, progression table, or domain rule the calculator implements. If there is any conflict between the code and this document, the document wins.
+- **[docs/guia_de_mestre-v4.0.0.md](docs/guia_de_mestre-v4.0.0.md)** — Game Master guide: creature/threat creation (NA, VD, attack tables), NPC creation, mission generation. Not currently implemented by any tab in this calculator; consult it if adding GM-facing tools (e.g. threat/creature builders).
 
 ## Features Covered
 

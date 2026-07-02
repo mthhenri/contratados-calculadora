@@ -35,10 +35,11 @@ src/
   script.js    — toda a lógica de cálculo
   styles.css   — tema escuro (glassmorphism)
 docs/
-  sistema-v4.0.0.md — fonte oficial das regras do sistema
+  sistema-v4.1.0.md          — fonte oficial das regras do sistema
+  guia_de_mestre-v4.0.0.md   — guia do mestre (criação de ameaças, NPCs e missões)
 ```
 
-Todas as regras de domínio estão em `docs/sistema-v4.0.0.md`. Em caso de conflito entre o código e o documento, o documento prevalece.
+Todas as regras de domínio estão em `docs/sistema-v4.1.0.md`. Em caso de conflito entre o código e o documento, o documento prevalece. O `docs/guia_de_mestre-v4.0.0.md` é material de apoio para o mestre e não é utilizado pela calculadora.
 
 ---
 

@@ -138,99 +138,99 @@
 
 [⬡ Corpo a Corpo	37](#heading)
 
-[⬡ Explosivos	38](#⬡-explosivos)
+[⬡ Explosivos	39](#⬡-explosivos)
 
-[⬡ Armas de Fogo	39](#⬡-armas-de-fogo)
+[⬡ Armas de Fogo	40](#⬡-armas-de-fogo)
 
-[⬡ Munições	40](#⬡-munições)
+[⬡ Munições	41](#⬡-munições)
 
-[⬡ Proteções	41](#⬡-proteções-e-escudos)
+[⬡ Proteções e Escudos	43](#⬡-proteções-e-escudos)
 
-[⬡ Exóticos	42](#⬡-exóticos)
+[⬡ Exóticos	44](#⬡-exóticos)
 
-[⬡ Armazenamento	43](#⬡-armazenamento)
+[⬡ Armazenamento	45](#⬡-armazenamento)
 
-[⬡ Itens Operacionais	44](#⬡-itens-operacionais)
+[⬡ Itens Operacionais	46](#⬡-itens-operacionais)
 
-[⬡ Itens Medicinais	45](#⬡-itens-medicinais)
+[⬡ Itens Medicinais	47](#⬡-itens-medicinais)
 
-[**⬢ Regras	46**](#⬢-regras)
+[**⬢ Regras	48**](#⬢-regras)
 
-[⬡ Gerais	46](#⬡-gerais)
+[⬡ Gerais	48](#⬡-gerais)
 
-[⬥ Testes	46](#⬥-testes)
+[⬥ Testes	48](#⬥-testes)
 
-[⬥ Crítico e Margem de Crítico	46](#⬥-crítico-e-margem-de-crítico)
+[⬥ Crítico e Margem de Crítico	48](#⬥-crítico-e-margem-de-crítico)
 
-[⬥ Tipos de Dano	47](#⬥-tipos-de-dano)
+[⬥ Tipos de Dano	49](#⬥-tipos-de-dano)
 
-[⬥ Ações	48](#⬥-ações)
+[⬥ Ações	50](#⬥-ações)
 
-[⬥ Descanso	50](#⬥-descanso)
+[⬥ Descanso	52](#⬥-descanso)
 
-[⬥ Cálculos	51](#⬥-cálculos)
+[⬥ Cálculos	53](#⬥-cálculos)
 
-[⬡ Base da Fundação	52](#⬡-base-da-fundação)
+[⬡ Base da Fundação	54](#⬡-base-da-fundação)
 
-[⬡ Missões	53](#⬡-missões)
+[⬡ Missões	55](#⬡-missões)
 
-[⬡ A Morte	55](#⬡-a-morte)
+[⬡ A Morte	57](#⬡-a-morte)
 
-[⬡ Cenas	56](#⬡-cenas)
+[⬡ Cenas	58](#⬡-cenas)
 
-[⬥ Investigação	56](#⬥-investigação)
+[⬥ Investigação	58](#⬥-investigação)
 
-[⬥ Combate	58](#⬥-combate)
+[⬥ Combate	60](#⬥-combate)
 
-[⬥ Furtiva	60](#⬥-furtiva)
+[⬥ Furtiva	62](#⬥-furtiva)
 
-[⬥ Perseguição	61](#⬥-perseguição)
+[⬥ Perseguição	63](#⬥-perseguição)
 
-[⬥ Resistência	62](#⬥-resistência)
+[⬥ Resistência	64](#⬥-resistência)
 
-[⬡ Condições	63](#⬡-condições)
+[⬡ Condições	65](#⬡-condições)
 
-[⬡ Lesões	64](#⬡-lesões)
+[⬡ Lesões	66](#⬡-lesões)
 
-[⬥ Reabilitação em Missão	64](#⬥-reabilitação-em-missão)
+[⬥ Reabilitação em Missão	66](#⬥-reabilitação-em-missão)
 
-[⬥ Tratamento de Lesões	65](#⬥-tratamento-de-lesões)
+[⬥ Tratamento de Lesões	67](#⬥-tratamento-de-lesões)
 
-[⬥ Lesões Permanentes	65](#⬥-lesões-permanentes)
+[⬥ Lesões Permanentes	67](#⬥-lesões-permanentes)
 
-[⬡ Aposentadoria	66](#⬡-aposentadoria)
+[⬡ Aposentadoria	68](#⬡-aposentadoria)
 
-[⬥ Se Tornar um Funcionário	66](#⬥-se-tornar-um-funcionário)
+[⬥ Se Tornar um Funcionário	68](#⬥-se-tornar-um-funcionário)
 
-[⬥ Sair da Fundação SCP	68](#⬥-sair-da-fundação-scp)
+[⬥ Sair da Fundação SCP	70](#⬥-sair-da-fundação-scp)
 
-[⬥ Abandonar a Fundação SCP	68](#⬥-abandonar-a-fundação-scp)
+[⬥ Abandonar a Fundação SCP	70](#⬥-abandonar-a-fundação-scp)
 
-[⬥ Contido ou Exterminado	69](#⬥-contido-ou-exterminado)
+[⬥ Contido ou Exterminado	71](#⬥-contido-ou-exterminado)
 
-[**⬢ Fundação SCP	70**](#⬢-fundação-scp)
+[**⬢ Fundação SCP	72**](#⬢-fundação-scp)
 
-[⬡ Criaturas e Anomalias	70](#⬡-criaturas-e-anomalias)
+[⬡ Criaturas e Anomalias	72](#⬡-criaturas-e-anomalias)
 
-[⬡ Fragmentos	71](#⬡-fragmentos)
+[⬡ Fragmentos	73](#⬡-fragmentos)
 
-[⬥ Módulos	71](#⬥-módulos)
+[⬥ Módulos	73](#⬥-módulos)
 
-[⬥ Identificação de Poder	71](#⬥-identificação-de-poder)
+[⬥ Identificação de Poder	73](#⬥-identificação-de-poder)
 
-[⬥ Acoplamento	71](#⬥-acoplamento)
+[⬥ Acoplamento	73](#⬥-acoplamento)
 
-[⬥ Função	72](#⬥-função)
+[⬥ Função	74](#⬥-função)
 
-[⬥ Afinidade com Fragmentos	73](#⬥-afinidade-com-fragmentos)
+[⬥ Afinidade com Fragmentos	75](#⬥-afinidade-com-fragmentos)
 
-[⬥ Venda de Fragmentos	74](#⬥-venda-de-fragmentos)
+[⬥ Venda de Fragmentos	76](#⬥-venda-de-fragmentos)
 
-[⬥ Reduzindo Módulos	75](#⬥-reduzindo-módulos)
+[⬥ Reduzindo Módulos	77](#⬥-reduzindo-módulos)
 
-[⬥ Forja de Fragmentos	75](#⬥-forja-de-fragmentos)
+[⬥ Forja de Fragmentos	77](#⬥-forja-de-fragmentos)
 
-[⬡ Amplificadores	76](#⬡-amplificadores)
+[⬡ Amplificadores	78](#⬡-amplificadores)
 
 # **⬢ Introdução** {#⬢-introdução}
 
@@ -474,7 +474,7 @@ As classes oferecem uma forma clara de **personalizar** o estilo de jogo e maxim
 
 * **Habilidades Gerais Melhoradas**: Estas habilidades são um reflexo das habilidades gerais, mas, cada arquétipo pode possuir habilidades gerais que são melhores para eles. Então, pegar uma habilidade geral que está listada como uma habilidade melhorada no seu arquétipo te faz ter a versão melhorada dela.
 
-| ⬥ Combatente *“O especialista em ofensiva. Aquele que parte para o ataque sem hesitar. É quem coloca a cara à tapa e lidera o avanço. Causando alto dano e encarando o combate de frente, mesmo que signifique tomar umas boas porradas.”* | ⬦ Habilidades de Classe  ◈ Abrir Cabeças \[3 E\] Adiciona o valor máximo do maior dado ao somatório do dano (limite 3×). ◈ Aparar \[3 E\] (Reação) Se um ataque falhar contra sua reação por 5 ou mais, por 1 turno, seu ataque recebe \+2 no teste. ◈ Artista Marcial \[1 E\] Muda o atributo somatório do dano de uma arma corpo a corpo de Força para Destreza. ◈ Berserk \[3 E\] Ao estar portando uma arma de duas mãos, adiciona seu atributo de teste ao dano. ◈ Cai Dentro \[0 E\] (Reação) Caso um alvo esteja corpo a corpo contigo e se afaste de você, poderá realizar um ataque padrão. ◈ Companheiro \[3 E\] (Reação) Escolha um aliado em até alcance médio. Caso ele obtenha um crítico durante um ataque, você pode realizar um ataque padrão como se estiver disponível para isso. Após esse ataque a habilidade finaliza.  ◈ Duplamente Letal \[0 E\] Estar portando duas armas iguais aumenta seus testes com elas em \+1 dado. ◈ Destroçar \[4 E\] Se obtiver um crítico, reduz os testes do oponente ou sua defesa em \-3 por 1 turno. ◈ Dupla Dinâmica \[4 E\] Durante 1D3+1 turnos, ter qualquer aliado atacando o mesmo ser que você é considerado flanqueado para ambos. ◈ Explosão de Adrenalina \[5 E\]  Aumenta \+2 dados no teste em um ataque, mas fica Cansado no próximo turno. | ◈ Guerreiro de Rua \[4 E\] Para cada turno decorrido no combate, recebe \+1 nos testes de Atributos Físicos, com limite em Vigor \+ Destreza divididos por 2 para estes aumentos. ◈ Mano a Mano \[4 E\] Escolha um ser na cena e, até o fim dela ou a morte do mesmo, recebe \+3 em todos os testes de Atributos Físicos contra ele, mas, \-2 em testes não relacionados à ele. Desfocar do alvo necessita de um teste de Vontade DT 15 \+ 2 por turno focado.  ◈ Manejo \[0 E\] Ao escolher no início de uma missão uma categoria de arma (Corpo a corpo, De fogo, Exótica ou Explosivos), recebe \+1 dado de dano ao usá-la. ◈ Mira de Combate \[1 E\] Aumenta o tempo de espera para perder a mira em \+1 turno (uma vez por ação de mirar). ◈ Na Base do Ódio \[2 E\] Em um teste de Atributo Físico, recebe \+1 dado. ◈ Porradeiro \[3 E\] Para cada 15 de vida a menos, recebe \+1 no teste ou dano de um ataque (limite Vigor × 2 de somatório). ◈ Pugilista \[0 E\] Usando armas que ampliam seu dano de corpo, aumenta os dados de dano de corpo em 1 tipo. ◈ Ruptura \[4 E\] Reduz a resistência do alvo ao tipo de dano de sua arma em Atributo do Teste × 2 pontos. ◈ Segundo Fôlego \[0 E\] Ao realizar um descanso, aumenta seus dados de recuperação de energia em Vigor ÷ 2\. ◈ Técnica Aplicada \[1 E\] Estar flanqueando um alvo te concede \+1 dado de dano. ◈ Vem pra Cima\! \[3 E\] Escolha um ser. Obriga-o a fazer um teste de Vontade (DT Vigor). Caso ele falhe, para todos na cena (exceto você) o ser estará Vulnerável até que você fique Inconsciente ou a cena finalize. |
+| ⬥ Combatente *“O especialista em ofensiva. Aquele que parte para o ataque sem hesitar. É quem coloca a cara à tapa e lidera o avanço. Causando alto dano e encarando o combate de frente, mesmo que signifique tomar umas boas porradas.”* | ⬦ Habilidades de Classe  ◈ Abrir Cabeças \[2 E\] Adiciona o valor máximo do maior dado de dano da sua arma ao somatório de dano de um ataque (+3E para adicionar o valor máximo \+1x limitado ao seu Nível / 2).  ◈ Aparar \[3 E\] (Reação) Se um ataque falhar contra sua reação por 5 ou mais, por 1 turno, seu ataque recebe \+2 no teste. ◈ Artista Marcial \[1 E\] Muda o atributo somatório do dano de uma arma corpo a corpo de Força para Destreza. ◈ Berserk \[3 E\] Ao estar portando uma arma de duas mãos, adiciona seu atributo de teste ao dano. ◈ Cai Dentro \[0 E\] (Reação) Caso um alvo esteja corpo a corpo contigo e se afaste de você, poderá realizar um ataque padrão. ◈ Companheiro \[3 E\] (Reação) Escolha um aliado em até alcance médio. Caso ele obtenha um crítico durante um ataque, você pode realizar um ataque padrão como se estiver disponível para isso. Após esse ataque a habilidade finaliza.  ◈ Duplamente Letal \[0 E\] Estar portando duas armas iguais aumenta seus testes com elas em \+1 dado. ◈ Destroçar \[4 E\] Se obtiver um crítico, reduz os testes do oponente ou sua defesa em \-3 por 1 turno. ◈ Dupla Dinâmica \[4 E\] Durante 1D3+1 turnos, ter qualquer aliado atacando o mesmo ser que você é considerado flanqueado para ambos. ◈ Explosão de Adrenalina \[5 E\]  Aumenta \+2 dados no teste em um ataque, mas fica Cansado no próximo turno. ◈ Guerreiro de Rua \[4 E\] Para cada turno decorrido no combate, recebe \+1 nos testes de Atributos Físicos, com limite em Vigor \+ Destreza divididos por 2 para estes aumentos. | ◈ Mano a Mano \[6 E\] Escolha um ser na cena e, até o fim dela ou a morte do mesmo, recebe \+3 em todos os testes de Atributos Físicos contra ele, mas, \-2 em testes não relacionados à ele. Desfocar do alvo necessita de um teste de Vontade DT 15 \+ 2 por turno focado. ◈ Manejo \[0 E\] Ao escolher no início de uma missão uma categoria de arma (Corpo a corpo, De fogo, Exótica ou Explosivos), recebe \+1 dado de dano ao usá-la. ◈ Mira de Combate \[1 E\] Aumenta o tempo de espera para perder a mira em \+1 turno (uma vez por ação de mirar). ◈ Na Base do Ódio \[2 E\] Em um teste de Atributo Físico, recebe \+1 dado. ◈ Porradeiro \[3 E\] Para cada 15 de vida a menos, recebe \+1 no teste ou dano de um ataque (limite Vigor × 2 de somatório). ◈ Pugilista \[0 E\] Usando armas que ampliam seu dano de corpo, aumenta os dados de dano de corpo em 1 tipo. ◈ Ruptura \[4 E\] Reduz a resistência do alvo ao tipo de dano de sua arma em Atributo do Teste × 2 pontos por 2 turnos. A resistência não pode ser reduzida abaixo de 0\. ◈ Segundo Fôlego \[0 E\] Ao realizar um descanso, aumenta seus dados de recuperação de energia em Vigor ÷ 2\. ◈ Técnica Aplicada \[1 E\] Estar flanqueando um alvo te concede \+1 dado de dano. ◈ Vem pra Cima\! \[3 E\] Escolha um ser. Obriga-o a fazer um teste de Vontade (DT Vigor). Caso ele falhe, para todos na cena (exceto você) o ser estará Vulnerável até que você fique Inconsciente ou a cena finalize. |
 | :---- | :---- | :---- |
 | **⬦ Saúde** Vida \= 30 \+ **VIG** × 4 Energia \= 15 \+ **DES** × 2 |  |  |
 | **⬦ Progressão por Nível** \[Vida\] a cada Nível recebe: 7 \+ **VIG** × 2 \[Energia\] a cada Nível recebe: 4 \+ **DES** × 2 |  |  |
@@ -483,7 +483,7 @@ As classes oferecem uma forma clara de **personalizar** o estilo de jogo e maxim
 
 | ◻ Lutador *“Foco em armas corpo-a-corpo”*  ⬦ Atributos Bônus \+1 em Luta \+1 em Força | ◻ Mercenário *“Foco em armas de fogo”* ⬦ Atributos Bônus \+1 em Pontaria \+1 em Destreza | ◻ Vanguarda *“Foco em defesa e resistências”* ⬦ Atributos Bônus \+1 em Vigor \+1 em Força |
 | :---- | :---- | :---- |
-| **⬦ Habilidades de Arquétipo**  ◈ Golpe Devastador \[3 E\] Em um ataque físico, após rodar o dano, pode selecionar dados que obtiveram seu valor máximo e rodá-los novamente. ◈ Golpe Frenético \[4 E\] Ao acertar um ataque físico, desfere um ataque físico extra, e caso este ataque também acerte, pode gastar **Luta** \+ 2 pontos de Energia adicionais para desferir mais um ataque. ◈ Peso Pesado \[3 E\] Em armas corpo a corpo, adiciona o peso da sua arma ao dano causado. ◈ Postura de Ataque \[2 E\] Para cada turno seguido atacando o mesmo ser, mesmo que falhando em seus testes, recebe \+2 no dano (Limite **Luta** turnos para acumulação). ◈ Reforço Adrenalizado \[0 E\] Ao entrar na condição Machucado, recebe \+3 em testes de **Força** e **Luta** e \+1 dado de dano em armas de dano físico até o fim da cena. ◈ Vingativo \[5 E\] Ao receber 25% ou mais de sua vida máxima em um único golpe, adiciona \+2 dados de dano ao seu próximo ataque no mesmo ser. | **⬦ Habilidades de Arquétipo**  ◈ Linha de Frente \[3 E\] Utilizando uma arma de fogo em alcance curto, recebe \+1 dado no teste.  ◈ Mira de Elite \[1 E\] Ao mirar, aumenta \+1 dado no teste do ataque. ◈ Pistoleiro \[4 E\] Soma sua **Destreza** × 3 no dano de ataques à distância. ◈ Ricochete \[3 E\] Atira de forma inesperada para acertar um alvo, reduzindo seu teste em 2 dados e a reação do alvo em 5\. ◈ Sobrecarga \[X E\] Para cada oponente na cena gasta 3 E para receber \+1 no teste ou \+2 no dano de seus ataques até o fim da cena. A diminuição do número de oponentes reduz os efeitos da habilidade. ◈ Treinamento Avançado \[2 E\] Não recebe penalidade por ter aliados adjacentes a um alvo ao realizar um disparo e em ataques em área, concede \+**Pontaria** no teste dos aliados. | **⬦ Habilidades de Arquétipo**  ◈ Golpe Pesado \[2 E\] Soma também seu **Vigor** ao dano de armas de dano físico. ◈ Investida Implacável \[5 E\] Reduz a defesa do alvo em **Vigor** ÷ 2 pontos, e caso obtenha um crítico no ataque, reduz a defesa em **Vigor** pontos. ◈ Jogo de Corpo \[2 E\] Muda o atributo de ataque de uma arma corpo a corpo de **Luta** para **Vigor**. ◈ Postura Defensiva \[3 E\] Quando um aliado em até **Destreza** metros for receber um golpe, pode se colocar no lugar dele, recebendo o dano direto. ◈ Resiliente \[3 E\] Soma seu **Vigor** em sua resistência Física. ◈ Vai e Volta \[3 E\] Se o ataque do atacante for inferior em ao menos 5 pontos da sua defesa, te garante um contra-ataque no alvo. |
+| **⬦ Habilidades de Arquétipo**  ◈ Golpe Devastador \[3 E\] Em um ataque físico, após rodar o dano, pode selecionar dados que obtiveram seu valor máximo e rodá-los novamente. ◈ Golpe Frenético \[4 E\] Ao acertar um ataque físico corpo a corpo, desfere um segundo ataque físico imediato contra o mesmo alvo. Caso este segundo ataque acerte, adiciona **Luta** × 2 ao dano. ◈ Peso Pesado \[3 E\] Em armas corpo a corpo, adiciona o peso da sua arma ao dano causado. ◈ Postura de Ataque \[2 E\] Para cada turno seguido atacando o mesmo ser, mesmo que falhando em seus testes, recebe \+2 no dano (Limite **Luta** turnos para acumulação). ◈ Reforço Adrenalizado \[0 E\] Ao entrar na condição Machucado, recebe \+3 em testes de **Força** e **Luta** e \+1 dado de dano em armas de dano físico até o fim da cena. ◈ Vingativo \[5 E\] Ao receber 25% ou mais de sua vida máxima em um único golpe, adiciona \+2 dados de dano ao seu próximo ataque no mesmo ser. | **⬦ Habilidades de Arquétipo**  ◈ Linha de Frente \[3 E\] Utilizando uma arma de fogo em alcance curto, recebe \+1 dado no teste.  ◈ Mira de Elite \[1 E\] Ao mirar, aumenta \+1 dado no teste do ataque. ◈ Pistoleiro \[4 E\] Soma sua **Destreza** × 3 no dano de ataques à distância. ◈ Ricochete \[3 E\] Atira de forma inesperada para acertar um alvo, reduzindo seu teste em 2 dados e a reação do alvo em 5\. ◈ Sobrecarga \[X E\] Para cada oponente na cena gasta 3 E para receber \+1 no teste ou \+2 no dano de seus ataques até o fim da cena. A diminuição do número de oponentes reduz os efeitos da habilidade. ◈ Treinamento Avançado \[2 E\] Não recebe penalidade por ter aliados adjacentes a um alvo ao realizar um disparo e em ataques em área, concede \+**Pontaria** no teste dos aliados. | **⬦ Habilidades de Arquétipo**  ◈ Golpe Pesado \[2 E\] Soma também seu **Vigor** ao dano de armas de dano físico. ◈ Investida Implacável \[5 E\] Reduz a defesa do alvo em **Vigor** ÷ 2 pontos, e caso obtenha um crítico no ataque, reduz a defesa em **Vigor** pontos. ◈ Jogo de Corpo \[2 E\] Muda o atributo de ataque de uma arma corpo a corpo de **Luta** para **Vigor**. ◈ Postura Defensiva \[3 E\] Quando um aliado em até **Destreza** metros for receber um golpe, pode se colocar no lugar dele, recebendo o dano direto. ◈ Resiliente \[3 E\] Soma seu **Vigor** em sua resistência Física. ◈ Vai e Volta \[3 E\] Se o ataque do atacante for inferior em ao menos 5 pontos da sua defesa, te garante um contra-ataque no alvo. |
 | **⬦ Habilidades Gerais Melhoradas**  ◈ Contra-Ataque \[2 E\] (Reação) Soma sua **Luta** na sua Defesa ao reagir, caso o atacante não à ultrapasse, garante um ataque físico direto no ser, rolando apenas o dano da arma em mãos. ◈ Persistência \[4 E\] Caso tenha errado o último ataque, recebe \+1 dado e \+2 no resultado do próximo ataque. | **⬦ Habilidades Gerais Melhoradas**  ◈ Queima-Roupa  \[0 E\] Recebe \+2 dados de dano ao estar adjacente ao seu alvo durante um disparo e reduz a defesa em \-2. ◈ Atirador Calculista \[3 E\]  Ao mirar em um alvo, soma sua **Pontaria** ao teste de ataque. | **⬦ Habilidades Gerais Melhoradas**  ◈ Contra-Ataque \[2 E\] (Reação) Soma sua **Luta** ÷ 2 ou **Vigor** ÷ 2 na sua Defesa ao reagir, caso o atacante não à ultrapasse, garante um ataque físico direto no ser, rolando apenas o dano da arma em mãos. ◈ Defesa Precisa \[2 E\] Recebe \+2 de Defesa. |
 
 | ⬥ Especialista *“A versatilidade em pessoa. Sendo desde uma sombra na linha de frente até o mais intelectual dos agentes. Tendo um conhecimento técnico forte e a sagacidade no pensar.”* | ⬦ Habilidades de Classe  ◈ Ajudante \[2 E\] Auxiliar um aliado soma \+1 a cada 4 pontos ao invés de a cada 5 pontos. ◈ Análise de Campo \[3 E\] Durante uma cena na qual você e seus aliados estejam sob um terreno ou ambiente difícil (como dentro de uma grande poça de lodo, terreno íngreme, ventos fortes, etc), pode encontrar algum benefício no mesmo, reduzindo a penalidade pela metade. ◈ Arsenal Compartilhado \[0 E\] Pode usar itens do inventário de aliados adjacentes sem que o aliado precise realizar nenhuma ação para entregar o item. ◈ Bacharel em Agressão \[2 E\] Muda (caso não haja, adiciona) o atributo de soma do dano de uma arma para Intelecto. ◈ Camuflagem Rápida \[4 E\] Para entrar em furtivo, recebe \+3 no teste. Em cenas furtivas, pode usar esta habilidade para se esconder novamente caso alguém tenha lhe encontrado. ◈ Conhecimento Técnico \[1 E\] Uma vez por cena, pode analisar uma arma durante seu turno, e com isso, receber \+1 dado em testes com ela até o fim da cena. ◈ Destreza Técnico \[1 E\] Uma vez por cena, antes de realizar um teste de manipulação técnica manual não-combativa (abrir fechaduras, desativar armadilhas, consertar equipamentos, burlar sistemas físicos), reduz a DT do teste em Intelecto \- 1 pontos (Redução mínima 1; DT mínima 5). ◈ Eclético \[2 E\] Recebe \+1 dado em um teste de Atributo Mental. | ◈ Espião \[2 E\] Ao utilizar uma arma silenciada, remove a penalidade completamente de um disparo furtivo. ◈ Estudo Rápido \[3 E\] Uma vez por criatura, pode descobrir uma fraqueza, ponto forte ou status da mesma. Ela pode realizar um teste de Intelecto DT Sentidos para anular o efeito. ◈ Hacker \[0 E\] Em testes para acessar equipamentos tecnológicos recebe \+1 dado. ◈ Interferência Calculada \[3 E\] (Reação) Quando um aliado em curto alcance for alvo de um ataque, realiza um teste de Sentidos contra DT 10 \+ metade do resultado do ataque recebido. Em caso de sucesso, o aliado recebe \+3 na Defesa contra aquele ataque. ◈ Investigador Nato \[2 E\] Durante uma cena de investigação, recebe \+1 dado em um teste para investigar uma área ou ser. ◈ Olhos de Águia \[2 E\] Amplia seus sentidos instintivos, aumentado sua área de percepção de seres furtivos de ×5 para ×6, além de fazer testes de Sentidos terem \+3 em seu resultado.   ◈ Prodígio Forense \[3 E\] Quando Examinando uma pista, recebe \+5 no resultado do teste. ◈ Segunda Chance \[2 E\] Ao falhar em um teste (exceto ataques) por 5 ou menos, pode rodar 1D20 extra com os mesmos bônus do teste realizado (não é considerado um teste). ◈ Técnico de Combate \[4 E\] Uma vez por turno, muda o teste de ataque de uma arma para Intelecto. |
@@ -523,7 +523,7 @@ Alguns conceitos importantes para a subclasse são:
 4. Você **não possui** habilidades **gerais melhoradas**.  
 5. Subclasses **não podem** pegar habilidades de **outras subclasses**, sejam elas de sua própria classe ou de outra classe.
 
-| ⬥ Experimento Bestial *⬡ CLASSE \- COMBATENTE “O resultado de experimentos corporais extremos. Carne reforçada, músculos reestruturados e reflexos que beiram o sobrenatural. Representando o ápice da brutalidade física, um Combatente que não apenas luta, ele devora o campo de batalha.” AGENTES DESTA CLASSE RECEBEM O DOBRO NOS EFEITOS DE TODAS AS SEQUELAS E TRAUMAS SEU LIMITE DE TRAUMAS É REDUZIDO PARA VONTADE \- 1 EM NÍVEL 0 VOCÊ INICIA COM \-1 DE PRESTÍGIO* | ⬦ Habilidades de Subclasse  ◈ Adaptabilidade \[4 E\] Após receber 8 \- Vigor golpes de um ser específico, recebe \+3 em sua Defesa e \+1 dado em testes de reação contra quaisquer ataques daquele ser até o fim da cena.  ◈ Carapaça Excessiva \[0 E\] Pode exceder seu limite padrão de vida ao ser curado de forma externa, podendo passar desse limite em até Vigor × 10\. ◈ Casca Grossa \[6 E\] (Reação) Escolhendo esta habilidade juntamente do Bloquear, recebe resistência a Dano Geral igual a (1D4 \+ 2\) × Vigor nesta rodada, mas anula sua resistência Físico/Balístico no próximo turno. ◈ Cicatrização Acelerada \[5 E\] Utilizando sua ação de movimento, uma vez por turno, recupera Vigor dados de quatro faces (D4) de Vida (+5 E para mudar para dados de seis faces (D6) de cura). ◈ Fúria Controlada \[6 E\] Ao obter um crítico em um ataque corpo a corpo, pode ativar esta habilidade. Adiciona Força ÷ 2 dados do maior tipo da arma usada ao dano (não é afetado por críticos). ◈ Musculatura Bestial \[X E\] Ao gastar 17 \- Força de Energia, durante uma cena, armas corpo a corpo de duas mãos são consideradas de uma mão para você. ◈ Reação Anômala \[X E\] Uma vez por turno, pode adicionar o valor do atributo ao resultado de um teste de resistência ou reação, sendo este valor o custo da habilidade. ◈ Seu Oponente sou EU\! \[4 E\] Escolha um ser visível em alcance médio. Ele realiza um teste de Vontade (DT Vigor). Se falhar, recebe a condição Provocado por você, até você ficar Morrendo, Inconsciente ou a cena terminar. Enquanto o alvo estiver Provocado, você ganha \+Destreza ÷ 2 em Defesa contra ataques originados dele. ◈ Vampirismo \[1 E\] Ao acertar um ataque, pode recuperar 1D3 × (Nível ÷ 4\) (mínimo 1). ◈ Peculiaridade \[0 E\] Ao criar seu agente, escolha uma característica anômala, ela lhe concederá um bônus e uma penalidade desconhecida substituindo seus bônus originais de Origem. |
+| ⬥ Experimento Bestial *⬡ CLASSE \- COMBATENTE “O resultado de experimentos corporais extremos. Carne reforçada, músculos reestruturados e reflexos que beiram o sobrenatural. Representando o ápice da brutalidade física, um Combatente que não apenas luta, ele devora o campo de batalha.” AGENTES DESTA CLASSE RECEBEM O DOBRO NOS EFEITOS DE TODAS AS SEQUELAS E TRAUMAS SEU LIMITE DE TRAUMAS É REDUZIDO PARA VONTADE \- 1 EM NÍVEL 0 VOCÊ INICIA COM \-1 DE PRESTÍGIO* | ⬦ Habilidades de Subclasse  ◈ Adaptabilidade \[4 E\] Após receber 8 \- Vigor golpes de um ser específico, recebe \+3 em sua Defesa e \+1 dado em testes de reação contra quaisquer ataques daquele ser até o fim da cena.  ◈ Carapaça Excessiva \[0 E\] Pode exceder seu limite padrão de vida ao ser curado de forma externa, podendo passar desse limite em até Vigor × 10\. ◈ Casca Grossa \[6 E\] (Reação) Escolhendo esta habilidade juntamente do Bloquear, recebe resistência a Dano Geral igual a (1D4 \+ 2\) × Vigor nesta rodada, mas anula sua resistência Físico/Balístico no próximo turno. ◈ Cicatrização Acelerada \[5 E\] Utilizando sua ação de movimento, até Vigor vezes por cena, recupera Vigor dados de quatro faces (D4) de Vida (+5 E para mudar para dados de seis faces (D6) de cura). ◈ Fúria Controlada \[6 E\] Ao obter um crítico em um ataque corpo a corpo, pode ativar esta habilidade. Adiciona Força ÷ 2 dados do maior tipo da arma usada ao dano (não é afetado por críticos). ◈ Musculatura Bestial \[X E\] Ao gastar 17 \- Força de Energia, durante uma cena, armas corpo a corpo de duas mãos são consideradas de uma mão para você. ◈ Reação Anômala \[X E\] Uma vez por turno, pode adicionar o valor do atributo ao resultado de um teste de resistência ou reação, sendo este valor o custo da habilidade. ◈ Seu Oponente sou EU\! \[4 E\] Escolha um ser visível em alcance médio. Ele realiza um teste de Vontade (DT Vigor). Se falhar, recebe a condição Provocado por você, até você ficar Morrendo, Inconsciente ou a cena terminar. Enquanto o alvo estiver Provocado, você ganha \+Destreza ÷ 2 em Defesa contra ataques originados dele. ◈ Vampirismo \[1 E\] Ao acertar um ataque, pode recuperar 1D3 × (Nível ÷ 4\) (mínimo 1). ◈ Peculiaridade \[0 E\] Ao criar seu agente, escolha uma característica anômala, ela lhe concederá um bônus e uma penalidade desconhecida substituindo seus bônus originais de Origem. |
 | ----- | :---- |
 | **⬦ Saúde** Vida \= 30 \+ **VIG** × 5 Energia \= 22 \+ **DES** × 2  **⬦ Progressão por Nível** \[Vida\] a cada Nível recebe: 9 \+ **VIG** × 2 \[Energia\] a cada Nível recebe: 5 \+ **DES** × 2  **⬦ Atributos Bônus** \+1 em Força \+1 em Vigor |  |
 | **⬦ Habilidade Inicial** Musculatura de Impacto \[0 E\] Cada vez que acertar um ataque corpo a corpo, ganha \+1 ponto de Reforço com um máximo de **Vigor** pontos de reforço. Para cada ponto de reforço, pode aumentar **\+1 dado de dano** ou **\+3 de resistência** de um tipo à escolha. Ao atingir 4 ou mais pontos de reforço, pode realizar um ataque extra com \+2 dados no teste ou \+3 em defesa, reiniciando os pontos. Os pontos também reiniciam ao fim da cena. |  |
@@ -574,7 +574,7 @@ Uma habilidade só pode ser utilizada **uma vez no turno**, exceto quando sua de
 
 ⬦ Charme \[2 E\] \- Ao falhar em um teste de **Social** contra uma pessoa, pode força-lo com \+1 dado. Falhar irá reduzir o Nível de Cooperação em 2 ao invés de 1\.
 
-⬦ Combater com Duas Armas \[0 E\] \- Pode atacar com duas armas de uma mão ao mesmo tempo (exemplo, uma pistola e uma arma leve), considerando ambas como um ataque só, no qual são realizados dois testes e dois danos (um para cada arma). Usar armas iguais causam \+1 dado de dano em ambas as armas (exemplo, duas pistolas).
+⬦ Combater com Duas Armas \[0 E\] \- Ataca com duas armas de uma mão como um único ataque, com dois testes e dois danos, um por arma. Armas iguais (exemplo: duas Pistolas) causam \+1 dado de dano em cada. Habilidades que beneficiam ambos os ataques custam \+50% de Energia (mínimo \+1 E). Ataques adicionais de outras habilidades usam apenas uma das armas.
 
 ⬦ Contra-Ataque \[2 E\] \- (Reação) Soma sua **Luta ÷ 2** na sua Defesa ao reagir, caso o atacante não à ultrapasse, garante um ataque físico direto no ser, rolando apenas o dano da arma em mãos.
 
@@ -584,7 +584,8 @@ Uma habilidade só pode ser utilizada **uma vez no turno**, exceto quando sua de
 
 ⬦ Defesa Precisa \[2 E\] \- Recebe \+1 de Defesa.
 
-⬦ Derrubar e Atacar \[3 E\] \- Após derrubar um alvo, pode dar um segundo ataque.  
+⬦ Derrubar e Atacar \[3 E\] \- Após derrubar um alvo, pode dar um segundo ataque.
+
 ⬦ Determinação Inabalável \[6 E\] \- Uma vez por missão, pode ignorar todos os efeitos negativos de uma condição na qual irá te afligir, ou uma que esteja já esteja lhe afligindo, negando-a por **Vigor** turnos. Exceto Morrendo.
 
 ⬦ Em Alerta \[0 E\] \- Ao chegar a menos da metade da vida máxima, recebe \+1 em Defesa e \+1 dado em testes de **Destreza** e **Sentidos** até o fim da cena ou recuperar sua vida completamente.
@@ -971,7 +972,7 @@ Caso venha à **falhar** neste teste, você ainda aplica a modificação ao seu 
 | ----- | :---- | :---- | :---- |
 | **Modificação** |  | **Efeito** | **Bloqueia** |
 | **Balanceada** | **■** | *Recebe \+1 dado nos testes* | \- |
-| **Confortável** | **■■■□** | *Concede a habilidade Ataque Duplo, com o custo aumentado em \+1 E **Empilhamentos adicionais apenas reduzem o custo da habilidade em \-1 E*** | \- |
+| **Confortável** | **■■■□□** | *Concede a habilidade Ataque Duplo, com o custo aumentado em \+2 E **Empilhamentos adicionais apenas reduzem o custo da habilidade em \-1 E*** | \- |
 | **Empunhadura Sofisticada** | **■□□□□** | *Adiciona \+2 aos testes de ataque* | \- |
 | **Explosiva** | **■□□□□** | *Concede \+1D4 de dano de Explosão* | Fervente, Furtiva e Plasma |
 | **Fervente** | **■□□□□** | *Concede \+1D4 de dano Químico* | Explosiva |
@@ -1026,7 +1027,7 @@ Caso venha à **falhar** neste teste, você ainda aplica a modificação ao seu 
 | ----- | :---- | :---- | :---- |
 | **Modificação** |  | **Efeito** | **Bloqueia** |
 | **Alcance** | **■** | *Aumenta o alcance em \+1 nível* | \- |
-| **Estabilizador** | **■■■□** | *Concede a habilidade Ataque Duplo, com o custo aumentado em \+1 E **Empilhamentos adicionais apenas reduzem o custo da habilidade em \-1 E*** | \- |
+| **Estabilizador** | **■■■□□** | *Concede a habilidade Ataque Duplo, com o custo aumentado em \+2 E **Empilhamentos adicionais apenas reduzem o custo da habilidade em \-1 E*** | \- |
 | **Explosiva** | **■□□□□** | *Concede \+1D6 de dano Explosivo* | Furtiva, Silenciada e Plasma |
 | **Furtiva** | **■□** | *Reduz o peso em 1 (mínimo 1\) e não adiciona o peso da modificação* | Plasma, Explosiva |
 | **Mira Dot** | **■□□□□** | *Adiciona \+2 aos testes de ataque* | \- |
@@ -1076,11 +1077,11 @@ Caso venha à **falhar** neste teste, você ainda aplica a modificação ao seu 
 | **Colete Tático** | **Resistência**: 4 \[Físico\] | Corpo | 1 | $ 1000 |
 | **Colete de Kevlar** | **Resistência**: 5 \[Físico\] e 3 \[Balístico\] | Corpo | 2 | $ 1500 |
 | **Roupa Anti-Químico** | **Resistência**: 6 \[Químico\] | Corpo | 2 | $ 2500 |
-| **Armadura Pesada** | **Resistência**: 10 \[Físico\] e 6 \[Balístico\] **Penalidade**: \-1 dado em testes de Destreza | Corpo | 4 | $ 3000 |
+| **Armadura Pesada** | **Resistência**: 10 \[Físico\] e 6 \[Balístico\] **Penalidade**: \-3 ao Esquivar e \-1 dado em **Destreza** | Corpo | 4 | $ 3000 |
 | **Escudo Leve** | **Resistência**: 1 \[Físico\] e \[Balístico\] | Uma Mão | 1 | $ 300 |
 | **Escudo Médio** | **Resistência**: 3 \[Físico\] e \[Balístico\] | Uma Mão | 2 | $ 750 |
 | **Escudo Pesado** | **Resistência**: 5 \[Físico\] e \[Balístico\] | Duas Mãos | 3 | $ 1250 |
-| **Escudo-Barreira Móvel** | **Resistência**: 7 \[Físico\] e \[Balístico\] **Penalidade**: \-1 dado em testes de Destreza | Duas Mãos | 4 | $ 1750 |
+| **Escudo-Barreira Móvel** | **Resistência**: 7 \[Físico\] e \[Balístico\] **Penalidade**: \-1 ao Esquivar | Duas Mãos | 4 | $ 1750 |
 
 | ⬥ Modificações |  |  |  |
 | ----- | :---- | :---- | :---- |
@@ -1551,7 +1552,7 @@ O resultado de sua escolha estabelece a **DT** que o atacante deve superar. Se o
 
 | Corpo a Corpo Oponente adjacente a você. | Curto Alcance De 2 a 8 metros. | Médio Alcance De 9 a 16 metros. |
 | :---: | :---: | :---: |
-| **Longo Alcance** De 10 a 24 metros. | **Longínquo** De 25 a 40 metros. |  |
+| **Longo Alcance** De 17 a 24 metros. | **Longínquo** De 25 a 40 metros. |  |
 
 **⬦ Combate Furtivo**  
 A furtividade é uma estratégia eficaz para quem prefere não enfrentar o oponente diretamente. Para se esconder, ou **entrar em furtivo**, é necessário gastar uma **ação padrão** para isso. Quando você está **furtivo**, seu deslocamento é reduzido pela metade, mas você ganha o bônus de **dano furtivo** de acordo com sua patente, que é adicionado aos seus ataques. No entanto, ao atacar, você perde automaticamente sua furtividade.  
